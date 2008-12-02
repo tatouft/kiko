@@ -1,0 +1,48 @@
+.Contents
+{
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.List
+{
+	border: solid 1px grey;
+	margin-top: 20px;
+}
+
+.invisible
+{
+	display: none;
+}
+
+table
+{
+	border-collapse: collapse;
+	border: 1px solid white;
+	width: 100%;
+}
+td
+{
+	border: 1px solid lightgray;
+}
+th
+{
+	padding-top: 10px;
+	border: 1px solid lightgray;
+}
+
+input
+{
+	border: 1px solid gray;
+}
+
+.LittelTabs
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+.Invisible
+{
+	display: none;
+}
