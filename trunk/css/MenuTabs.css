@@ -1,0 +1,19 @@
+#MenuTab
+{
+	border: solid 0 white;
+}
+
+#MenuTab .Tab
+{
+	border: solid 1px grey;
+	display: inline;
+	padding: 3px;
+	margin: 0px;
+	cursor: pointer;
+	cursor: hand;
+}
+
+#MenuTab .SelectedTab
+{
+	border-bottom: solid 1px white;
+}
