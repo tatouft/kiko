@@ -1,0 +1,297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXFileReference section */
+		1FBFA6900EA93082003EA493 /* SearchGauche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchGauche.png; sourceTree = "<group>"; };
+		1FC22C0F0EDA06D500F37789 /* completeName.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = completeName.php; path = services/completeName.php; sourceTree = "<group>"; };
+		1FCDBCAC0ED97D8500EEA6D0 /* action.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = action.js; path = js/action.js; sourceTree = "<group>"; };
+		1FCDBD050ED98CC300EEA6D0 /* builder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = builder.js; sourceTree = "<group>"; };
+		1FCDBD060ED98CC300EEA6D0 /* controls.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = controls.js; sourceTree = "<group>"; };
+		1FCDBD070ED98CC300EEA6D0 /* dragdrop.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dragdrop.js; sourceTree = "<group>"; };
+		1FCDBD080ED98CC300EEA6D0 /* effects.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = effects.js; sourceTree = "<group>"; };
+		1FCDBD090ED98CC300EEA6D0 /* prototype.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = prototype.js; sourceTree = "<group>"; };
+		1FCDBD0A0ED98CC300EEA6D0 /* scriptaculous.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = scriptaculous.js; sourceTree = "<group>"; };
+		1FCDBD0B0ED98CC300EEA6D0 /* slider.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = slider.js; sourceTree = "<group>"; };
+		1FCDBD0C0ED98CC300EEA6D0 /* sound.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sound.js; sourceTree = "<group>"; };
+		1FCDBD0D0ED98CC300EEA6D0 /* unittest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = unittest.js; sourceTree = "<group>"; };
+		1FCDBD0F0ED98DAE00EEA6D0 /* getPratiquants.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = getPratiquants.php; path = services/getPratiquants.php; sourceTree = "<group>"; };
+		1FCDBE430ED9A6B500EEA6D0 /* config.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = config.php; path = config/config.php; sourceTree = "<group>"; };
+		1FCDBEB80ED9AB0700EEA6D0 /* getPratiquants.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = getPratiquants.php; path = services/core/getPratiquants.php; sourceTree = "<group>"; };
+		1FCDBF220ED9B44700EEA6D0 /* findPratiquantId.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = findPratiquantId.php; path = services/findPratiquantId.php; sourceTree = "<group>"; };
+		1FFD8D0C0EA523C80090BC26 /* test.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = test.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D0E0EA523C80090BC26 /* index.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = index.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D110EA523C80090BC26 /* kobukai */ = {isa = PBXFileReference; lastKnownFileType = file; name = kobukai; path = db/kobukai; sourceTree = SOURCE_ROOT; };
+		1FFD8D120EA523C80090BC26 /* sqlitestudio */ = {isa = PBXFileReference; lastKnownFileType = file; name = sqlitestudio; path = db/sqlitestudio; sourceTree = SOURCE_ROOT; };
+		1FFD8D140EA523C80090BC26 /* general.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = general.css; path = css/general.css; sourceTree = SOURCE_ROOT; };
+		1FFD8D150EA523C80090BC26 /* MenuTabs.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = MenuTabs.css; path = css/MenuTabs.css; sourceTree = SOURCE_ROOT; };
+		1FFD8D160EA523C80090BC26 /* SearchArea.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = SearchArea.css; path = css/SearchArea.css; sourceTree = SOURCE_ROOT; };
+		1FFD8D190EA523C80090BC26 /* config.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = config.php; path = core/pmo/config.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D1A0EA523C80090BC26 /* contributors */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = contributors; path = core/pmo/contributors; sourceTree = SOURCE_ROOT; };
+		1FFD8D1B0EA523C80090BC26 /* licence */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = licence; path = core/pmo/licence; sourceTree = SOURCE_ROOT; };
+		1FFD8D1E0EA523C80090BC26 /* class_grades.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_grades.php; path = core/pmo/PMO_core/class_loader/class_grades.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D1F0EA523C80090BC26 /* class_passages.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_passages.php; path = core/pmo/PMO_core/class_loader/class_passages.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D200EA523C80090BC26 /* class_pratiquants.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_pratiquants.php; path = core/pmo/PMO_core/class_loader/class_pratiquants.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D210EA523C80090BC26 /* class_section.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_section.php; path = core/pmo/PMO_core/class_loader/class_section.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D220EA523C80090BC26 /* config.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = config.php; path = core/pmo/PMO_core/config.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D230EA523C80090BC26 /* PMO_Controller.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_Controller.php; path = core/pmo/PMO_core/PMO_Controller.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D240EA523C80090BC26 /* PMO_Map.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_Map.php; path = core/pmo/PMO_core/PMO_Map.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D250EA523C80090BC26 /* PMO_MapHash.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MapHash.php; path = core/pmo/PMO_core/PMO_MapHash.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D260EA523C80090BC26 /* PMO_MapTable.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MapTable.php; path = core/pmo/PMO_core/PMO_MapTable.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D270EA523C80090BC26 /* PMO_MyController.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyController.php; path = core/pmo/PMO_core/PMO_MyController.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D280EA523C80090BC26 /* PMO_MyMap.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyMap.php; path = core/pmo/PMO_core/PMO_MyMap.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D290EA523C80090BC26 /* PMO_MyMapHash.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyMapHash.php; path = core/pmo/PMO_core/PMO_MyMapHash.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D2A0EA523C80090BC26 /* PMO_MyMapTable.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyMapTable.php; path = core/pmo/PMO_core/PMO_MyMapTable.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D2B0EA523C80090BC26 /* PMO_MyObject.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyObject.php; path = core/pmo/PMO_core/PMO_MyObject.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D2C0EA523C80090BC26 /* PMO_MyParser.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyParser.php; path = core/pmo/PMO_core/PMO_MyParser.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D2D0EA523C80090BC26 /* PMO_MySgbd.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MySgbd.php; path = core/pmo/PMO_core/PMO_MySgbd.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D2E0EA523C80090BC26 /* PMO_MyTable.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_MyTable.php; path = core/pmo/PMO_core/PMO_MyTable.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D2F0EA523C80090BC26 /* PMO_Object.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_Object.php; path = core/pmo/PMO_core/PMO_Object.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D300EA523C80090BC26 /* PMO_Parser.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_Parser.php; path = core/pmo/PMO_core/PMO_Parser.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D310EA523C80090BC26 /* PMO_Sgbd.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_Sgbd.php; path = core/pmo/PMO_core/PMO_Sgbd.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D320EA523C80090BC26 /* PMO_sgbd_mysql.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_sgbd_mysql.php; path = core/pmo/PMO_core/PMO_sgbd_mysql.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D330EA523C80090BC26 /* PMO_sgbd_pdo.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_sgbd_pdo.php; path = core/pmo/PMO_core/PMO_sgbd_pdo.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D340EA523C80090BC26 /* PMO_sgbd_pgsql.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_sgbd_pgsql.php; path = core/pmo/PMO_core/PMO_sgbd_pgsql.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D350EA523C80090BC26 /* PMO_sgbd_sqlite.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_sgbd_sqlite.php; path = core/pmo/PMO_core/PMO_sgbd_sqlite.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D360EA523C80090BC26 /* PMO_Table.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = PMO_Table.php; path = core/pmo/PMO_core/PMO_Table.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D370EA523C80090BC26 /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme; path = core/pmo/readme; sourceTree = SOURCE_ROOT; };
+		1FFD8D380EA523C80090BC26 /* test.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = test.php; path = core/pmo/test.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D3A0EA523C80090BC26 /* MenuTabs.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = MenuTabs.php; path = controls/MenuTabs.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D3B0EA523C80090BC26 /* SearchArea.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = SearchArea.php; path = controls/SearchArea.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D440EA531450090BC26 /* ResultHeader.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = ResultHeader.php; sourceTree = "<group>"; };
+		1FFD8D450EA532C10090BC26 /* ResultHeader.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = ResultHeader.css; sourceTree = "<group>"; };
+		1FFD8D4A0EA53C070090BC26 /* loupe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loupe.png; path = images/loupe.png; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1FCDBCAB0ED97D5300EEA6D0 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				1FCDBD040ED98CC300EEA6D0 /* scriptaculous */,
+				1FCDBCAC0ED97D8500EEA6D0 /* action.js */,
+			);
+			name = js;
+			sourceTree = "<group>";
+		};
+		1FCDBD040ED98CC300EEA6D0 /* scriptaculous */ = {
+			isa = PBXGroup;
+			children = (
+				1FCDBD050ED98CC300EEA6D0 /* builder.js */,
+				1FCDBD060ED98CC300EEA6D0 /* controls.js */,
+				1FCDBD070ED98CC300EEA6D0 /* dragdrop.js */,
+				1FCDBD080ED98CC300EEA6D0 /* effects.js */,
+				1FCDBD090ED98CC300EEA6D0 /* prototype.js */,
+				1FCDBD0A0ED98CC300EEA6D0 /* scriptaculous.js */,
+				1FCDBD0B0ED98CC300EEA6D0 /* slider.js */,
+				1FCDBD0C0ED98CC300EEA6D0 /* sound.js */,
+				1FCDBD0D0ED98CC300EEA6D0 /* unittest.js */,
+			);
+			name = scriptaculous;
+			path = js/scriptaculous;
+			sourceTree = "<group>";
+		};
+		1FCDBD0E0ED98D8600EEA6D0 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				1FCDBEB60ED9AA9F00EEA6D0 /* core */,
+				1FCDBD0F0ED98DAE00EEA6D0 /* getPratiquants.php */,
+				1FCDBF220ED9B44700EEA6D0 /* findPratiquantId.php */,
+				1FC22C0F0EDA06D500F37789 /* completeName.php */,
+			);
+			name = services;
+			sourceTree = "<group>";
+		};
+		1FCDBE420ED9A69400EEA6D0 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				1FCDBE430ED9A6B500EEA6D0 /* config.php */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		1FCDBEB60ED9AA9F00EEA6D0 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				1FCDBEB80ED9AB0700EEA6D0 /* getPratiquants.php */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		1FD1E3430EA522E600870DE7 = {
+			isa = PBXGroup;
+			children = (
+				1FCDBE420ED9A69400EEA6D0 /* config */,
+				1FCDBD0E0ED98D8600EEA6D0 /* services */,
+				1FCDBCAB0ED97D5300EEA6D0 /* js */,
+				1FFD8D0C0EA523C80090BC26 /* test.php */,
+				1FFD8D0D0EA523C80090BC26 /* Search */,
+				1FFD8D0E0EA523C80090BC26 /* index.php */,
+				1FFD8D0F0EA523C80090BC26 /* images */,
+				1FFD8D100EA523C80090BC26 /* db */,
+				1FFD8D130EA523C80090BC26 /* css */,
+				1FFD8D170EA523C80090BC26 /* core */,
+				1FFD8D390EA523C80090BC26 /* controls */,
+			);
+			sourceTree = "<group>";
+		};
+		1FFD8D0D0EA523C80090BC26 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D0F0EA523C80090BC26 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				1FBFA6900EA93082003EA493 /* SearchGauche.png */,
+				1FFD8D4A0EA53C070090BC26 /* loupe.png */,
+			);
+			path = images;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D100EA523C80090BC26 /* db */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D110EA523C80090BC26 /* kobukai */,
+				1FFD8D120EA523C80090BC26 /* sqlitestudio */,
+			);
+			path = db;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D130EA523C80090BC26 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D140EA523C80090BC26 /* general.css */,
+				1FFD8D150EA523C80090BC26 /* MenuTabs.css */,
+				1FFD8D160EA523C80090BC26 /* SearchArea.css */,
+				1FFD8D450EA532C10090BC26 /* ResultHeader.css */,
+			);
+			path = css;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D170EA523C80090BC26 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D180EA523C80090BC26 /* pmo */,
+			);
+			path = core;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D180EA523C80090BC26 /* pmo */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D190EA523C80090BC26 /* config.php */,
+				1FFD8D1A0EA523C80090BC26 /* contributors */,
+				1FFD8D1B0EA523C80090BC26 /* licence */,
+				1FFD8D1C0EA523C80090BC26 /* PMO_core */,
+				1FFD8D370EA523C80090BC26 /* readme */,
+				1FFD8D380EA523C80090BC26 /* test.php */,
+			);
+			name = pmo;
+			path = core/pmo;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D1C0EA523C80090BC26 /* PMO_core */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D1D0EA523C80090BC26 /* class_loader */,
+				1FFD8D220EA523C80090BC26 /* config.php */,
+				1FFD8D230EA523C80090BC26 /* PMO_Controller.php */,
+				1FFD8D240EA523C80090BC26 /* PMO_Map.php */,
+				1FFD8D250EA523C80090BC26 /* PMO_MapHash.php */,
+				1FFD8D260EA523C80090BC26 /* PMO_MapTable.php */,
+				1FFD8D270EA523C80090BC26 /* PMO_MyController.php */,
+				1FFD8D280EA523C80090BC26 /* PMO_MyMap.php */,
+				1FFD8D290EA523C80090BC26 /* PMO_MyMapHash.php */,
+				1FFD8D2A0EA523C80090BC26 /* PMO_MyMapTable.php */,
+				1FFD8D2B0EA523C80090BC26 /* PMO_MyObject.php */,
+				1FFD8D2C0EA523C80090BC26 /* PMO_MyParser.php */,
+				1FFD8D2D0EA523C80090BC26 /* PMO_MySgbd.php */,
+				1FFD8D2E0EA523C80090BC26 /* PMO_MyTable.php */,
+				1FFD8D2F0EA523C80090BC26 /* PMO_Object.php */,
+				1FFD8D300EA523C80090BC26 /* PMO_Parser.php */,
+				1FFD8D310EA523C80090BC26 /* PMO_Sgbd.php */,
+				1FFD8D320EA523C80090BC26 /* PMO_sgbd_mysql.php */,
+				1FFD8D330EA523C80090BC26 /* PMO_sgbd_pdo.php */,
+				1FFD8D340EA523C80090BC26 /* PMO_sgbd_pgsql.php */,
+				1FFD8D350EA523C80090BC26 /* PMO_sgbd_sqlite.php */,
+				1FFD8D360EA523C80090BC26 /* PMO_Table.php */,
+			);
+			name = PMO_core;
+			path = core/pmo/PMO_core;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D1D0EA523C80090BC26 /* class_loader */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D1E0EA523C80090BC26 /* class_grades.php */,
+				1FFD8D1F0EA523C80090BC26 /* class_passages.php */,
+				1FFD8D200EA523C80090BC26 /* class_pratiquants.php */,
+				1FFD8D210EA523C80090BC26 /* class_section.php */,
+			);
+			name = class_loader;
+			path = core/pmo/PMO_core/class_loader;
+			sourceTree = SOURCE_ROOT;
+		};
+		1FFD8D390EA523C80090BC26 /* controls */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD8D3A0EA523C80090BC26 /* MenuTabs.php */,
+				1FFD8D3B0EA523C80090BC26 /* SearchArea.php */,
+				1FFD8D440EA531450090BC26 /* ResultHeader.php */,
+			);
+			path = controls;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		1FD1E3450EA522E700870DE7 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1FD1E3480EA522E700870DE7 /* Build configuration list for PBXProject "kobukai" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 0;
+			mainGroup = 1FD1E3430EA522E600870DE7;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		1FD1E3460EA522E700870DE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		1FD1E3470EA522E700870DE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FD1E3480EA522E700870DE7 /* Build configuration list for PBXProject "kobukai" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FD1E3460EA522E700870DE7 /* Debug */,
+				1FD1E3470EA522E700870DE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1FD1E3450EA522E700870DE7 /* Project object */;
+}
