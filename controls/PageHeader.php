@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="css/PageHeader.css" type="text/css">
+
+<div class="home" id="Header">
+	<ul>
+		<li id="HeaderG"><a href="index.php">KiKo</a></li>
+		<li class="<? if($CurrentPage == 'lists') echo('selected'); ?>"><a href="">Listes</a></li>
+		<li><a>Présences</a></li>
+		<li><a>Banque</a></li>
+		<li><a>Admin</a></li>
+		<li id="HeaderD"><a id="new" href="new.php" target="_blank" title="Nouveau pratiquant" ></a><a id="print" href="#" target="_blank" title="Imprimer"></a></li>
+		<li id="HeaderNone" style="float:none;"><a/></li>
+	</ul>
+</DIV>

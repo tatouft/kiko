@@ -7,8 +7,20 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		1F34A75812DBCF7E00201A1F /* ToDo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ToDo; sourceTree = "<group>"; };
+		1F3B8A7D12DCED98004E650E /* presences.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = presences.php; sourceTree = "<group>"; };
+		1F3B8A7E12DCF12A004E650E /* getPratiquantsNom.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = getPratiquantsNom.php; path = services/getPratiquantsNom.php; sourceTree = "<group>"; };
+		1F3B8B1912DD02F7004E650E /* AddPresence.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = AddPresence.php; path = services/AddPresence.php; sourceTree = "<group>"; };
+		1F3B8B1A12DD0541004E650E /* class_presences.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = class_presences.php; sourceTree = "<group>"; };
+		1F6C0FC10F018E1A00231EAF /* new.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = new.php; sourceTree = "<group>"; };
 		1FBFA6900EA93082003EA493 /* SearchGauche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchGauche.png; sourceTree = "<group>"; };
 		1FC22C0F0EDA06D500F37789 /* completeName.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = completeName.php; path = services/completeName.php; sourceTree = "<group>"; };
+		1FC3C3290EE85FC800E0D90B /* PageHeader.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = PageHeader.php; sourceTree = "<group>"; };
+		1FC3C32B0EE8637100E0D90B /* PageHeader.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = PageHeader.css; sourceTree = "<group>"; };
+		1FC3C32C0EE8758C00E0D90B /* HeaderC_All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeaderC_All.png; sourceTree = "<group>"; };
+		1FC3C32D0EE8758C00E0D90B /* HeaderD_All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeaderD_All.png; sourceTree = "<group>"; };
+		1FC3C32E0EE8758C00E0D90B /* HeaderG_All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeaderG_All.png; sourceTree = "<group>"; };
+		1FC3C32F0EE8758C00E0D90B /* HeaderR_All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeaderR_All.png; sourceTree = "<group>"; };
 		1FCDBCAC0ED97D8500EEA6D0 /* action.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = action.js; path = js/action.js; sourceTree = "<group>"; };
 		1FCDBD050ED98CC300EEA6D0 /* builder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = builder.js; sourceTree = "<group>"; };
 		1FCDBD060ED98CC300EEA6D0 /* controls.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = controls.js; sourceTree = "<group>"; };
@@ -23,17 +35,17 @@
 		1FCDBE430ED9A6B500EEA6D0 /* config.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = config.php; path = config/config.php; sourceTree = "<group>"; };
 		1FCDBEB80ED9AB0700EEA6D0 /* getPratiquants.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = getPratiquants.php; path = services/core/getPratiquants.php; sourceTree = "<group>"; };
 		1FCDBF220ED9B44700EEA6D0 /* findPratiquantId.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = findPratiquantId.php; path = services/findPratiquantId.php; sourceTree = "<group>"; };
+		1FD6D8EC10A75FDC00B0B30E /* class_grades.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = class_grades.php; sourceTree = "<group>"; };
+		1FFC9CBB0F35B22D007A2ED4 /* New.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = New.css; sourceTree = "<group>"; };
 		1FFD8D0C0EA523C80090BC26 /* test.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = test.php; sourceTree = SOURCE_ROOT; };
 		1FFD8D0E0EA523C80090BC26 /* index.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = index.php; sourceTree = SOURCE_ROOT; };
 		1FFD8D110EA523C80090BC26 /* kobukai */ = {isa = PBXFileReference; lastKnownFileType = file; name = kobukai; path = db/kobukai; sourceTree = SOURCE_ROOT; };
-		1FFD8D120EA523C80090BC26 /* sqlitestudio */ = {isa = PBXFileReference; lastKnownFileType = file; name = sqlitestudio; path = db/sqlitestudio; sourceTree = SOURCE_ROOT; };
 		1FFD8D140EA523C80090BC26 /* general.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = general.css; path = css/general.css; sourceTree = SOURCE_ROOT; };
 		1FFD8D150EA523C80090BC26 /* MenuTabs.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = MenuTabs.css; path = css/MenuTabs.css; sourceTree = SOURCE_ROOT; };
 		1FFD8D160EA523C80090BC26 /* SearchArea.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = SearchArea.css; path = css/SearchArea.css; sourceTree = SOURCE_ROOT; };
-		1FFD8D190EA523C80090BC26 /* config.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = config.php; path = core/pmo/config.php; sourceTree = SOURCE_ROOT; };
 		1FFD8D1A0EA523C80090BC26 /* contributors */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = contributors; path = core/pmo/contributors; sourceTree = SOURCE_ROOT; };
 		1FFD8D1B0EA523C80090BC26 /* licence */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = licence; path = core/pmo/licence; sourceTree = SOURCE_ROOT; };
-		1FFD8D1E0EA523C80090BC26 /* class_grades.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_grades.php; path = core/pmo/PMO_core/class_loader/class_grades.php; sourceTree = SOURCE_ROOT; };
+		1FFD8D1E0EA523C80090BC26 /* class_lnk_grades_sections.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = class_lnk_grades_sections.php; sourceTree = "<group>"; };
 		1FFD8D1F0EA523C80090BC26 /* class_passages.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_passages.php; path = core/pmo/PMO_core/class_loader/class_passages.php; sourceTree = SOURCE_ROOT; };
 		1FFD8D200EA523C80090BC26 /* class_pratiquants.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_pratiquants.php; path = core/pmo/PMO_core/class_loader/class_pratiquants.php; sourceTree = SOURCE_ROOT; };
 		1FFD8D210EA523C80090BC26 /* class_section.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = class_section.php; path = core/pmo/PMO_core/class_loader/class_section.php; sourceTree = SOURCE_ROOT; };
@@ -99,8 +111,10 @@
 			children = (
 				1FCDBEB60ED9AA9F00EEA6D0 /* core */,
 				1FCDBD0F0ED98DAE00EEA6D0 /* getPratiquants.php */,
+				1F3B8A7E12DCF12A004E650E /* getPratiquantsNom.php */,
 				1FCDBF220ED9B44700EEA6D0 /* findPratiquantId.php */,
 				1FC22C0F0EDA06D500F37789 /* completeName.php */,
+				1F3B8B1912DD02F7004E650E /* AddPresence.php */,
 			);
 			name = services;
 			sourceTree = "<group>";
@@ -128,26 +142,25 @@
 				1FCDBD0E0ED98D8600EEA6D0 /* services */,
 				1FCDBCAB0ED97D5300EEA6D0 /* js */,
 				1FFD8D0C0EA523C80090BC26 /* test.php */,
-				1FFD8D0D0EA523C80090BC26 /* Search */,
 				1FFD8D0E0EA523C80090BC26 /* index.php */,
 				1FFD8D0F0EA523C80090BC26 /* images */,
 				1FFD8D100EA523C80090BC26 /* db */,
 				1FFD8D130EA523C80090BC26 /* css */,
 				1FFD8D170EA523C80090BC26 /* core */,
 				1FFD8D390EA523C80090BC26 /* controls */,
+				1F6C0FC10F018E1A00231EAF /* new.php */,
+				1F34A75812DBCF7E00201A1F /* ToDo */,
+				1F3B8A7D12DCED98004E650E /* presences.php */,
 			);
 			sourceTree = "<group>";
-		};
-		1FFD8D0D0EA523C80090BC26 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Search;
-			sourceTree = SOURCE_ROOT;
 		};
 		1FFD8D0F0EA523C80090BC26 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1FC3C32C0EE8758C00E0D90B /* HeaderC_All.png */,
+				1FC3C32D0EE8758C00E0D90B /* HeaderD_All.png */,
+				1FC3C32E0EE8758C00E0D90B /* HeaderG_All.png */,
+				1FC3C32F0EE8758C00E0D90B /* HeaderR_All.png */,
 				1FBFA6900EA93082003EA493 /* SearchGauche.png */,
 				1FFD8D4A0EA53C070090BC26 /* loupe.png */,
 			);
@@ -158,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				1FFD8D110EA523C80090BC26 /* kobukai */,
-				1FFD8D120EA523C80090BC26 /* sqlitestudio */,
 			);
 			path = db;
 			sourceTree = SOURCE_ROOT;
@@ -170,6 +182,8 @@
 				1FFD8D150EA523C80090BC26 /* MenuTabs.css */,
 				1FFD8D160EA523C80090BC26 /* SearchArea.css */,
 				1FFD8D450EA532C10090BC26 /* ResultHeader.css */,
+				1FC3C32B0EE8637100E0D90B /* PageHeader.css */,
+				1FFC9CBB0F35B22D007A2ED4 /* New.css */,
 			);
 			path = css;
 			sourceTree = SOURCE_ROOT;
@@ -185,7 +199,6 @@
 		1FFD8D180EA523C80090BC26 /* pmo */ = {
 			isa = PBXGroup;
 			children = (
-				1FFD8D190EA523C80090BC26 /* config.php */,
 				1FFD8D1A0EA523C80090BC26 /* contributors */,
 				1FFD8D1B0EA523C80090BC26 /* licence */,
 				1FFD8D1C0EA523C80090BC26 /* PMO_core */,
@@ -229,10 +242,12 @@
 		1FFD8D1D0EA523C80090BC26 /* class_loader */ = {
 			isa = PBXGroup;
 			children = (
-				1FFD8D1E0EA523C80090BC26 /* class_grades.php */,
+				1FD6D8EC10A75FDC00B0B30E /* class_grades.php */,
+				1FFD8D1E0EA523C80090BC26 /* class_lnk_grades_sections.php */,
 				1FFD8D1F0EA523C80090BC26 /* class_passages.php */,
 				1FFD8D200EA523C80090BC26 /* class_pratiquants.php */,
 				1FFD8D210EA523C80090BC26 /* class_section.php */,
+				1F3B8B1A12DD0541004E650E /* class_presences.php */,
 			);
 			name = class_loader;
 			path = core/pmo/PMO_core/class_loader;
@@ -244,6 +259,7 @@
 				1FFD8D3A0EA523C80090BC26 /* MenuTabs.php */,
 				1FFD8D3B0EA523C80090BC26 /* SearchArea.php */,
 				1FFD8D440EA531450090BC26 /* ResultHeader.php */,
+				1FC3C3290EE85FC800E0D90B /* PageHeader.php */,
 			);
 			path = controls;
 			sourceTree = SOURCE_ROOT;

@@ -3,19 +3,24 @@
 	function SwitchSearchTab(areaId, tab)
 	{
 	    //var m = document.getElementById('MenuTab').childNodes;
-		var m = $('MenuTab').childNodes;
+
+		//var m = $('MenuTab').childNodes;
+		var m = $('MenuTab').childElements();
 		for (i=0; i<m.length; i++) 
 		{
-			m[i].className = "Tab"; 
+			//m[i].className = "Tab"; 
+			$(m[i]).removeClassName('SelectedTab');
 		}
 
-	    var m = $('SearchArea').childNodes;
+
+	    var m = $('SearchArea').childElements();
 		for (i=0; i<m.length; i++) 
 		{
 			/*if(m.id == id)
 				m[i].className = "SearchAreaContent"; 
 			else*/
-				m[i].className = "SearchAreaContent Invisible"; 
+				//m[i].className = "SearchAreaContent Invisible"; 
+			m[i].addClassName('Invisible')
 		}
 		
 		/*
@@ -25,8 +30,10 @@
 		document.getElementById('ExpirationArea').setAttribute('style', "display: none");
 		document.getElementById('UpArea').setAttribute('style', "display: none");*/
 
-		tab.className = "Tab SelectedTab";
-		$(areaId).setAttribute('class', "SearchAreaContent");
+		tab.addClassName('SelectedTab')
+		//tab.className = "Tab SelectedTab";
+		//$(areaId).setAttribute('class', "SearchAreaContent");
+		$(areaId).removeClassName('Invisible');
 		//document.getElementById('AllArea').style = "display: none;";
 		//document.getElementById('SectionArea').style = "display: none;";
 		//document.getElementById('ExamensArea').style = "display: none;";

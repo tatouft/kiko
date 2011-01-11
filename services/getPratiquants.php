@@ -6,7 +6,5 @@
 
 	$action = $_REQUEST['action'];
 	$section = $_REQUEST['section'];
-
-	require_once("core/getPratiquants.php");
-
 ?>
+<? 	require_once("core/getPratiquants.php"); ?>

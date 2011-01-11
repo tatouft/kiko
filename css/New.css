@@ -1,0 +1,86 @@
+.Contents
+{
+	width: 500px; 
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+#NewTitle 
+{ 
+	text-align: center;
+	background-color: lightgrey;
+}
+
+.New
+{
+	padding: 10px;
+}
+
+.FieldName
+{
+	width: 100px;
+	float: left;
+	margin-left: 3px;
+	margin-right: 5px;
+	font-weight: bold;
+}
+.Grade
+{
+	width: 200px;
+}
+
+.InputField
+{
+	/*width: 50px;*/
+	float: left;
+}
+
+.FieldPhoto
+{
+	float: right;
+	width: auto;
+}
+.Photo
+{
+	float: right;
+	width: 100px;
+	height: 130px;
+	border: 1px black solid;
+}
+.Photo img
+{
+	width: 100px;
+	height: 130px;
+	border: 0px red solid;
+	cursor: pointer;
+	cursor: hand;	
+}
+
+.Button
+{
+	float: right;
+	background-color: rgb(240,240,240);
+}
+#Add.Button
+{
+	float: none;
+	margin-right: 5px;
+}
+#Save.Button
+{
+	margin-right: 0px;
+}
+#Edit.Button
+{
+	margin-right: 0px;
+}
+#Cancel.Button
+{
+	margin-right: 5px;
+}
+.Button img
+{
+	vertical-align: bottom;
+	margin-bottom: 2px;
+}

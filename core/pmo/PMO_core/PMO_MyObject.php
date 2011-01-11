@@ -109,7 +109,7 @@ class PMO_MyObject implements PMO_Object{
 	}
 
 	public function toXml($encoding){
-		$out = "<?xml version=\"1.0\" encoding=\"$encoding\"?>\r";
+		$out = "<?xml version=\"1.0\" encoding=\"$encoding\"?>\r"; //"
 		$out .= "<attributes>\r";
 
 		foreach($this->object_attribute as $key=>$value)

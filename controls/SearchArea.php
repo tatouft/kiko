@@ -7,12 +7,12 @@
 ?>
 
 <link rel="stylesheet" href="css/SearchArea.css" type="text/css">
-<form method="post" action="<? $_SERVER['REQUEST_URI'] ?>" id="form">
+<form method="post" action="<? $_SERVER['REQUEST_URI'] ?>" id="formSearch">
 <div id="SearchArea">
 	<input type="hidden" id="filterAction">
 	<div class="SearchAreaContent" id="AllArea">
 		Tous les pratiquants
-		<div class="SearchButton"><input type="button" onclick="Search('all');" value="Rafraichir"></div>
+		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','all');" value="Rafraichir"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="SectionArea">
@@ -28,12 +28,26 @@
 				?>
 			</select>
 		</div>
-		<div class="SearchButton"><input type="button" onclick="Search('section',$F('filterSection'));" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','section',$F('filterSection'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExamensArea">
-		Sections, date
-		<div class="SearchButton"><input type="button" value="Afficher"></div>
+		<div id="CSectionExam" class="criteres">
+			Section: 
+			<select id="filterSectionExam" name="filterSectionExam">
+				<?php
+					$sections = sections::GetAll();
+					foreach($sections as $sec)
+					{
+						echo('<option value="' . $sec->id . '">' . $sec->libelle . '</option>');
+					}
+				?>
+			</select>
+		</div>
+		<div id="CDateExam" class="criteres">
+			Date: <input type="text" id="filterDateExam" name="filterDateExam"/>
+		</div>
+		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','examens',$F('filterSectionExam'),$F('filterDateExam'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">

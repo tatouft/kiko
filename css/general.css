@@ -31,6 +31,26 @@ th
 	border: 1px solid lightgray;
 }
 
+.TableButton
+{
+	display: block;
+	float: left;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+
+#modify.TableButton
+{
+	background-image: url(images/24.png);	
+}
+
+#delete.TableButton
+{
+	background-image: url(images/12.png);	
+}
+
 input
 {
 	border: 1px solid gray;
@@ -45,4 +65,36 @@ input
 .Invisible
 {
 	display: none;
+}
+
+.Button
+{
+	display: block;
+	border: 1px solid grey;
+	background-color: lightgrey;
+	display: inline;
+	padding: 1px;
+	padding-left: 5px;
+	padding-right: 5px; 
+	margin: 5px;
+	text-decoration: none;
+	color: black;
+}
+.Button *
+{
+	border: 0px solid white;
+	text-decoration: none;
+	color: black;
+}
+
+div.Checked
+{
+	color: green;
+	margin-left: 20px;
+}
+
+div.Unchecked
+{
+	color: red;
+	margin-left: 20px;
 }

@@ -1,4 +1,6 @@
 <?php
+require_once("class_grades.php");
+	
 class passages extends PMO_MyObject{
 	public static $TableName = 'passages';
 		
@@ -45,7 +47,7 @@ class passages extends PMO_MyObject{
 	public static function GetByPratiquant($fkPratiquant)
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_pratiquant = " . $fkPratiquant . ";");
+		$map = $controler->queryController("SELECT a.* FROM " . self::$TableName . " as a, " . grades::$TableName  . " as b WHERE a.fk_pratiquant = " . $fkPratiquant . " AND a.fk_grade = b.id ORDER BY b.displayorder;");
 	
 		return self::GetArray($map);
 	}

@@ -1,0 +1,12 @@
+- Check des données d'ajout et de modif pour ne pas faire n'importe quoi
+- Del des grades
+- Photos
+- Tab examens, section et date du passage de grade, il affiche les gens prets
+- Tab expiration, section et date de l'expiration, il affiche les gens en expiration
+- Montée, Section. Il affiche les élève de cette section à être prêt à changer de section
+- Grades dans l'écran de modif
+	- Ne pas laisser ajouter un grade exstant ou en cours d'ajout
+	- Ne pas rafraichir quand on ajoute un grade, sinon on perd le grade en cours (ajax)
+	
+- Partout: Ajouter des control de calendrier pour entrer les dates.
+- présences
