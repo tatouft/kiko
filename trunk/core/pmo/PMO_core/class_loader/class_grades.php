@@ -1,20 +1,23 @@
 <?php
-class grades extends PMO_MyObject{
-	public static $TableName = ' grades';
+require_once("class_lnk_grades_sections.php");
+
 	
-	public function GetSection()
+class grades extends PMO_MyObject{
+	public static $TableName = 'grades';
+	
+	// Récupère la liste des sections dans lesquelles ce pratiquant à des grades
+	public function GetSections()
 	{
-		if($this->fk_section != NULL)
-		{
-			$prat = PMO_MyObject::factory('sections');
-			$prat->id = $this->fk_section;
-			$prat->load();
-			return $prat;
-		}
-		else
-		{
-			return NULL;
-		}
+		$sql = "select b.* ";
+		$sql .= "from ";
+		$sql .= self::$TableName . " as a inner join ";
+		$sql .= lnk_grades_sections::$TableName . " as l on a.id = l.fk_grade inner join ";
+		$sql .= sections::$TableName . " as b on l.fk_section = b.id ";
+		$sql .= "where ";
+		$sql .= "a.id = " . $this->id;
+		$map = $controler->queryController($sql);
+		
+		return sections::GetArray($map);		
 	}
 
 	/*************
@@ -40,10 +43,14 @@ class grades extends PMO_MyObject{
 	}
 	public static function GetBySection($section)
 	{
-		public static function GetAll()
 		$controler = new PMO_MyController();
-
-		$map = $controler->queryController("SELECT * FROM  . self::$TableName . " WHERE " . $section . " ORDER BY displayOrder;");
+		$sql = "select a.* ";
+		$sql .= "from " . self::$TableName . " as a, " . lnk_grades_sections::$TableName . " as l ";
+		$sql .= "where a.id = l.fk_grade AND ";
+		$sql .= "l.fk_section = " . $section;
+		
+		echo($sql);
+		$map = $controler->queryController($sql);
 	
 		return self::GetArray($map);
 	}

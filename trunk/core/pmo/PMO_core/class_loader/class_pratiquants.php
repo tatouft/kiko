@@ -1,5 +1,6 @@
 <?php
 require_once("class_passages.php");
+require_once("class_presences.php");
 
 class pratiquants extends PMO_MyObject{
 	public static $TableName = 'pratiquants';
@@ -46,9 +47,34 @@ class pratiquants extends PMO_MyObject{
 		}
 	}
 	
+	public function AddPresence($date)
+	{
+		if(!presences::Exists($this->id, $date))
+		{
+			$presence = PMO_MyObject::factory("presences");
+			
+			$presence->date = $date;
+			$presence->fk_pratiquant = $this->id;
+			$presence->commit();
+		}
+	}
+	
+	public function AddPresences($n)
+	{
+		for($i = 0; $i<$n; $i++)
+		{
+			$presence = PMO_MyObject::factory("presences");
+			
+			$date = date("Y-m-d");
+			$presence->date = $date;
+			$presence->fk_pratiquant = $this->id;
+			$presence->commit();
+		}
+	}
+	
 	public function IsLicenceExpired()
 	{
-		if($this->licenceDate <= date("j/n/Y"))
+		if($this->licenceDate <= date("Y-m-d"))
 			return true;
 		else
 			return false;
@@ -87,11 +113,19 @@ class pratiquants extends PMO_MyObject{
 	/*******************
 	 *** Public Static *************************************
 	 *******************/
+	public static function GetById($id)
+	{
+		$prat = PMO_MyObject::factory(self::$TableName);
+		$prat->id = $id;
+		$prat->load();		
+		return $prat;
+	}
+	
 	public static function GetAll()
 	{
 		$controler = new PMO_MyController();
 
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . ";");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " ORDER BY nom ASC;");
 	
 		return self::GetArray($map);
 	}
@@ -101,6 +135,23 @@ class pratiquants extends PMO_MyObject{
 		$controler = new PMO_MyController();
 		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . ";");
 	
+		return self::GetArray($map);
+	}
+	
+	public static function GetBySections($fkSections)
+	{
+		//echo("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ");");
+		$controler = new PMO_MyController();
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ");");
+		
+		return self::GetArray($map);
+	}
+	
+	public static function GetByExam($fkSection, $date)
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . " AND ;");
+		
 		return self::GetArray($map);
 	}
 	

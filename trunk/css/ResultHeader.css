@@ -8,20 +8,21 @@
 .HeaderTitle
 {
 	padding-top: 2px;
-	float: left;
-	display: inline;
-	width: 100px;
+	display: block;
+	font-weight: bold;
+	text-align: center;
+	font-size: +1em;
 }
 
 .DivSearchBox
 {
 	float: right;
+	width: 200px;
 }
 
 .PreSearchBox
 {
 	float: left;
-	width: 5px;
 	width: 11px;
 	height: 23px;
 	background-image: url('../images/SearchGauche.png');	
@@ -31,7 +32,7 @@
 .SearchBox
 {
 	float: left;
-	width: 150px;
+	width: 149px;
 }
 .SearchBox input
 {
@@ -57,7 +58,7 @@
   position: relative;
   left: 11px;
   top: 23px;
-  width: 150px;
+  width: 160px;
   background-color: white;
   border: 1px solid #888;
   margin: 0px;

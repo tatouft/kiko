@@ -1,0 +1,41 @@
+<?php
+	
+	class presences extends PMO_MyObject{
+		public static $TableName = 'presences';
+
+		
+		/********************
+		 *** Private Static *************************************
+		 ********************/
+		private static function  GetArray($map)
+		{
+			$i = 0;
+			while ($result = $map->fetchMap())
+			{
+				$pratiquants[$i] = $result[self::$TableName];
+				$i++;
+			}
+			return $pratiquants;
+		}
+		
+		/*******************
+		 *** Public Static *************************************
+		 *******************/
+		
+		public static function Exists($pid, $date)
+		{
+			$controler = new PMO_MyController();
+			
+			$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_pratiquant = " . $pid . " AND date = '" . $date . "';");
+			
+			return count(self::GetArray($map)) > 0;
+		}
+		
+		public static function DeleteItem($pid, $date)
+		{
+			$controler = new PMO_MyController();
+			
+			$controler->queryController("DELETE FROM " . self::$TableName . " WHERE fk_pratiquant = " . $pid . " AND date = '" . $date . "';");
+		}
+	}	
+?>
