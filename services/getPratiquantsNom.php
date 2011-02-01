@@ -24,10 +24,11 @@
 	if(count($pratiquants) != 0)
 	{
 		foreach($pratiquants as $prat)
-		{
+		{				
 			$checked = presences::Exists($prat->id,$today)?'Checked':'Unchecked';
 			echo("<div class='" . $checked . "' onClick='AddPresence(" . $prat->id . ",this)'>");
-			echo(ucfirst($prat->nom) . " " . ucfirst($prat->prenom));
+			echo("<div class='Identity'><img src='" . $prat->GetPhotoHttpPath() . "' title='" . $prat->GetPhotoTitle() . "'/></div>");
+			echo("<div class='fname'>" . ucfirst($prat->nom) . "</div> <div class='name'>" . ucfirst($prat->prenom) . "</div>");
 			echo("</div>");
 			
 			// License

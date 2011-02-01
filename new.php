@@ -128,7 +128,7 @@
 						} ?>
 					</div>
 
-					<div class="InputField Photo"><img src="css/images/NoPhoto.png"/></div>	<div class="FieldName FieldPhoto">Photo:</div>
+					<div class="InputField Photo"><img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/></div>	<div class="FieldName FieldPhoto">Photo:</div>
 					
 					<br><div class="FieldName">Prénom:</div>
 					<div class="InputField">

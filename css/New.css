@@ -45,14 +45,13 @@
 {
 	float: right;
 	width: 100px;
-	height: 130px;
+	max-height: 130px;
+	overflow: hidden;
 	border: 1px black solid;
 }
 .Photo img
 {
 	width: 100px;
-	height: 130px;
-	border: 0px red solid;
 	cursor: pointer;
 	cursor: hand;	
 }

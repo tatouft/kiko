@@ -13,6 +13,7 @@
 		1F3B8B1912DD02F7004E650E /* AddPresence.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = AddPresence.php; path = services/AddPresence.php; sourceTree = "<group>"; };
 		1F3B8B1A12DD0541004E650E /* class_presences.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = class_presences.php; sourceTree = "<group>"; };
 		1F6C0FC10F018E1A00231EAF /* new.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = new.php; sourceTree = "<group>"; };
+		1F9310B512F8A8E900980D5A /* presences.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = presences.css; sourceTree = "<group>"; };
 		1FBFA6900EA93082003EA493 /* SearchGauche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchGauche.png; sourceTree = "<group>"; };
 		1FC22C0F0EDA06D500F37789 /* completeName.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = completeName.php; path = services/completeName.php; sourceTree = "<group>"; };
 		1FC3C3290EE85FC800E0D90B /* PageHeader.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = PageHeader.php; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 		1FFD8D130EA523C80090BC26 /* css */ = {
 			isa = PBXGroup;
 			children = (
+				1F9310B512F8A8E900980D5A /* presences.css */,
 				1FFD8D140EA523C80090BC26 /* general.css */,
 				1FFD8D150EA523C80090BC26 /* MenuTabs.css */,
 				1FFD8D160EA523C80090BC26 /* SearchArea.css */,
