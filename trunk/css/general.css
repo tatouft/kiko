@@ -87,14 +87,4 @@ input
 	color: black;
 }
 
-div.Checked
-{
-	color: green;
-	margin-left: 20px;
-}
 
-div.Unchecked
-{
-	color: red;
-	margin-left: 20px;
-}

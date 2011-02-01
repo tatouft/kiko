@@ -96,6 +96,38 @@ class pratiquants extends PMO_MyObject{
 
 	}
 	
+	public function ExistsPhoto()
+	{
+		$fullPath = $this->GetPhotoSystemPath();
+		if($this->photo != null && file_exists($fullPath))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public function GetPhotoTitle()
+	{
+		if($this->ExistsPhoto())
+		{
+			return "";
+		}
+		return "No photo at: " . $this->GetPhotoSystemPath();
+	}
+	
+	public function GetPhotoHttpPath()
+	{
+		if($this->ExistsPhoto())
+		{
+			return "photos" . "/" . $this->photo;
+		}
+		return "css/images/NoPhoto.png";
+	}
+	
+	public function GetPhotoSystemPath()
+	{
+		return $_SERVER['DOCUMENT_ROOT'] . "photos" . "/" . $this->photo;
+	}
 	/********************
 	 *** Private Static *************************************
 	 ********************/
@@ -142,7 +174,7 @@ class pratiquants extends PMO_MyObject{
 	{
 		//echo("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ");");
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ");");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ") ORDER BY nom ASC;");
 		
 		return self::GetArray($map);
 	}

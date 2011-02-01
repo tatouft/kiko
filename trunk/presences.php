@@ -12,18 +12,20 @@
 
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
+		<link rel="stylesheet" href="css/presences.css" type="text/css">
 	</head>
 	<body>
 		<div id="debug">&nbsp;</div>
+		<div id='Title'>Présences</div>
 		<div id='sections' name='sections'>
 			<?php
 				$sections = sections::GetAll();
 				foreach($sections as $sec)
 				{
-					echo('<input type="checkbox" checked value="' . $sec->id . '">' . $sec->libelle . '</input>');
+					echo('<input class="check" type="checkbox" checked value="' . $sec->id . '">' . $sec->libelle . '</input>');
 				}
 			?>
-			<input type="button" value="Afficher" onclick="Search('services/getPratiquantsNom.php', 'presences', GetSections());"/>
+			<input type="button" class="button" value="Afficher" onclick="Search('services/getPratiquantsNom.php', 'presences', GetSections());"/>
 		</div>
 
 		<div id='PratiquantList'/>
