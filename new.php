@@ -60,6 +60,7 @@
 					$pratiquant->licenceDate = date_format($date, "Y-m-d");
 					
 					$pratiquant->fk_section = $section;
+					$pratiquant->AddPresences($presences);
 					//$new->fk_famille = 
 					
 					if($action != 'add' && $pratiquant->GetGrades() != NULL)
@@ -116,8 +117,15 @@
 			<input type="hidden" id="action" name="action" />
 			<input type="hidden" id="edit" name="edit" value="<? echo($edit); ?>" />
 
+			<div class="Contents">
+				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
+				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><? } ?>
+				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><? } ?>
+				<div class="EndFloat">&nbsp;</div>
+			</div>
+
 			<div class="List Contents">
-				<div id="NewTitle">Identité</div>
+				<div class="NewTitle">Identité</div>
 				<div class="New">
 					<div class="FieldName">Nom:</div>	
 					<div class="InputField">
@@ -182,7 +190,7 @@
 			</div>
 
 			<div class="List Contents">
-				<div id="NewTitle">Club et fédé</div>
+				<div class="NewTitle">Club et fédé</div>
 				<div class="New">
 					<div class="FieldName">N° licence:</div> 
 					<div class="InputField">
@@ -242,7 +250,7 @@
 
 		<? if($id){ ?>
 			<div class="List Contents">
-				<div id="NewTitle">Grades</div>
+				<div class="NewTitle">Grades</div>
 				<div class="New">
 					<?
 						if($pratiquant != NULL)
@@ -295,11 +303,32 @@
 			</div>
 		<? } ?>
 
-			<div class="Contents">
-				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"> Modifier</a><? } ?>
-				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"> Enregistrer</a><? } ?>
-				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"> Annuler</a><? } ?>
+		<? if($id){ ?>
+			<div class="List Contents">
+				<div class="NewTitle">Statistiques</div>
+				<div class="New">
+					<div class="FieldName Stat">Présences depuis le dernier grade:</div>
+					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
+					<? if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0"><? } ?>
+					<br/>
+
+					<div class="FieldName Stat">Présences par ans:</div>
+					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div><br/>
+					
+					<div class="FieldName Stat">Stages du club cette saison:</div>
+					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div><br/>
+			
+				</div>
 			</div>
+		<? } ?>
+
+			<div class="Contents">
+				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
+				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><? } ?>
+				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><? } ?>
+				<div class="EndFloat">&nbsp;</div>
+			</div>
+
 		</form>
 	</body>
 </html>

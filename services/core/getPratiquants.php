@@ -76,7 +76,8 @@
 				echo("</td>\n\t\t\t<td>");
 				
 				// Pret
-				echo("&nbsp;");
+				echo($prat->IsReady()?"<img class='TableButton' src='css/images/001_06.png'>":"");
+				echo("&nbsp;" . $prat->GetRestToNextGrade());
 				echo("</td>\n\t\t\t<td>");			
 				
 				// Bouttons

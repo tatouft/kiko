@@ -1,3 +1,5 @@
+v Presences
+v Pret à présenter
 - Check des données d'ajout et de modif pour ne pas faire n'importe quoi
 - Del des grades
 - Photos
@@ -9,8 +11,7 @@
 	- Ne pas rafraichir quand on ajoute un grade, sinon on perd le grade en cours (ajax)
 	
 - Partout: Ajouter des control de calendrier pour entrer les dates.
-- présences
+
 
 En cours:
-- Presences
-- Prets à presenter.
+- Poubelle
