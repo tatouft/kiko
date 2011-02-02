@@ -6,7 +6,7 @@
 }
 
 
-#NewTitle 
+.NewTitle 
 { 
 	text-align: center;
 	background-color: lightgrey;
@@ -28,6 +28,10 @@
 .Grade
 {
 	width: 200px;
+}
+.Stat
+{
+	width: 250px;
 }
 
 .InputField
@@ -61,6 +65,11 @@
 	float: right;
 	background-color: rgb(240,240,240);
 }
+.EndFloat
+{
+	float: none;
+}
+
 #Add.Button
 {
 	float: none;
@@ -78,8 +87,17 @@
 {
 	margin-right: 5px;
 }
+#Plus.Button
+{
+	float: none;
+	margin-left: 10px;
+}
 .Button img
 {
 	vertical-align: bottom;
 	margin-bottom: 2px;
+}
+input#presences
+{
+	width: 50px;
 }

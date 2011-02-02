@@ -90,9 +90,36 @@ class pratiquants extends PMO_MyObject{
 		return passages::GetGradeByPratiquant($this->id);
 	}
 	
-	public function IsReady($diff)
+	public function GetPresences()
 	{
-					
+		return presences::GetByPratiquant($this->id);
+	}
+	public function GetPresencesCountFromLastGrade()
+	{
+		return count(presences::GetByPratiquantFromLastGrade($this->id, $this->GetGrade()->date));
+	}
+	public function GetRestToNextGrade()
+	{
+		if($this->GetGrade() == null)
+			return 0;
+		
+		$need = $this->GetGrade()->GetGrade()->jours;
+		//echo($need . " - " . $this->GetPresencesCountFromLastGrade() . " = ");
+		return $this->GetPresencesCountFromLastGrade() - $need;
+	}
+	
+	public function IsReady()
+	{
+		if($this->GetGrade() == null)
+			return false;
+			
+		$presences = $this->GetPresencesCountFromLastGrade();
+		$need = $this->GetGrade()->GetGrade()->jours;
+		//echo($presences);
+		if($presences >= $need - 4)
+			return true;
+		else
+			return false;
 
 	}
 	
@@ -128,6 +155,7 @@ class pratiquants extends PMO_MyObject{
 	{
 		return $_SERVER['DOCUMENT_ROOT'] . "photos" . "/" . $this->photo;
 	}
+	
 	/********************
 	 *** Private Static *************************************
 	 ********************/

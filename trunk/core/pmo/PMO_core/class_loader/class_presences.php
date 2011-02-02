@@ -37,5 +37,22 @@
 			
 			$controler->queryController("DELETE FROM " . self::$TableName . " WHERE fk_pratiquant = " . $pid . " AND date = '" . $date . "';");
 		}
+		
+		public static function GetByPratiquant($pid)
+		{
+			$controler = new PMO_MyController();
+			
+			$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_pratiquant = " . $pid . ";");
+			
+			return self::GetArray($map);
+		}
+		public static function GetByPratiquantFromLastGrade($pid, $date)
+		{
+			$controler = new PMO_MyController();
+			
+			$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_pratiquant = " . $pid . " AND date > '" . $date . "';");
+			
+			return self::GetArray($map);
+		}
 	}	
 ?>
