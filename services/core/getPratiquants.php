@@ -31,7 +31,7 @@
 	else if($action == "section")
 		$pratiquants = pratiquants::GetBySection($section);
 	else if($action == "examens")
-		$pratiquants = pratiquants::GetByExam($section, $date);
+		$pratiquants = pratiquants::GetByExam($section);
 ?>
 
 	<input type="hidden" id="pratiquantId" name="pratiquantId">
