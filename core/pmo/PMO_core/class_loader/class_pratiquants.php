@@ -207,11 +207,21 @@ class pratiquants extends PMO_MyObject{
 		return self::GetArray($map);
 	}
 	
-	public static function GetByExam($fkSection, $date)
+	public static function GetByExam($fkSection)
 	{
 		$controler = new PMO_MyController();
 		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . " AND ;");
-		
+		/*SELECT p.id, count(pr.fk_pratiquant) as nbPresences
+		FROM 
+		pratiquants as p INNER JOIN
+		presences as pr ON pr.fk_pratiquant = p.id INNER JOIN
+		passages as pa ON pa.fk_pratiquant = p.id AND pa.date = (SELECT p2.date FROM passages as p2 WHERE p2.fk_pratiquant = p.id ORDER BY p2.date DESC) INNER JOIN
+		grades as g on g.id = pa.fk_grade
+		WHERE 
+		p.fk_section = 1 AND
+		pr.date > pa.date AND
+		count(pr.fk_pratiquant) > g.jours - 4
+		GROUP BY p.id*/
 		return self::GetArray($map);
 	}
 	
