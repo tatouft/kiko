@@ -44,10 +44,7 @@
 				?>
 			</select>
 		</div>
-		<div id="CDateExam" class="criteres">
-			Date: <input type="text" id="filterDateExam" name="filterDateExam"/>
-		</div>
-		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','examens',$F('filterSectionExam'),$F('filterDateExam'));" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','examens',$F('filterSectionExam'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">
