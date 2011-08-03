@@ -6,8 +6,10 @@
 
 .List
 {
-	border: solid 1px grey;
+	border: solid 2px grey;
 	margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .invisible

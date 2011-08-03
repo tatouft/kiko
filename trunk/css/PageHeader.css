@@ -5,8 +5,10 @@
 	//margin: 18px auto; 
 	margin-left: auto;
 	margin-right: auto;
-	position: relative; 
-	z-index: 9998; 
+    border: 3px solid #0000EE;
+    border-radius: 5px;
+	border-radius: 5px;
+    box-shadow: 6px 6px 5px #888888;
 }
 
 #Header ul 
@@ -18,21 +20,21 @@
 #Header ul li 
 { 
 	text-align: center;
-	text-shadow: white 3px 3px 3px;
+	text-shadow: #888888 3px 3px 2px;
 	float: left;
 	display: block; 
 /*	width: 110px;
 	height: 26px;*/
 	padding-top: 10px; 
 	overflow: hidden; 
-	background-image: url(../images/HeaderC_All.png);
-	background-repeat: repeat-x;
+	/*background-image: url(../images/HeaderC_All.png);
+	background-repeat: repeat-x;*/
 	border-right: solid 1px grey;
 }
 
 #Header ul li:hover 
 {
-	background-position: 0 -38px;
+	text-shadow: white 3px 3px 2px;
 }
 
 #Header ul li:active { background-position: 0 -76px; }
@@ -41,13 +43,13 @@
 
 #Header ul li#HeaderG 
 { 
-	background-image: url(../images/HeaderG_All.png);
+	/*background-image: url(../images/HeaderG_All.png);*/
 	background-repeat: no-repeat;
 }
 
 #Header ul li#HeaderD
 { 
-	background-image: url(../images/HeaderD_All.png);
+	/*background-image: url(../images/HeaderD_All.png);*/
 	background-repeat: no-repeat;
 	background-position: right top;
 	border-right: solid 0px white;
