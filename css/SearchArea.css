@@ -1,7 +1,11 @@
 #SearchArea
 {
 	margin-top: 2px;
-	border: solid 1px grey;
+	border: solid 2px grey;
+    
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 .SearchAreaContent
