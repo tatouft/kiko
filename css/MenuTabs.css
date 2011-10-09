@@ -1,16 +1,29 @@
 #MenuTab
 {
 	border: solid 0 white;
+	padding-top: 3px;
+    padding-bottom: 0px;    
+    
+    margin-bottom: -2px;
+}
+#formSearch
+{
+    border: solid 0 white;
+    margin: 0px;
+    padding: 0px;
 }
 
 #MenuTab .Tab
 {
 	border: solid 2px grey;
-	display: inline;
+	display: inline-block;
 	padding: 3px;
+    padding-bottom: 0px;
 	margin: 0px;
 	cursor: pointer;
 	cursor: hand;
+    
+    background-color: white;
     
     border-top-right-radius: 8px;
 }
