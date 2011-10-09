@@ -40,6 +40,8 @@
 <?
 	if(count($pratiquants) != 0)
 	{
+        $count = 0;
+
 		?>
 		<table>
 			<tr>
@@ -53,6 +55,7 @@
 			<?
 			foreach($pratiquants as $prat)
 			{
+                $count++;
 				echo("<tr id='PratRow" . $prat->id . "'>");
 				echo("<td><a name='Prat" . $prat->id . "'></a>");
 				
@@ -87,6 +90,7 @@
 			}
 			?>
 		</table>
+        <div id='Total'>Total: <? echo($count); ?></div>
 		<?
 	}
 	else

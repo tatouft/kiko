@@ -24,9 +24,10 @@
 				
 				$id = $_REQUEST['id'];
 				$edit = $_REQUEST['edit'];
-				if($id)
+				
+                $pratiquant = PMO_MyObject::factory('pratiquants');
+                if($id)
 				{
-					$pratiquant = PMO_MyObject::factory('pratiquants');
 					$pratiquant->id = $id;
 					$pratiquant->load();
 					$new = false;
@@ -130,18 +131,21 @@
 					<div class="FieldName">Nom:</div>	
 					<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="nom"				name="nom"		 value="<? echo($pratiquant->nom); ?>">
+							<input type="text" autocomplete="off" id="nom"				name="nom"		 value="<? echo($pratiquant->nom); ?>">
 						<? } else {
 							echo($pratiquant->nom);
 						} ?>
 					</div>
 
-					<div class="InputField Photo"><img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/></div>	<div class="FieldName FieldPhoto">Photo:</div>
+					<div class="InputField Photo">
+                        <img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/>
+                    </div>	
+                    <div class="FieldName FieldPhoto">Photo:</div>
 					
 					<br><div class="FieldName">Prénom:</div>
 					<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
+							<input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
 						<? } else {
 							echo($pratiquant->prenom);
 						} ?>
@@ -149,7 +153,7 @@
 
 					<div class="FieldName">Adresse:</div>	<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="adresse"		name="adresse"	 value="<? echo($pratiquant->adresse); ?>">
+							<input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<? echo($pratiquant->adresse); ?>">
 						<? } else {
 							echo($pratiquant->adresse);
 						} ?>
@@ -157,7 +161,7 @@
 					
 					<div class="FieldName">Code postal:</div>	<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="cp"		name="cp"		 value="<? echo($pratiquant->codePostal); ?>">
+							<input type="text" autocomplete="off" id="cp"		name="cp"		 value="<? echo($pratiquant->codePostal); ?>">
 						<? } else {
 							echo($pratiquant->codePostal);
 						} ?>
@@ -165,7 +169,7 @@
 					
 					<div class="FieldName">Commune:</div>	<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="commune"		name="commune"	 value="<? echo($pratiquant->commune); ?>">
+							<input type="text" autocomplete="off" id="commune"		name="commune"	 value="<? echo($pratiquant->commune); ?>">
 						<? } else {
 							echo($pratiquant->commune);
 						} ?>
@@ -173,7 +177,7 @@
 					
 					<div class="FieldName">Naissance:</div>	<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="naissance"	name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
+							<input type="text" autocomplete="off" id="naissance"	name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
 						<? } else {
 							echo(date('d/m/Y', strtotime($pratiquant->naissance)));
 						} ?>
@@ -195,7 +199,7 @@
 					<div class="FieldName">N° licence:</div> 
 					<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="licence" name="licence"		value="<? echo($pratiquant->licenceNbr); ?>">
+							<input type="text" id="licence" name="licence"	autocomplete="off"	value="<? echo($pratiquant->licenceNbr); ?>">
 						<? } else {
 							echo($pratiquant->licenceNbr);
 						} ?>
@@ -213,7 +217,7 @@
 					<div class="FieldName">Grade:</div> 
 					<div class="InputField">
 							<? 
-								if($pratiquant != NULL && $action != 'add')
+								if($action != 'add')
 								{
 									$grade = $pratiquant->GetGrade();		
 									if($grade != NULL)
@@ -321,6 +325,22 @@
 				</div>
 			</div>
 		<? } ?>
+
+        <? if($id){ ?>
+            <div class="List Contents">
+                <div class="NewTitle">Payements</div>
+                <div class="New">
+                    <div class="FieldName Stat">Périodes non payées:</div>
+                    <div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
+                    <? if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0"><? } ?>
+                    <br/>
+    
+                    <div class="FieldName Stat">Cours non payés:</div>
+                    <div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
+    
+                </div>
+            </div>
+        <? } ?>
 
 			<div class="Contents">
 				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
