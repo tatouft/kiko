@@ -19,6 +19,24 @@ class grades extends PMO_MyObject{
 		
 		return sections::GetArray($map);		
 	}
+    
+    // Récupère le grade suivant
+    public function GetNextGrade($section)
+    {
+        $controler = new PMO_MyController();
+		$sql = "select g.* ";
+		$sql .= " from " . self::$TableName . " as g ";
+		$sql .= " WHERE g.fk_section in (1," . $section . ") AND ";
+        $sql .= " g.displayOrder > " . $this->displayOrder;
+        $sql .= " ORDER BY displayOrder ASC";
+        
+        //echo($sql);
+
+		$map = $controler->queryController($sql);
+        
+        $array = self::GetArray($map);
+		return $array[0];
+    }
 
 	/*************
 	 *** Static *************************************
@@ -49,7 +67,6 @@ class grades extends PMO_MyObject{
 		$sql .= "where a.id = l.fk_grade AND ";
 		$sql .= "l.fk_section = " . $section;
 		
-		echo($sql);
 		$map = $controler->queryController($sql);
 	
 		return self::GetArray($map);

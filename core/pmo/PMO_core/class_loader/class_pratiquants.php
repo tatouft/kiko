@@ -98,12 +98,16 @@ class pratiquants extends PMO_MyObject{
 	{
 		return count(presences::GetByPratiquantFromLastGrade($this->id, $this->GetGrade()->date));
 	}
+    public function GetPresencesNeededForNextGrade()
+    {
+        return $this->GetGrade()->GetGrade()->GetNextGrade($this->fk_section)->jours;
+    }
 	public function GetRestToNextGrade()
 	{
 		if($this->GetGrade() == null)
 			return 0;
 		
-		$need = $this->GetGrade()->GetGrade()->jours;
+		$need = $this->GetPresencesNeededForNextGrade();
 		//echo($need . " - " . $this->GetPresencesCountFromLastGrade() . " = ");
 		return $this->GetPresencesCountFromLastGrade() - $need;
 	}
@@ -114,7 +118,7 @@ class pratiquants extends PMO_MyObject{
 			return false;
 			
 		$presences = $this->GetPresencesCountFromLastGrade();
-		$need = $this->GetGrade()->GetGrade()->jours;
+		$need = $this->GetPresencesNeededForNextGrade();
 		//echo($presences);
 		if($presences >= $need - 4)
 			return true;
