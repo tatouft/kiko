@@ -49,7 +49,8 @@
 				<th>Section</th>
 				<th>Grade</th>
 				<th>License</th>
-				<th>Pret</th>
+                <th>Cotisation</th>
+				<th>Examen</th>
 				<th>&nbsp;</th>
 			</tr>
 			<?
@@ -77,8 +78,12 @@
 				
 				echo("&nbsp;" . $dt->format('d/m/Y'));
 				echo("</td>\n\t\t\t<td>");
+                
+                // Cotisation
+                echo("&nbsp;");
+				echo("</td>\n\t\t\t<td>");
 				
-				// Pret
+				// Examen
 				echo($prat->IsReady()?"<img class='TableButton' src='css/images/001_06.png'>":"");
 				echo("&nbsp;" . $prat->GetRestToNextGrade());
 				echo("</td>\n\t\t\t<td>");			

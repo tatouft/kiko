@@ -51,6 +51,9 @@
 					$pratiquant->adresse = $adresse;
 					$pratiquant->codePostal = $cp;
 					$pratiquant->commune = $commune;
+                    $pratiquant->telephone = $telephone;
+                    $pratiquant->gsm = $gsm;
+                    $pratiquant->email = $email;
 					$datet = explode("/", $naissance);
 					$date = date_create();
 					date_date_set($date , $datet[2] , $datet[1], $datet[0]);
@@ -177,7 +180,7 @@
 					
 					<div class="FieldName">Naissance:</div>	<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" autocomplete="off" id="naissance"	name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
+							<input type="text" autocomplete="off" id="naissance" name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
 						<? } else {
 							echo(date('d/m/Y', strtotime($pratiquant->naissance)));
 						} ?>
@@ -185,12 +188,36 @@
 					
 					<div class="FieldName">Famille:</div>	<div class="InputField">
 						<? if($edit){ ?>
-							<input type="text" id="famille"		name="famille"	 value="<? echo($pratiquant->fk_famille); ?>">
+							<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->fk_famille); ?>">
 						<? } else {
 							echo($pratiquant->fk_famille);
 						} ?>
 					</div><br>
-				</div>
+
+                    <div class="FieldName">Téléphone:</div>	<div class="InputField">
+                        <? if($edit){ ?>
+                            <input type="text" autocomplete="off" id="telephone" name="telephone" value="<? echo($pratiquant->telephone); ?>">
+                        <? } else {
+                                echo($pratiquant->telephone);
+                        } ?>
+                    </div><br>
+                    
+                    <div class="FieldName">GSM:</div>	<div class="InputField">
+                        <? if($edit){ ?>
+                            <input type="text" autocomplete="off" id="gsm" name="gsm" value="<? echo($pratiquant->gsm); ?>">
+                        <? } else {
+                            echo($pratiquant->gsm);
+                        } ?>
+                    </div><br>
+
+                    <div class="FieldName">eMail:</div>	<div class="InputField">
+                        <? if($edit){ ?>
+                            <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
+                        <? } else {
+                            echo($pratiquant->email);
+                        } ?>
+                    </div><br>
+                </div>
 			</div>
 
 			<div class="List Contents">
