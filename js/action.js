@@ -64,6 +64,18 @@ function Search(baseUrl, action, param1, param2)
 						 }		
 		);
 	}
+    if(action == "poubelle")
+	{
+		url = baseUrl + "?action=poubelle";
+		new Ajax.Updater($('PratiquantList'),					
+						 url, {
+						 evalScripts: true,
+						 onFailure: function(transport) { 
+                            alert('oups, ajax problem');
+                            }
+						 }		
+        );
+	}
 }
 
 function AddPresence(id, checkbox)
@@ -116,5 +128,15 @@ function GetSections()
 		}
 	}
 	return ids;
+}
+
+function DeletePratiquant(nom, prenom, id)
+{
+    if(confirm("Voulez-vous supprimer " + nom + " " + prenom + " ?"))
+    {
+        SetHidden("pratiquantId", id); 
+        SetHidden("baction", "delete"); 
+        $("formList").submit();
+    }
 }
 

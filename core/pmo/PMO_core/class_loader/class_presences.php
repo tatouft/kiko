@@ -54,5 +54,19 @@
 			
 			return self::GetArray($map);
 		}
+        public static function GetByPratiquantForThisSeason($pid)
+        {
+			$controler = new PMO_MyController();
+            $today = getdate();
+            $year = $today[year];
+            if($today[mon] < 9)
+            {
+                $year = $year - 1;
+            }
+			
+			$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_pratiquant = " . $pid . " AND date > '" . $year . "-09-01';");
+			
+			return self::GetArray($map);            
+        }
 	}	
 ?>

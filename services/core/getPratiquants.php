@@ -20,7 +20,9 @@
 	{
 		$pratiquant = PMO_MyObject::factory('pratiquants');
 		$pratiquant->id = $id;
-		$pratiquant->delete();
+		$pratiquant->load();
+        $pratiquant->deleted = 1;
+        $pratiquant->commit();
 		if($debug)
 			echo("delete " . $id);
 	}
@@ -32,6 +34,9 @@
 		$pratiquants = pratiquants::GetBySection($section);
 	else if($action == "examens")
 		$pratiquants = pratiquants::GetByExam($section);
+    else if($action == "poubelle")
+        $pratiquants = pratiquants::GetPoubelle($section);
+
 ?>
 
 	<input type="hidden" id="pratiquantId" name="pratiquantId">
@@ -80,6 +85,24 @@
 				echo("</td>\n\t\t\t<td>");
                 
                 // Cotisation
+                $lessons = $prat->GetCountNoPayLesson();
+                $periodes = $prat->GetNoPayPeriod();
+                $enOrdre = (count($periodes) > 0 || $lessons > 0);
+                echo($enOrdre?"<img class='TableButton' src='css/images/001_05.png'>":"<img class='TableButton' src='css/images/001_06.png'>");
+                echo("&nbsp;");
+                if(count($periodes) > 0)
+                {
+                    $enOrdre = 0;
+                    foreach($periodes as $periode)
+                    {
+                        echo($periode->GetPeriode()->libelleCourt . ", ");
+                    }
+                }
+                if($lessons > 0)
+                {
+                    $enOrdre = 0;
+                    echo($lessons . " cours");
+                }
                 echo("&nbsp;");
 				echo("</td>\n\t\t\t<td>");
 				
@@ -90,7 +113,7 @@
 				
 				// Bouttons
 				echo("<a href='new.php?id=" . $prat->id . "' target='_blank' class='TableButton' id='modify' title='Modifier'></a>");
-				echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='if(confirm(\"Voulez-vous supprimer " . $prat->nom . " " . $prat->prenom . " ?\")){SetHidden(\"pratiquantId\", \"" . $prat->id . "\"); SetHidden(\"baction\", \"delete\"); $(\"formList\").submit();}'></a>");
+				echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
 				echo("</td></tr>\n\t\t");
 			}
 			?>

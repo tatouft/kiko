@@ -29,6 +29,11 @@
             return substr($com, 0, 3) . "/" . substr($com, 3, 4) . "/" . substr($com, 7, 5);
         }
         
+        public function GetPeriode()
+        {
+            return periodes::GetById($this->fk_periode);
+        }
+        
         /*************
          *** Static *************************************
          *************/
@@ -61,6 +66,35 @@
             $map = $controler->queryController($sql);
             
             return self::GetArray($map);
+        }
+        public static function GetToPayByPratiquant($prat)
+        {
+            $controler = new PMO_MyController();
+            
+            $sql = "select *";
+            $sql .= " from " . cotisationsPeriode::$TableName;
+            $sql .= " where fk_pratiquant = " . $prat->id;
+            $sql .= "  AND enOrdre = 0";
+            
+            $map = $controler->queryController($sql);
+            
+            return self::GetArray($map);
+        }
+        public static function GetNewForPratiquant($id)
+        {
+            $controler = new PMO_MyController();
+            
+            $sql =  "SELECT p.* FROM";
+            $sql .= " " . periodes::$TableName . " as p";
+            $sql .= " WHERE id NOT IN (";
+            $sql .= " SELECT fk_periode FROM " . self::$TableName . " as c";
+            $sql .= " WHERE fk_pratiquant = " . $id;
+            $sql .= ")";
+            
+            $map = $controler->queryController($sql);
+            
+            return periodes::GetArray($map);
+            
         }
         
     }

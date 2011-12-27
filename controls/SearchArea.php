@@ -56,5 +56,10 @@
 		Sections, date
 		<div class="SearchButton"><input type="button" value="Afficher"></div>
 	</div>
+
+    <div class="SearchAreaContent Invisible" id="PoubelleArea">
+        Affiche les pratiquants supprimés
+        <div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','poubelle',0);" value="Afficher"></div>
+    </div>
 </div>
 </form>
