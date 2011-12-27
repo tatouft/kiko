@@ -7,7 +7,7 @@
         /*************
          *** Static *************************************
          *************/
-        private static function  GetArray($map)
+        public static function  GetArray($map)
         {
             $i = 0;
             while ($result = $map->fetchMap())
@@ -25,6 +25,14 @@
             
             return self::GetArray($map);
         }
+        public static function GetById($id)
+        {
+            $prat = PMO_MyObject::factory(self::$TableName);
+            $prat->id = $id;
+            $prat->load();		
+            return $prat;
+        }
+
     }
     
     ?>

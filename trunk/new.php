@@ -4,6 +4,7 @@
 	require_once("core/pmo/PMO_core/class_loader/class_pratiquants.php");
 	require_once("core/pmo/PMO_core/class_loader/class_section.php");
 	require_once("core/pmo/PMO_core/class_loader/class_grades.php");
+    require_once("core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
 ?>
 <html>
 	<head>
@@ -340,14 +341,14 @@
 				<div class="New">
 					<div class="FieldName Stat">Présences depuis le dernier grade:</div>
 					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
-					<? if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0"><? } ?>
+					<? if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0" size="3"><? } ?>
 					<br/>
 
-					<div class="FieldName Stat">Présences par ans:</div>
-					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div><br/>
+					<div class="FieldName Stat">Présences par saison:</div>
+					<div class="InputField"><? echo($pratiquant->GetPresencesCountForThisSeason()); ?></div><br/>
 					
 					<div class="FieldName Stat">Stages du club cette saison:</div>
-					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div><br/>
+					<div class="InputField"><? echo($pratiquant->GetCountStages()); ?></div><br/>
 			
 				</div>
 			</div>
@@ -358,12 +359,34 @@
                 <div class="NewTitle">Payements</div>
                 <div class="New">
                     <div class="FieldName Stat">Périodes non payées:</div>
-                    <div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
-                    <? if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0"><? } ?>
+                    <div class="InputField"><? echo($pratiquant->GetCountNoPayPeriod()); ?></div>
                     <br/>
-    
+                    <? if($edit){ ?>&nbsp;Ajouter une période&nbsp;
+                        <select id="periodeList" name="periodeList">
+						<?php
+                            $periodes = cotisationsPeriode::GetNewForPratiquant($pratiquant->id);
+                            $i = 0;
+                            foreach($periodes as $periode)
+                            {
+                                $selected = "";
+                                if($i == 0)
+                                {
+                                    $selected = "selected";
+                                }
+                                echo('<option value="' . $periode->id . '" ' . $selected . '>' . $periode->libelle . '</option>');
+                                $i++;
+                            }
+						?>
+						</select>
+                    <? } ?>
+                    <br/>
+            
+            
+            
                     <div class="FieldName Stat">Cours non payés:</div>
-                    <div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
+                    <div class="InputField"><? echo($pratiquant->GetCountNoPayLesson()); ?></div>
+                    <? if($edit){ ?>&nbsp;Ajouter des payements&nbsp;<input type="text" name="payements" id="payements" value="0" size="3"><? } ?>
+                    <br/>
     
                 </div>
             </div>

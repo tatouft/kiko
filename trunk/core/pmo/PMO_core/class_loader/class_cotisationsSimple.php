@@ -1,6 +1,9 @@
 <?php
+    require_once("class_presences.php");
+    require_once("class_periodes.php");
+
     
-    class cotisationsPeriode extends PMO_MyObject{
+    class cotisationsSimple extends PMO_MyObject{
         public static $TableName = 'cotisationsSimple';
         
         /*************
@@ -40,9 +43,9 @@
         {
             $controler = new PMO_MyController();
             
-            $sql = "select pr.fk_pratiquant, pr.id, 5 ";
+            $sql = "select pr.fk_pratiquant, pr.id, 5 as prix ";
             $sql .= "from " . presences::$TableName . " as pr ";
-            $sql .= "where pr.fk_pratiquant = " $prat->id;
+            $sql .= "where pr.fk_pratiquant = " . $prat->id;
             $sql .= "  AND not exists (select * ";
             $sql .= "           from " . periodes::$TableName . " as pe, " . cotisationsPeriode . " as co ";
             $sql .= "           where pe.id = co.fk_periode ";

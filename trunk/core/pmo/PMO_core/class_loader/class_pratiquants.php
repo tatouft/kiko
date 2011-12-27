@@ -1,7 +1,9 @@
 <?php
 require_once("class_passages.php");
 require_once("class_presences.php");
-
+require_once("class_cotisationsSimple.php");
+require_once("class_cotisationsPeriode.php");
+    
 class pratiquants extends PMO_MyObject{
 	public static $TableName = 'pratiquants';
 	
@@ -111,6 +113,37 @@ class pratiquants extends PMO_MyObject{
 		//echo($need . " - " . $this->GetPresencesCountFromLastGrade() . " = ");
 		return $this->GetPresencesCountFromLastGrade() - $need;
 	}
+    
+    // Recupere le nombre de stage auquel le pratiquant a participe cette annee
+    public function GetCountStages()
+    {
+        return 0;
+    }
+    
+    // recupere le nombre de periode que le pratiquant n'a pas paye
+    public function GetCountNoPayPeriod()
+    {
+        return count(cotisationsPeriode::GetToPayByPratiquant($this));
+    }
+    public function GetNoPayPeriod()
+    {
+        return cotisationsPeriode::GetToPayByPratiquant($this);
+    }
+    
+    // recupere le nombre de cours que le pratiquant n'a pas paye
+    public function GetCountNoPayLesson()
+    {
+        return count(cotisationsSimple::GetToPayByPratiquant($this));
+    }
+    public function GetNoPayLesson()
+    {
+        return cotisationsSimple::GetToPayByPratiquant($this);
+    }
+    
+    public function GetPresencesCountForThisSeason()
+    {
+		return count(presences::GetByPratiquantForThisSeason($this->id));        
+    }
 	
 	public function IsReady()
 	{
@@ -189,7 +222,7 @@ class pratiquants extends PMO_MyObject{
 	{
 		$controler = new PMO_MyController();
 
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " ORDER BY nom ASC;");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 ORDER BY nom ASC;");
 	
 		return self::GetArray($map);
 	}
@@ -197,7 +230,7 @@ class pratiquants extends PMO_MyObject{
 	public static function GetBySection($fkSection)
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . ";");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . " AND  deleted = 0;");
 	
 		return self::GetArray($map);
 	}
@@ -206,7 +239,7 @@ class pratiquants extends PMO_MyObject{
 	{
 		//echo("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ");");
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ") ORDER BY nom ASC;");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section in (" . $fkSections . ") AND deleted = 0 ORDER BY nom ASC;");
 		
 		return self::GetArray($map);
 	}
@@ -233,6 +266,13 @@ class pratiquants extends PMO_MyObject{
 	{
 		$controler = new PMO_MyController();
 		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_famille ISNULL OR fk_famille = id;");
+	
+		return self::GetArray($map);
+	}
+	public static function GetPoubelle()
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 1;");
 	
 		return self::GetArray($map);
 	}
