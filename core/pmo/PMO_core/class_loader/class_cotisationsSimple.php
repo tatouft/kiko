@@ -46,12 +46,18 @@
             $sql = "select pr.fk_pratiquant, pr.id, 5 as prix ";
             $sql .= "from " . presences::$TableName . " as pr ";
             $sql .= "where pr.fk_pratiquant = " . $prat->id;
-            $sql .= "  AND not exists (select * ";
-            $sql .= "           from " . periodes::$TableName . " as pe, " . cotisationsPeriode . " as co ";
+            $sql .= "  AND not exists (";
+            $sql .= "           select 1 ";
+            $sql .= "           from " . periodes::$TableName . " as pe, " . cotisationsPeriode::$TableName . " as co ";
             $sql .= "           where pe.id = co.fk_periode ";
             $sql .= "             AND co.fk_pratiquant = pr.fk_pratiquant";
             $sql .= "             AND pr.date >= pe.dateDebut ";
-            $sql .= "             AND pr.date <= pe.dateFin )";
+            $sql .= "             AND pr.date <= pe.dateFin  ";
+            $sql .= "           UNION ";
+            $sql .= "           select 1 ";
+            $sql .= "           FROM cotisationsSimple cs ";
+            $sql .= "           WHERE cs.fk_presences = pr.id ";
+            $sql .= "           )";
             
             $map = $controler->queryController($sql);
             
