@@ -20,6 +20,7 @@ function SetParam1(param)
 
 function Search(baseUrl, action, param1, param2)
 {
+    
 	if(action == "all")
 	{
 		new Ajax.Updater($('PratiquantList'), 
@@ -27,7 +28,12 @@ function Search(baseUrl, action, param1, param2)
 						 evalScripts: true
 						}
 		);
+        $('mail').href = "mail.php?action=" + action; 
 	}
+    else
+    {
+        $('mail').href = "mail.php?action=" + action + "&section=" + param1; 
+    }
 	if(action == "section")
 	{
 		url = baseUrl + "?action=section&section=" + param1;

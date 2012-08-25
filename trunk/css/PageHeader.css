@@ -90,6 +90,13 @@
 	background-color: #6F6F6F;
 }
 
+#Header ul li#HeaderD a#mail
+{
+	background-image: url(images/mail.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
 #Header ul li#HeaderD a#new
 {
 	background-image: url(images/21.png);
