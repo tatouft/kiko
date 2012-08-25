@@ -1,0 +1,117 @@
+body
+{
+    -moz-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+
+}
+
+div
+{
+    -moz-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+}
+
+.Contents
+{
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.List
+{
+	border: solid 2px grey;
+	margin-top: 20px;
+    border-radius: 8px;
+    overflow: auto;
+}
+
+#Total
+{
+	text-align: right;
+    padding: 3px;
+    margin-top: 3px;
+    margin-right: 20px;
+    font-style: italic;
+}
+
+.invisible
+{
+	display: none;
+}
+
+table
+{
+	border-collapse: collapse;
+	border: 1px solid white;
+	width: 100%;
+}
+td
+{
+	border: 1px solid lightgray;
+}
+th
+{
+	padding-top: 10px;
+	border: 1px solid lightgray;
+}
+
+.TableButton
+{
+	display: block;
+	float: left;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+
+#modify.TableButton
+{
+	background-image: url(images/24.png);	
+}
+
+#delete.TableButton
+{
+	background-image: url(images/12.png);	
+}
+
+
+input
+{
+	border: 1px solid gray;
+}
+
+.LittelTabs
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+.Invisible
+{
+	display: none;
+}
+
+.Button
+{
+	display: block;
+	border: 1px solid grey;
+	background-color: lightgrey;
+	display: inline;
+	padding: 1px;
+	padding-left: 5px;
+	padding-right: 5px; 
+	margin: 5px;
+	text-decoration: none;
+	color: black;
+}
+.Button *
+{
+	border: 0px solid white;
+	text-decoration: none;
+	color: black;
+}
+
+

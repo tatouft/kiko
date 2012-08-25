@@ -1,0 +1,81 @@
+.Header
+{
+	background-color: lightgrey;
+	height: 20px;
+	padding: 5px;
+
+}
+
+.HeaderTitle
+{
+	padding-top: 2px;
+	display: block;
+	font-weight: bold;
+	text-align: center;
+	font-size: +1em;
+}
+
+.DivSearchBox
+{
+	float: right;
+	width: 200px;
+}
+
+.PreSearchBox
+{
+	float: left;
+	width: 11px;
+	height: 23px;
+	background-image: url('../images/SearchGauche.png');	
+	background-repeat: no-repeat;
+}
+
+.SearchBox
+{
+	float: left;
+	width: 149px;
+}
+.SearchBox input
+{
+	height: 22px;
+	border-left: 0px solid white;
+	border-right: 0px solid white;
+}
+
+
+.PostSearchBox
+{
+	margin-left: -1px;
+	float: left;
+	width: 24px;
+	height: 23px;
+	background-image: url('../images/loupe.png');
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+#AutoCompleteSearch {
+  position: relative;
+  left: 11px;
+  top: 23px;
+  width: 160px;
+  background-color: white;
+  border: 1px solid #888;
+  margin: 0px;
+  padding: 0px;
+}
+#AutoCompleteSearch ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+#AutoCompleteSearch ul li.selected { background-color: #ffb;}
+#AutoCompleteSearch ul li {
+  list-style-type: none;
+  display: block;
+  margin: 0;
+  padding: 2px;
+  //height: 40px;
+  cursor: pointer;
+}
