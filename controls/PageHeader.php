@@ -2,7 +2,7 @@
 
 <div class="home" id="Header">
 	<ul>
-		<li id="HeaderG"><a href="index.php">KiKo</a></li>
+		<li id="HeaderG"><a href="index.php">KiKo 1.0</a></li>
 		<li class="<? if($CurrentPage == 'lists') echo('selected'); ?>"><a href="index.php">Listes</a></li>
 		<li class="<? if($CurrentPage == 'presences') echo('selected'); ?>"><a href="presences.php">Présences</a></li>
 		<li><a>Banque</a></li>
