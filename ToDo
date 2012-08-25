@@ -11,7 +11,11 @@ v Pret à présenter
 	- Ne pas rafraichir quand on ajoute un grade, sinon on perd le grade en cours (ajax)
 	
 - Partout: Ajouter des control de calendrier pour entrer les dates.
-
+- Permettre d'ajouter une période
+- Lier les pratiquants aux périodes
+- Permettre de spécifier qu'une période a été payée
+- Permettre de spécifier qu'un cours a été payé
+- Générer les virements avec communication structurée
 
 En cours:
-- Poubelle
+v Poubelle

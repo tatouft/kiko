@@ -7,7 +7,7 @@
 		<li class="<? if($CurrentPage == 'presences') echo('selected'); ?>"><a href="presences.php">Présences</a></li>
 		<li><a>Banque</a></li>
 		<li><a>Admin</a></li>
-		<li id="HeaderD"><a id="new" href="new.php" target="_blank" title="Nouveau pratiquant" ></a><a id="print" href="#" target="_blank" title="Imprimer"></a></li>
+		<li id="HeaderD"><a id="new" href="new.php" target="_blank" title="Nouveau pratiquant" ></a><a id="print" href="#" target="_blank" title="Imprimer"></a><a id="mail" href="mail.php" target="_blank" title="Publipostage" ></a></li>
 		<li id="HeaderNone" style="float:none;"><a/></li>
 	</ul>
 </DIV>

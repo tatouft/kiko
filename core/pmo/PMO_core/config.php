@@ -12,7 +12,7 @@
 	$driverz = "sqlite";
 	
 	/** if you use sqlite */
-	$dsn = 'sqlite:' . $_SESSION['SiteRoot'] .'/db/kobukai';	
+	$dsn = 'sqlite:' . $_SESSION['SiteRoot'] .'/db/kome';	
 	
 	/** if you use other sgbd */
 	$hostz = 'localhost';

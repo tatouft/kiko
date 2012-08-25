@@ -14,6 +14,9 @@
 		1F3B8A7E12DCF12A004E650E /* getPratiquantsNom.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = getPratiquantsNom.php; path = services/getPratiquantsNom.php; sourceTree = "<group>"; };
 		1F3B8B1912DD02F7004E650E /* AddPresence.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = AddPresence.php; path = services/AddPresence.php; sourceTree = "<group>"; };
 		1F3B8B1A12DD0541004E650E /* class_presences.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = class_presences.php; sourceTree = "<group>"; };
+		1F649E2615E8E7A500380394 /* mail.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = mail.php; sourceTree = "<group>"; };
+		1F649E2A15E8FEC000380394 /* PdfConfig.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = PdfConfig.php; path = config/PdfConfig.php; sourceTree = "<group>"; };
+		1F649E2B15E8FECD00380394 /* FillTable.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = FillTable.php; path = services/core/FillTable.php; sourceTree = "<group>"; };
 		1F6C0FC10F018E1A00231EAF /* new.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = new.php; sourceTree = "<group>"; };
 		1F763F9A1441F0F0006735A2 /* class_cotisationsSimple.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = class_cotisationsSimple.php; sourceTree = "<group>"; };
 		1F9310B512F8A8E900980D5A /* presences.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = presences.css; sourceTree = "<group>"; };
@@ -84,6 +87,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		1F649E2715E8E98600380394 /* fpdf */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = fpdf;
+			sourceTree = "<group>";
+		};
 		1FCDBCAB0ED97D5300EEA6D0 /* js */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +136,7 @@
 		1FCDBE420ED9A69400EEA6D0 /* config */ = {
 			isa = PBXGroup;
 			children = (
+				1F649E2A15E8FEC000380394 /* PdfConfig.php */,
 				1FCDBE430ED9A6B500EEA6D0 /* config.php */,
 			);
 			name = config;
@@ -134,6 +145,7 @@
 		1FCDBEB60ED9AA9F00EEA6D0 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				1F649E2B15E8FECD00380394 /* FillTable.php */,
 				1FCDBEB80ED9AB0700EEA6D0 /* getPratiquants.php */,
 			);
 			name = core;
@@ -142,6 +154,8 @@
 		1FD1E3430EA522E600870DE7 = {
 			isa = PBXGroup;
 			children = (
+				1F649E2715E8E98600380394 /* fpdf */,
+				1F649E2615E8E7A500380394 /* mail.php */,
 				1FCDBE420ED9A69400EEA6D0 /* config */,
 				1FCDBD0E0ED98D8600EEA6D0 /* services */,
 				1FCDBCAB0ED97D5300EEA6D0 /* js */,
