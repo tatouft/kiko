@@ -28,11 +28,13 @@ function Search(baseUrl, action, param1, param2)
 						 evalScripts: true
 						}
 		);
-        $('mail').href = "mail.php?action=" + action; 
+        if($('mail'))
+            $('mail').href = "mail.php?action=" + action; 
 	}
     else
     {
-        $('mail').href = "mail.php?action=" + action + "&section=" + param1; 
+        if($('mail'))
+            $('mail').href = "mail.php?action=" + action + "&section=" + param1; 
     }
 	if(action == "section")
 	{
@@ -121,6 +123,16 @@ function AddGrade(gradeId, gradeLibelle)
 	$('NewGrade').innerHTML += text;
 	
 	++nbNewGrades;
+}
+
+var nbNewPeriodes = 0;
+function AddPeriode(preiodeId, periodeLibelle)
+{
+	var text = "<div class='FieldName Periode'>" + periodeLibelle + ":</div> ";
+	text += "<div class='InputField'><input type='hidden' name='newPeriodeId" + nbNewPeriodes + "' id='newPeriodeId" + nbNewPeriodes + "' value='" + preiodeId + "'></div><br>";
+	$('NewPeriode').innerHTML += text;
+    
+    ++nbNewPeriodes;
 }
 
 function GetSections()

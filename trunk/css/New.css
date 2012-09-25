@@ -29,6 +29,10 @@
 {
 	width: 200px;
 }
+.Periode
+{
+	width: 150px;
+}
 .Stat
 {
 	width: 250px;
@@ -75,6 +79,11 @@
 	float: none;
 	margin-right: 5px;
 }
+#AddPeriode.Button
+{
+	float: none;
+	margin-right: 5px;
+}
 #Save.Button
 {
 	margin-right: 0px;
@@ -100,4 +109,9 @@
 input#presences
 {
 	width: 50px;
+}
+img.Warning
+{
+    width: 16px;
+	height: 16px;
 }

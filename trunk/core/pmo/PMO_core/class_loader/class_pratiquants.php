@@ -190,7 +190,7 @@ class pratiquants extends PMO_MyObject{
 	
 	public function GetPhotoSystemPath()
 	{
-		return $_SERVER['DOCUMENT_ROOT'] . "photos" . "/" . $this->photo;
+		return $_SESSION['SiteRoot'] . "/photos" . "/" . $this->photo;
 	}
 	
 	/********************
