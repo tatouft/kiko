@@ -1,10 +1,12 @@
 <?php
-	require_once("config/config.php");
-	require_once("core/pmo/PMO_core/PMO_MyController.php");
-	require_once("core/pmo/PMO_core/class_loader/class_pratiquants.php");
-	require_once("core/pmo/PMO_core/class_loader/class_section.php");
-	require_once("core/pmo/PMO_core/class_loader/class_grades.php");
-    require_once("core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
+	require_once(dirname(__FILE__)."/config/config.php");
+    if($debug)
+        error_reporting(E_ERROR);
+	require_once(dirname(__FILE__)."/core/pmo/PMO_core/PMO_MyController.php");
+	require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_pratiquants.php");
+	require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_section.php");
+	require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_grades.php");
+    require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
 ?>
 <html>
 	<head>
@@ -68,10 +70,11 @@
 					$pratiquant->AddPresences($presences);
 					//$new->fk_famille = 
 					
+                    // Save grades
 					if($action != 'add' && $pratiquant->GetGrades() != NULL)
 					{
 						if($debug)
-							echo("save grades:");
+							echo("- save grades:");
 						foreach($pratiquant->GetGrades() as $grade)
 						{
 							if($debug)
@@ -88,8 +91,8 @@
 						}
 					}
 					
+                    // Add grades
 					$i = 0;
-					$gradeId = '';
 					do
 					{
 						$ngradeId =  $_REQUEST['newGradeId' . $i];
@@ -111,7 +114,27 @@
 
 						++$i;
 					}while($ngradeId != '');
-					
+
+                    // Add periode
+					$i = 0;
+					do
+					{
+						$nperiodeId =  $_REQUEST['newPeriodeId' . $i];
+						
+						if($nperiodeId != '')
+						{
+							$periode = PMO_MyObject::factory('cotisationsPeriode');
+                            
+							$periode->fk_pratiquant = $pratiquant->id;
+							$periode->fk_periode = $nperiodeId;
+                            $periode->prixPaye = 0;
+							$periode->GenerateCommunication($pratiquant->id, $nperiodeId);
+                            $periode->enOrdre = 0;
+							$periode->commit();
+						}
+                        
+						++$i;
+					}while($nperiodeId != '');
 					
 					$pratiquant->commit();
 					
@@ -359,12 +382,37 @@
                 <div class="NewTitle">Payements</div>
                 <div class="New">
                     <div class="FieldName Stat">Périodes non payées:</div>
-                    <div class="InputField"><? echo($pratiquant->GetCountNoPayPeriod()); ?></div>
+                    <div class="InputField"><? echo($pratiquant->GetCountNoPayPeriod());?></div>
+                    <? 
+                        $periodes = $pratiquant->GetNoPayPeriod();
+                        foreach($periodes as $cperiode)
+                        {
+                            $periode = $cperiode->GetPeriode();
+                            
+                            ?><br/><div class="FieldName Periode"><? echo($periode->libelle); ?>:</div> <?
+                            if($edit)
+                            {
+                                $idPrix = "periodePrix" . $cperiode->fk_periode;
+                                $idOrdre = "periodeOrdre" . $cperiode->fk_periode;
+                                ?>
+                                    <input type="text" name="<? echo($idPrix); ?>" id="<? echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
+                                    <input type="checkbox" name="<? echo($idOrdre); ?>" id="<? echo($idOrdre); ?>" value="enOrdre"  />
+                                <?
+                            }
+                            else
+                            {
+                                ?><img class='Warning' src='css/images/001_05.png'><?
+                            }
+                        }
+                    
+                    ?>
                     <br/>
+                    <div id="NewPeriode"></div>
+
                     <? if($edit){ ?>&nbsp;Ajouter une période&nbsp;
-                        <select id="periodeList" name="periodeList">
+                       <select id="periodeList" name="periodeList">
 						<?php
-                            $periodes = cotisationsPeriode::GetNewForPratiquant($pratiquant->id);
+                            $periodes = periodes::GetNewForPratiquant($pratiquant->id);
                             $i = 0;
                             foreach($periodes as $periode)
                             {
@@ -378,11 +426,13 @@
                             }
 						?>
 						</select>
+                        <a class="Button" id="AddPeriode" href="#" onClick="AddPeriode($('periodeList').value, $('periodeList').options[$('periodeList').options.selectedIndex].innerHTML);">Ajouter</a>
                     <? } ?>
                     <br/>
             
             
             
+                    <br/>
                     <div class="FieldName Stat">Cours non payés:</div>
                     <div class="InputField"><? echo($pratiquant->GetCountNoPayLesson()); ?></div>
                     <? if($edit){ ?>&nbsp;Ajouter des payements&nbsp;<input type="text" name="payements" id="payements" value="0" size="3"><? } ?>

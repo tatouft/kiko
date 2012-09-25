@@ -32,7 +32,23 @@
             $prat->load();		
             return $prat;
         }
-
+        public static function GetNewForPratiquant($id)
+        {
+            $controler = new PMO_MyController();
+            
+            $sql =  "SELECT p.* FROM";
+            $sql .= " " . self::$TableName . " as p";
+            $sql .= " WHERE id NOT IN (";
+            $sql .= " SELECT fk_periode FROM " . cotisationsPeriode::$TableName . " as c";
+            $sql .= " WHERE fk_pratiquant = " . $id;
+            $sql .= ")";
+            $sql .= "  ORDER BY dateDebut ASC";
+            
+            $map = $controler->queryController($sql);
+            
+            return periodes::GetArray($map);
+            
+        }
     }
     
     ?>
