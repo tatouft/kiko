@@ -56,6 +56,9 @@ th
 	padding-top: 10px;
 	border: 1px solid lightgray;
 }
+tr:nth-child(even) {
+    background-color: rgba(200, 200, 200, 0.3); /* red, 30% alpha */
+}
 
 .TableButton
 {

@@ -2,7 +2,7 @@
     require('PdfConfig.php');
 	$debug = true;
 
-	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'] . "kobukai/trunk";
+	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'] . "";
 
     $pdfConfig = new PDFPubliConfig;
     $pdfConfig->CellWidth = 95;
