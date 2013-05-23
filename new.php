@@ -381,15 +381,42 @@
             <div class="List Contents">
                 <div class="NewTitle">Payements</div>
                 <div class="New">
+                    <div class="FieldName Stat">Périodes payées:</div>
+                    <? 
+                    $periodes = $pratiquant->GetPaiedPeriodForSeason();
+                    foreach($periodes as $cperiode)
+                    {
+                        $periode = $cperiode->GetPeriode();
+                        
+                        ?><div class="Periode"><? echo($periode->libelle);
+                        /*if($edit)
+                        {
+                            $idPrix = "periodePrix" . $cperiode->fk_periode;
+                            $idOrdre = "periodeOrdre" . $cperiode->fk_periode;
+                            ?>
+                            <input type="text" name="<? echo($idPrix); ?>" id="<? echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
+                            <input type="checkbox" name="<? echo($idOrdre); ?>" id="<? echo($idOrdre); ?>" value="enOrdre"  />
+                            <?
+                        }
+                        else*/
+                        {
+                            ?><img class='Warning' src='css/images/001_06.png'></div><?
+                        }
+                    }
+                    
+                    ?>
+
+                    <br/>
+            
                     <div class="FieldName Stat">Périodes non payées:</div>
                     <div class="InputField"><? echo($pratiquant->GetCountNoPayPeriod());?></div>
-                    <? 
+                    <?
                         $periodes = $pratiquant->GetNoPayPeriod();
                         foreach($periodes as $cperiode)
                         {
                             $periode = $cperiode->GetPeriode();
                             
-                            ?><br/><div class="FieldName Periode"><? echo($periode->libelle); ?>:</div> <?
+                            ?><div class="Periode"><? echo($periode->libelle); ?>: <?
                             if($edit)
                             {
                                 $idPrix = "periodePrix" . $cperiode->fk_periode;
@@ -403,6 +430,7 @@
                             {
                                 ?><img class='Warning' src='css/images/001_05.png'><?
                             }
+                            ?></div><?
                         }
                     
                     ?>

@@ -129,6 +129,10 @@ class pratiquants extends PMO_MyObject{
     {
         return cotisationsPeriode::GetToPayByPratiquant($this);
     }
+    public function GetPaiedPeriodForSeason()
+    {
+        return cotisationsPeriode::GetPaiedByPratiquantForSeason($this);
+    }
     
     // recupere le nombre de cours que le pratiquant n'a pas paye
     public function GetCountNoPayLesson()
@@ -144,7 +148,7 @@ class pratiquants extends PMO_MyObject{
     {
 		return count(presences::GetByPratiquantForThisSeason($this->id));        
     }
-	
+    
 	public function IsReady()
 	{
 		if($this->GetGrade() == null)

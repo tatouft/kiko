@@ -46,6 +46,33 @@
             $table = self::GetArray($map);
             return $table;
         }
+        
+        public static function GetPaiedByPratiquantForSeason($prat)
+        {
+            $controler = new PMO_MyController();
+
+            $today = getdate();
+            $year = $today[year];
+            if($today[mon] < 9)
+            {
+                $year = $year - 1;
+            }
+
+            
+            $sql = "SELECT cp.*";
+            $sql .= " FROM " . self::$TableName . " as cp";
+            $sql .= "   , " . periodes::$TableName . " as p";
+            $sql .= " WHERE cp.fk_pratiquant = " . $prat->id;
+            $sql .= "   AND cp.fk_periode = p.id";
+            $sql .= "   AND cp.enOrdre = 1";
+            $sql .= "   AND p.dateDebut >= '" . $year . "-09-01'";
+            $sql .= " ORDER BY p.dateDebut ASC";
+            
+            $map = $controler->queryController($sql);
+            
+            $table = self::GetArray($map);
+            return $table;
+        }
         public static function GetAll()
         {
             $controler = new PMO_MyController();

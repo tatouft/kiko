@@ -20,7 +20,4 @@
 	$passz = 'pmo';
 	$basez = 'sakila';
 	
-	
-	//require_once("core/pmo/PMO_core/class_loader/class_pratiquants.php");
-
 ?>
