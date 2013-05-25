@@ -16,7 +16,7 @@
 
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
-		<link rel="stylesheet" href="css/new.css" type="text/css">
+		<link rel="stylesheet" href="css/New.css" type="text/css">
 	</head>
 	<body>
 		<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formNew" id="formNew">

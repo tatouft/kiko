@@ -117,4 +117,19 @@ input
 	color: black;
 }
 
+.loading
+{
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+}
+.loading::after {
+	content: ".";
+    visibility: hidden;
+}
+.loading img
+{
+    vertical-align: middle;
+}
+
 
