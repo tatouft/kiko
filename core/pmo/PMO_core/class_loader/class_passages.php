@@ -62,7 +62,8 @@ class passages extends PMO_MyObject{
 		$query = "SELECT * FROM " . self::$TableName . " WHERE fk_pratiquant = " . $fkPratiquant . " ORDER BY date DESC;";
 		$map = $controler->queryController($query);
 		$grades = self::GetArray($map);
-		if(count($grades) > 0)
+		
+        if(count($grades) > 0)
 			return $grades[0];
 		else
 			return NULL;

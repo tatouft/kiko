@@ -46,24 +46,48 @@
             $sql = "select pr.fk_pratiquant, pr.id, 5 as prix ";
             $sql .= "from " . presences::$TableName . " as pr ";
             $sql .= "where pr.fk_pratiquant = " . $prat->id;
+            $sql .= "  AND not exists ( ";
+            $sql .= "           select 1 ";
+            $sql .= "           FROM cotisationsSimple cs ";
+            $sql .= "           WHERE cs.fk_presences = " . $prat->id;
+            $sql .= "           )";
             $sql .= "  AND not exists (";
             $sql .= "           select 1 ";
             $sql .= "           from " . periodes::$TableName . " as pe, " . cotisationsPeriode::$TableName . " as co ";
             $sql .= "           where pe.id = co.fk_periode ";
-            $sql .= "             AND co.fk_pratiquant = pr.fk_pratiquant";
+            $sql .= "             AND co.fk_pratiquant = " . $prat->id;
             $sql .= "             AND pr.date >= pe.dateDebut ";
-            $sql .= "             AND pr.date <= pe.dateFin  ";
-            $sql .= "           UNION ";
-            $sql .= "           select 1 ";
-            $sql .= "           FROM cotisationsSimple cs ";
-            $sql .= "           WHERE cs.fk_presences = pr.id ";
-            $sql .= "           )";
+            $sql .= "             AND pr.date <= pe.dateFin ) ";
             
             $map = $controler->queryController($sql);
             
             return self::GetArray($map);
         }
-        
+        public static function GetToPayByPratiquantCount($prat)
+        {
+            $controler = new PMO_MyController();
+            
+            $sql = "select count(pr.fk_pratiquant) ";
+            $sql .= "from " . presences::$TableName . " as pr ";
+            $sql .= "where pr.fk_pratiquant = " . $prat->id;
+            $sql .= "  AND not exists ( ";
+            $sql .= "           select 1 ";
+            $sql .= "           FROM cotisationsSimple cs ";
+            $sql .= "           WHERE cs.fk_presences = " . $prat->id;
+            $sql .= "           )";
+            $sql .= "  AND not exists (";
+            $sql .= "           select 1 ";
+            $sql .= "           from " . periodes::$TableName . " as pe, " . cotisationsPeriode::$TableName . " as co ";
+            $sql .= "           where pe.id = co.fk_periode ";
+            $sql .= "             AND co.fk_pratiquant = " . $prat->id;
+            $sql .= "             AND pr.date >= pe.dateDebut ";
+            $sql .= "             AND pr.date <= pe.dateFin ) ";
+
+            
+            $map = $controler->queryController($sql);
+            
+            return self::GetArray($map);
+        }
     }
     
     ?>

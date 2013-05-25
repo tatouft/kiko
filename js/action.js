@@ -20,9 +20,11 @@ function SetParam1(param)
 
 function Search(baseUrl, action, param1, param2)
 {
+    $loading = "<div class='loading'><img src='images/loading.gif'/></div>";
     
 	if(action == "all")
 	{
+        $('PratiquantList').innerHTML = $loading;
 		new Ajax.Updater($('PratiquantList'), 
 						 baseUrl + "?action=all", {
 						 evalScripts: true
@@ -38,6 +40,7 @@ function Search(baseUrl, action, param1, param2)
     }
 	if(action == "section")
 	{
+        $('PratiquantList').innerHTML = $loading;
 		url = baseUrl + "?action=section&section=" + param1;
 		new Ajax.Updater($('PratiquantList'),					
 						 url, {
@@ -50,6 +53,7 @@ function Search(baseUrl, action, param1, param2)
 	}
 	if(action == "examens")
 	{
+        $('PratiquantList').innerHTML = $loading;
 		url = baseUrl + "?action=section&section=" + param1 + "&date=" + param2;
 		new Ajax.Updater($('PratiquantList'),					
 						 url, {
@@ -62,6 +66,7 @@ function Search(baseUrl, action, param1, param2)
 	}
 	if(action == "presences")
 	{
+        $('PratiquantList').innerHTML = $loading;
 		url = baseUrl + "?sections=" + param1;
 		new Ajax.Updater($('PratiquantList'),					
 						 url, {
@@ -74,6 +79,7 @@ function Search(baseUrl, action, param1, param2)
 	}
     if(action == "poubelle")
 	{
+        $('PratiquantList').innerHTML = $loading;
 		url = baseUrl + "?action=poubelle";
 		new Ajax.Updater($('PratiquantList'),					
 						 url, {
