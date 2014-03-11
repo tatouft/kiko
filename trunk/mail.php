@@ -37,16 +37,36 @@
 	$section = $_REQUEST['section'];
     $pratiquants = FillTable($action, $section);
 
+    $incomplets = "Incomplets: ";
     
     $i = 0;
     foreach($pratiquants as $prat)
     {
-        $nom = ucfirst($prat->nom) . " " . ucfirst($prat->prenom);
-        $ville = $prat->codePostal . " " . $prat->commune;
-        $data[$i] = utf8_decode($nom) . "\n" . utf8_decode($prat->adresse) . "\n" . utf8_decode($ville);
-        $i++;
+        if($prat->adresse)
+        {  
+            $nom = ucfirst($prat->nom) . " " . ucfirst($prat->prenom);
+            
+            $famille = $prat->GetFamille();
+            if($famille)
+            {
+                foreach($famille as $fam)
+                {
+                    $nom = $nom . "\n" . ucfirst($fam->nom) . " " . ucfirst($fam->prenom);
+                }
+            }
+            
+            $ville = $prat->codePostal . " " . $prat->commune;
+            $data[$i] = utf8_decode($nom) . "\n" . utf8_decode($prat->adresse) . "\n" . utf8_decode($ville);
+            $i++;
+        }
+        else
+        {
+            $incomplets = $incomplets . "\n" . ucfirst($prat->nom) . " " . ucfirst($prat->prenom);
+        }
     }
     
+    if($incomplets != "Incomplets: ")
+        $data[$i] = $incomplets;
     $pdf->Table($pdfConfig, $data);
 
     

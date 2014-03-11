@@ -1,4 +1,4 @@
-<?php
+<?php    
 	require_once(dirname(__FILE__)."/config/config.php");
     if($debug)
         error_reporting(E_ERROR);
@@ -14,6 +14,8 @@
 		<script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>
 		<script src="js/action.js"						type="text/javascript"></script>
 
+        <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+        <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
 		<link rel="stylesheet" href="css/New.css" type="text/css">
@@ -135,6 +137,37 @@
                         
 						++$i;
 					}while($nperiodeId != '');
+                    
+                    // Save periode
+                    if($action == 'save')
+                    {
+                        $noPayPeriodes = $pratiquant->GetNoPayPeriod();
+                        if($noPayPeriodes != NULL)
+                        {
+                            if($debug)
+                                echo("- save periodes:");
+                            
+                            foreach($noPayPeriodes as $cperiode)
+                            {
+                                if($debug)
+                                    echo("{");
+                                
+                                $periodePrix    =  $_REQUEST['periodePrix' . $cperiode->fk_periode];
+                                $periodeEnOrdre =  $_REQUEST['periodeOrdre' . $cperiode->fk_periode];
+                                
+                                if($debug)
+                                    echo($cperiode->GetPeriode()->libelle . " - ");
+                                
+                                if($periodeEnOrdre == "enOrdre")
+                                    $cperiode->enOrdre = 1;
+                                else
+                                    $cperiode->enOrdre = 0;
+                                $cperiode->commit();
+                                if($debug)
+                                    echo("Periodes saved}");
+                            }
+                        }
+                    }
 					
 					$pratiquant->commit();
 					
@@ -145,12 +178,15 @@
 			<input type="hidden" id="action" name="action" />
 			<input type="hidden" id="edit" name="edit" value="<? echo($edit); ?>" />
 
+<?echo($_SERVER['REMOTE_USER']);?>
+            <? if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
 			<div class="Contents">
 				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
 				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><? } ?>
 				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><? } ?>
 				<div class="EndFloat">&nbsp;</div>
 			</div>
+            <? } ?>
 
 			<div class="List Contents">
 				<div class="NewTitle">Identité</div>
@@ -421,9 +457,10 @@
                             {
                                 $idPrix = "periodePrix" . $cperiode->fk_periode;
                                 $idOrdre = "periodeOrdre" . $cperiode->fk_periode;
+                                $enOrdre = ($cperiode->enOrdre == 1);
                                 ?>
                                     <input type="text" name="<? echo($idPrix); ?>" id="<? echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
-                                    <input type="checkbox" name="<? echo($idOrdre); ?>" id="<? echo($idOrdre); ?>" value="enOrdre"  />
+                                <input type="checkbox" name="<? echo($idOrdre); ?>" id="<? echo($idOrdre); ?>" value="enOrdre" <? echo($enOrdre?"checked":""); ?> />
                                 <?
                             }
                             else
@@ -470,12 +507,14 @@
             </div>
         <? } ?>
 
-			<div class="Contents">
+            <? if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
+            <div class="Contents">
 				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
 				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><? } ?>
 				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><? } ?>
 				<div class="EndFloat">&nbsp;</div>
 			</div>
+                        <? } ?>
 
 		</form>
 	</body>

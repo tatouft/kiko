@@ -9,6 +9,8 @@
             $pratiquants = pratiquants::GetByExam($section);
         else if($action == "poubelle")
             $pratiquants = pratiquants::GetPoubelle($section);
+        else if($action == "mail")
+            $pratiquants = pratiquants::GetChefs($section);
         
         return $pratiquants;
     }

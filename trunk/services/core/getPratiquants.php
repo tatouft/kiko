@@ -103,16 +103,18 @@
 				
 				// Examen
                 $rest = $prat->GetRestToNextGrade();
-                $ready = (($rest - 4) <= 0);
+                $ready = (($rest + 4) >= 0);
 				echo($ready?"<img class='TableButton' src='css/images/001_06.png'>":"");
 				echo("&nbsp;" . $rest);
 				echo("</td>\n\t\t\t<td>");			
 				
-				// Bouttons
-				echo("<a href='new.php?id=" . $prat->id . "' target='_blank' class='TableButton' id='modify' title='Modifier'></a>");
-				echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
-				echo("</td></tr>\n\t\t");
-                 
+                // Bouttons
+                echo("<a href='new.php?id=" . $prat->id . "' target='_blank' class='TableButton' id='modify' title='Modifier'></a>");
+                if($_SERVER['REMOTE_USER'] == "tatou")
+                {
+                    echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
+                }
+                echo("</td></tr>\n\t\t");
 			}
 			?>
 		</table>
