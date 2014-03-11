@@ -1,5 +1,8 @@
 v Presences
 v Pret à présenter
+- Refactorer le code. Créer des classes qui font le rendu html des données
+- Changer la politique d'affichage des élèves qui doivent payer. Dire qu'il doivent payer une période s'il sont présent à des cours d'une période lié à leur section s'il ne l'ont pas déjà payée
+- Supprimer le payement au cours
 - Check des données d'ajout et de modif pour ne pas faire n'importe quoi
 - Del des grades
 - Photos
@@ -12,10 +15,10 @@ v Pret à présenter
 	
 - Partout: Ajouter des control de calendrier pour entrer les dates.
 - Permettre d'ajouter une période
-- Lier les pratiquants aux périodes
-- Permettre de spécifier qu'une période a été payée
-- Permettre de spécifier qu'un cours a été payé
+v Lier les pratiquants aux périodes
+v Permettre de spécifier qu'une période a été payée
 - Générer les virements avec communication structurée
+- Impossible de deleter si on a déjà fait d'autres opérations
 
 En cours:
 v Poubelle

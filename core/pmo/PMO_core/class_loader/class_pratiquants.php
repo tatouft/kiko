@@ -107,7 +107,9 @@ class pratiquants extends PMO_MyObject{
 	public function GetRestToNextGrade()
 	{
 		if($this->GetGrade() == null)
+		{
 			return 0;
+		}
 		
 		$need = $this->GetPresencesNeededForNextGrade();
 		//echo($need . " - " . $this->GetPresencesCountFromLastGrade() . " = ");
@@ -152,16 +154,30 @@ class pratiquants extends PMO_MyObject{
 	public function IsReady()
 	{
 		if($this->GetGrade() == null)
+		{
 			return false;
+		}
 			
 		$presences = $this->GetPresencesCountFromLastGrade();
 		$need = $this->GetPresencesNeededForNextGrade();
 		//echo($presences);
 		if($presences >= $need - 4)
+		{
 			return true;
+		}
 		else
+		{
 			return false;
+		}
 
+	}
+    
+    public function GetFamille()
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND fk_famille = " . $this->id . ";");
+        
+		return self::GetArray($map);
 	}
 	
 	public function ExistsPhoto()
@@ -226,7 +242,7 @@ class pratiquants extends PMO_MyObject{
 	{
 		$controler = new PMO_MyController();
 
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 ORDER BY nom ASC;");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 ORDER BY nom, prenom ASC;");
 	
 		return self::GetArray($map);
 	}
@@ -234,7 +250,7 @@ class pratiquants extends PMO_MyObject{
 	public static function GetBySection($fkSection)
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . " AND  deleted = 0;");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_section = " . $fkSection . " AND  deleted = 0 ORDER BY nom, prenom ASC;");
 	
 		return self::GetArray($map);
 	}
@@ -269,7 +285,7 @@ class pratiquants extends PMO_MyObject{
 	public static function GetChefs()
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE fk_famille ISNULL OR fk_famille = id;");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND (fk_famille ISNULL OR fk_famille = id);");
 	
 		return self::GetArray($map);
 	}
@@ -280,7 +296,6 @@ class pratiquants extends PMO_MyObject{
 	
 		return self::GetArray($map);
 	}
-	
 	public static function GetByFirstName($name)
 	{
 		return GetByName($name, "");	

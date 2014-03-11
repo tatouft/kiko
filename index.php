@@ -13,22 +13,22 @@
 		<link rel="stylesheet" href="css/general.css" type="text/css">
 	</head>
 	<body>
-		<? 
-			$CurrentPage = "lists";
-			require_once("controls/PageHeader.php"); 
+		<?php
+                    $CurrentPage = "lists";
+                    require_once("controls/PageHeader.php"); 
 		?>
 		<div id="debug">&nbsp;</div>
 		<div class="LittelTabs">
-			<? require_once("controls/MenuTabs.php"); ?>
-			<? require_once("controls/SearchArea.php"); ?>
-			<? $headerTitle = 'Liste des pratiquants'; ?>
+			<?php require_once("controls/MenuTabs.php"); ?>
+			<?php require_once("controls/SearchArea.php"); ?>
+			<?php $headerTitle = 'Liste des pratiquants'; ?>
 		</div>		
 		
 		<div class="List Contents">
-			<? require_once("controls/ResultHeader.php"); ?>
+			<?php require_once("controls/ResultHeader.php"); ?>
 			<div id='PratiquantList'>
-				<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>index.php" name="formList" id="formList">
-				<?
+				<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formList" id="formList">
+				<?php
 					$action = "all";
                     require_once("services/core/FillTable.php");
 					require_once("services/core/getPratiquants.php"); 

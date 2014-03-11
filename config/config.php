@@ -10,4 +10,6 @@
     $pdfConfig->NbCellByLine = 2;
 
 	date_default_timezone_set("Europe/Brussels");
+
+    $admins = array("tatou", "");
 ?>
