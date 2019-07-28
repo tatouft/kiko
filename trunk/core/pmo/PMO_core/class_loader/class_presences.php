@@ -68,5 +68,22 @@
 			
 			return self::GetArray($map);            
         }
+        public static function GetByPratiquantForThisPeriod($pratId, $periodId)
+        {
+			$controler = new PMO_MyController();
+
+        	$sql =  "SELECT pr.* ";
+	    	$sql .= "FROM ";
+	    	$sql .= "    presences as pr, ";
+	    	$sql .= "    periodes as p ";
+	    	$sql .= "WHERE ";
+	    	$sql .= "    p.dateDebut < pr.date AND p.dateFin >= pr.date ";
+	    	$sql .= "    AND p.id == " . $period->id;
+	    	$sql .= "    AND pr.fk_pratiquant == " . $this->id;
+			
+			$map = $controler->queryController($sql);
+			
+			return self::GetArray($map);
+        }
 	}	
 ?>

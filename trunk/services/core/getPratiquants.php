@@ -41,7 +41,7 @@
         $count = 0;
 
 		?>
-		<table>
+		<table id="TablePratiquants">
 			<tr>
 				<th>Nom/Prenom</th>
 				<th>Section</th>
@@ -52,11 +52,21 @@
 				<th>&nbsp;</th>
 			</tr>
 			<?
+			$mailto = "";
 			foreach($pratiquants as $prat)
 			{
                 $count++;
 
-				echo("<tr id='PratRow" . $prat->id . "'>");
+                if($prat->email != "")
+                {
+                	$emails = explode(";", $prat->email);
+                	foreach ($emails as $email) 
+                	{
+	                	$mailto .= $prat->nom . ' ' . $prat->prenom . '<' . $email . '>;';
+                	}
+                }
+
+				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ")' ondblclick='Select(" . $prat->id . ");OpenPersonne();'>");
 				echo("<td><a name='Prat" . $prat->id . "'></a>");
 				
 				// Name
@@ -90,7 +100,7 @@
                     $enOrdre = 0;
                     foreach($periodes as $periode)
                     {
-                        echo($periode->GetPeriode()->libelleCourt . ", ");
+                        echo($periode->libelleCourt . ", ");
                     }
                 }
                 if($lessons > 0)
@@ -109,8 +119,7 @@
 				echo("</td>\n\t\t\t<td>");			
 				
                 // Bouttons
-                echo("<a href='new.php?id=" . $prat->id . "' target='_blank' class='TableButton' id='modify' title='Modifier'></a>");
-                if($_SERVER['REMOTE_USER'] == "tatou")
+                if(in_array($_SERVER['REMOTE_USER'], $admins))
                 {
                     echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
                 }
@@ -119,7 +128,8 @@
 			?>
 		</table>
         <div id='Total'>Total: <? echo($count); ?></div>
-		<?
+        <script>$('email').href = "mailto:<? echo($mailto); ?>";</script>
+		<? 
 	}
 	else
 	{

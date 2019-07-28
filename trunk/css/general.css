@@ -59,6 +59,42 @@ th
 tr:nth-child(even) {
     background-color: rgba(200, 200, 200, 0.3); /* red, 30% alpha */
 }
+tr.Selectable:hover
+{
+    background-color: #D1E1FF;
+}
+tr.Selected
+{
+    background-color: #B1C1FF;
+}
+
+ul.Buttons
+{
+    float: right;
+    list-style-type: none;
+    margin-top: -23px;
+}
+
+ul.Buttons li
+{
+    float: left;
+    background-color: #D1E1FF;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    margin-right: 4px;
+    display: block;
+    float: left;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    cursor: pointer;
+}
+ul.Buttons li:hover
+{
+    background-color: #B1C1FF;
+}
 
 .TableButton
 {
@@ -132,4 +168,69 @@ input
     vertical-align: middle;
 }
 
+div.title
+{
+    font-weight: bold;
+    width: 150px;
+    display: inline-block;
+}
 
+div.value
+{
+    display: inline-block;
+}
+
+div.NewPeriode div
+{
+    margin: auto;
+    width: 56%;
+    overflow: auto;
+}
+
+div.NewPeriode div div
+{
+    float: left;
+    padding: 5px;
+    margin: auto;
+    overflow: auto;
+
+}
+div.NewPeriode div.NotSaved
+{
+    background-color: lightyellow;
+}
+div.NewPeriode div div.libelle
+{
+    width: 53%;
+}
+div.NewPeriode div div.court
+{
+    width: 10%;
+}
+div.NewPeriode div div.date
+{
+    text-align: center;
+    width: 15%;
+}
+
+div#NewPeriodeFields
+{
+    padding-top: 10px;
+    margin:auto;
+    width: 30%;
+}
+
+div#NewPeriodeFields div
+{
+    padding: 3px;
+}
+div.NewPeriode div.Header
+{
+    background-color: lightgrey;
+}
+div.NewPeriode div.Header div
+{
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+}

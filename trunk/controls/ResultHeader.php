@@ -1,22 +1,49 @@
 
 <link rel="stylesheet" href="css/ResultHeader.css" type="text/css">
 <div class="Header">
-	<div class="HeaderTitle"><? echo($headerTitle); ?><!--</div>-->
-	<div class="DivSearchBox">
-		<div id="indicator1" style="display: none;">
-		S
-		</div>
-		<div class="PreSearchBox"></div>
-		<div class="SearchBox"><input type="text" id="FindInPrats"></div>
-		<div class="PostSearchBox" onclick="FindPratiquantId($F('FindInPrats'));" title="Rechercher"></div>
-		<div id="AutoCompleteSearch"></div>
-	</div>
-</div>
+	<div class="HeaderTitle"><? echo($headerTitle); ?></div>
+	<ul class="Buttons">
+		<li>
+			<?php $pratiquants = FillTable($action, $section); ?>
+			<a href="mailto:<? foreach($pratiquants as $prat) echo($prat->email . ';');  ?>" target="_blank" id="email"></a>
+		</li>
+	</ul>
+	<ul class="Buttons invisible" id="ActionButtons">
+		<li onclick="OpenPersonne()">Afficher</li>
+		<?php 
+		if(in_array($_SERVER['REMOTE_USER'], $admins))
+		{ ?>
+			<li onclick="DeletePersonne()">Supprimer</li>
+		<?php } ?>
+		
+	</ul>
 	<script type="text/javascript">
-		function selected()
+		selectedId = 0;
+		function DeSelect()
 		{
-			$('AutoCompleteSearch').style.opacity = 1;
+			if(selectedId !== 0)
+			{
+				$('PratRow'+selectedId).className = "Selectable";
+				selectedId = 0;
+				$("ActionButtons").className = "Buttons invisible";
+			}
 		}
-		new Ajax.Autocompleter("FindInPrats", "AutoCompleteSearch", "services/completeName.php", {paramName: "name", afterUpdateElement: selected});
+		function Select(id)
+		{
+			DeSelect();
+			$('PratRow'+id).className = "Selected";
+			selectedId = id;
+			$("ActionButtons").className = "Buttons";
+		}
+		
+		function OpenPersonne()
+		{
+			window.open("new.php?id=" + selectedId);
+		}
+		
+		function DeletePersonne()
+		{
+			DeSelect();
+		}
 	</script>
 </div>

@@ -1,13 +1,3 @@
-<?php    
-	require_once(dirname(__FILE__)."/config/config.php");
-    if($debug)
-        error_reporting(E_ERROR);
-	require_once(dirname(__FILE__)."/core/pmo/PMO_core/PMO_MyController.php");
-	require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_pratiquants.php");
-	require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_section.php");
-	require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_grades.php");
-    require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
-?>
 <html>
 	<head>
 		<script src="js/scriptaculous/prototype.js"		type="text/javascript"></script>
@@ -21,14 +11,32 @@
 		<link rel="stylesheet" href="css/New.css" type="text/css">
 	</head>
 	<body>
+		<?php    
+			require_once(dirname(__FILE__)."/config/config.php");
+			if($debug)
+			{
+				error_reporting(E_ERROR);
+			}
+			require_once(dirname(__FILE__)."/core/pmo/PMO_core/PMO_MyController.php");
+			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_pratiquants.php");
+			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_section.php");
+			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_grades.php");
+			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
+		?>
 		<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formNew" id="formNew">
 			<?php
-				import_request_variables('GP');
+				//import_request_variables('GP');
+				extract($_GET);
+				extract($_POST);
 				
 				$new = true;
 				
-				$id = $_REQUEST['id'];
-				$edit = $_REQUEST['edit'];
+				//$id = $_REQUEST['id'];
+				//$edit = $_REQUEST['edit'];
+				
+				$id = filter_input(INPUT_GET , 'id');
+				$edit = filter_input(INPUT_POST, 'edit');
+				$action = filter_input(INPUT_POST, 'action');
 				
                 $pratiquant = PMO_MyObject::factory('pratiquants');
                 if($id)
@@ -43,7 +51,9 @@
 				}
 				
 				if($debug)
+				{
 					echo('Action: ' . $action);
+				}
 				if($action == 'add' || $action == 'save')
 				{
 					if($action == 'add')
@@ -53,12 +63,14 @@
 						
 					$pratiquant->nom = $nom;
 					$pratiquant->prenom = $prenom;
+					$pratiquant->photo = $photo;
 					$pratiquant->adresse = $adresse;
 					$pratiquant->codePostal = $cp;
 					$pratiquant->commune = $commune;
                     $pratiquant->telephone = $telephone;
                     $pratiquant->gsm = $gsm;
                     $pratiquant->email = $email;
+                    $pratiquant->fk_famille = $famille;
 					$datet = explode("/", $naissance);
 					$date = date_create();
 					date_date_set($date , $datet[2] , $datet[1], $datet[0]);
@@ -68,6 +80,7 @@
 					date_date_set($date , $datet[2] , $datet[1], $datet[0]);
 					$pratiquant->licenceDate = date_format($date, "Y-m-d");
 					
+					echo($section);
 					$pratiquant->fk_section = $section;
 					$pratiquant->AddPresences($presences);
 					//$new->fk_famille = 
@@ -76,20 +89,29 @@
 					if($action != 'add' && $pratiquant->GetGrades() != NULL)
 					{
 						if($debug)
+						{
 							echo("- save grades:");
+						}
 						foreach($pratiquant->GetGrades() as $grade)
 						{
 							if($debug)
+							{
 								echo("{");
-							$gradeDate =  $_REQUEST['grade' . $grade->fk_grade];
+							}
+							//$gradeDate =  $_REQUEST['grade' . $grade->fk_grade];
+							$gradeDate = filter_input(INPUT_POST , 'grade' . $grade->fk_grade);
 							if($debug)
+							{
 								echo($gradeDate . " - ");
+							}
 							$datet = explode("/", $gradeDate);
 							date_date_set($date , $datet[2] , $datet[1], $datet[0]);
 							$grade->date = date_format($date, "Y-m-d");
 							$grade->commit();
 							if($debug)
+							{
 								echo("Grade saved}");
+							}
 						}
 					}
 					
@@ -97,8 +119,10 @@
 					$i = 0;
 					do
 					{
-						$ngradeId =  $_REQUEST['newGradeId' . $i];
-						$ngradeDate = $_REQUEST['newGrade' . $i];
+						//$ngradeId =  $_REQUEST['newGradeId' . $i];
+						//$ngradeDate = $_REQUEST['newGrade' . $i];
+						$ngradeId = filter_input(INPUT_POST , 'newGradeId' . $i);
+						$ngradeDate = filter_input(INPUT_POST , 'newGrade' . $i);
 						
 						if($ngradeId != '')
 						{
@@ -110,7 +134,9 @@
 							date_date_set($date , $datet[2] , $datet[1], $datet[0]);
 							$grade->date = date_format($date, "Y-m-d");
 							if($debug)
+							{
 								echo($ngradeId . " " . $ngradeDate . " - ");
+							}
 							$grade->commit();
 						}
 
@@ -121,7 +147,8 @@
 					$i = 0;
 					do
 					{
-						$nperiodeId =  $_REQUEST['newPeriodeId' . $i];
+						//$nperiodeId =  $_REQUEST['newPeriodeId' . $i];
+						$nperiodeId = filter_input(INPUT_POST , 'newPeriodeId' . $i);
 						
 						if($nperiodeId != '')
 						{
@@ -141,32 +168,24 @@
                     // Save periode
                     if($action == 'save')
                     {
-                        $noPayPeriodes = $pratiquant->GetNoPayPeriod();
-                        if($noPayPeriodes != NULL)
-                        {
-                            if($debug)
-                                echo("- save periodes:");
-                            
-                            foreach($noPayPeriodes as $cperiode)
-                            {
-                                if($debug)
-                                    echo("{");
-                                
-                                $periodePrix    =  $_REQUEST['periodePrix' . $cperiode->fk_periode];
-                                $periodeEnOrdre =  $_REQUEST['periodeOrdre' . $cperiode->fk_periode];
-                                
-                                if($debug)
-                                    echo($cperiode->GetPeriode()->libelle . " - ");
-                                
-                                if($periodeEnOrdre == "enOrdre")
-                                    $cperiode->enOrdre = 1;
-                                else
-                                    $cperiode->enOrdre = 0;
-                                $cperiode->commit();
-                                if($debug)
-                                    echo("Periodes saved}");
-                            }
-                        }
+                    	$i = 0;
+                    	do{
+	                    	$periodeId    = filter_input(INPUT_POST , 'periodeId'  . $i);
+							$periodeEnOrdre = filter_input(INPUT_POST , 'periodeOrdre' . $i);
+
+							if($periodeEnOrdre == 'enOrdre')
+							{
+								$periode = PMO_MyObject::factory('cotisationsPeriode');
+	                            
+								$periode->fk_pratiquant = $pratiquant->id;
+								$periode->fk_periode = $periodeId;
+	                            $periode->prixPaye = 0;
+								$periode->GenerateCommunication($pratiquant->id, $nperiodeId);
+	                            $periode->enOrdre = 1;
+								$periode->commit();
+							}
+							++$i;
+						}while($periodeId != '');
                     }
 					
 					$pratiquant->commit();
@@ -178,24 +197,24 @@
 			<input type="hidden" id="action" name="action" />
 			<input type="hidden" id="edit" name="edit" value="<? echo($edit); ?>" />
 
-<?echo($_SERVER['REMOTE_USER']);?>
-            <? if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
+			<?php echo($_SERVER['REMOTE_USER']);?>
+            <?php if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
 			<div class="Contents">
-				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
-				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><? } ?>
-				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><? } ?>
+				<?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><?php } ?>
+				<?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><?php } ?>
+				<?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><?php } ?>
 				<div class="EndFloat">&nbsp;</div>
 			</div>
-            <? } ?>
+            <?php } ?>
 
 			<div class="List Contents">
 				<div class="NewTitle">Identité</div>
 				<div class="New">
 					<div class="FieldName">Nom:</div>	
 					<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="nom"				name="nom"		 value="<? echo($pratiquant->nom); ?>">
-						<? } else {
+						<?php } else {
 							echo($pratiquant->nom);
 						} ?>
 					</div>
@@ -207,73 +226,80 @@
 					
 					<br><div class="FieldName">Prénom:</div>
 					<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
-						<? } else {
+						<?php } else {
 							echo($pratiquant->prenom);
 						} ?>
 					</div><br>
+					
+					<?php if($edit){ ?>
+						<div class="FieldName">Photo:</div>
+						<div class="InputField">
+							<input type="text" autocomplete="off" id="photo" name="photo" value="<? echo($pratiquant->photo); ?>">
+						</div><br>
+					<? } ?>
 
 					<div class="FieldName">Adresse:</div>	<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<? echo($pratiquant->adresse); ?>">
-						<? } else {
+						<?php } else {
 							echo($pratiquant->adresse);
 						} ?>
 					</div><br>
 					
 					<div class="FieldName">Code postal:</div>	<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="cp"		name="cp"		 value="<? echo($pratiquant->codePostal); ?>">
-						<? } else {
+						<?php } else {
 							echo($pratiquant->codePostal);
 						} ?>
 					</div><br>
 					
 					<div class="FieldName">Commune:</div>	<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="commune"		name="commune"	 value="<? echo($pratiquant->commune); ?>">
-						<? } else {
+						<?php } else {
 							echo($pratiquant->commune);
 						} ?>
 					</div><br>
 					
 					<div class="FieldName">Naissance:</div>	<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="naissance" name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
-						<? } else {
+						<?php } else {
 							echo(date('d/m/Y', strtotime($pratiquant->naissance)));
 						} ?>
 					</div><br>
 					
 					<div class="FieldName">Famille:</div>	<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->fk_famille); ?>">
-						<? } else {
-							echo($pratiquant->fk_famille);
+						<?php } else {
+							echo("<a href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->fk_famille . "</a>");
 						} ?>
 					</div><br>
 
                     <div class="FieldName">Téléphone:</div>	<div class="InputField">
-                        <? if($edit){ ?>
+                        <?php if($edit){ ?>
                             <input type="text" autocomplete="off" id="telephone" name="telephone" value="<? echo($pratiquant->telephone); ?>">
-                        <? } else {
+                        <?php } else {
                                 echo($pratiquant->telephone);
                         } ?>
                     </div><br>
                     
                     <div class="FieldName">GSM:</div>	<div class="InputField">
-                        <? if($edit){ ?>
+                        <?php if($edit){ ?>
                             <input type="text" autocomplete="off" id="gsm" name="gsm" value="<? echo($pratiquant->gsm); ?>">
-                        <? } else {
+                        <?php } else {
                             echo($pratiquant->gsm);
                         } ?>
                     </div><br>
 
                     <div class="FieldName">eMail:</div>	<div class="InputField">
-                        <? if($edit){ ?>
+                        <?php if($edit){ ?>
                             <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
-                        <? } else {
+                        <?php } else {
                             echo($pratiquant->email);
                         } ?>
                     </div><br>
@@ -285,25 +311,25 @@
 				<div class="New">
 					<div class="FieldName">N° licence:</div> 
 					<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" id="licence" name="licence"	autocomplete="off"	value="<? echo($pratiquant->licenceNbr); ?>">
-						<? } else {
+						<?php } else {
 							echo($pratiquant->licenceNbr);
 						} ?>
 					</div><br>
 
 					<div class="FieldName">Expiration:</div>
 					<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<input type="text" id="licenceDate" name="licenceDate"		value="<? echo(date('d/m/Y', strtotime($pratiquant->licenceDate))); ?>">
-						<? } else {
+						<?php } else {
 							echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
 						} ?>
 					</div><br>
 
 					<div class="FieldName">Grade:</div> 
 					<div class="InputField">
-							<? 
+							<?php 
 								if($action != 'add')
 								{
 									$grade = $pratiquant->GetGrade();		
@@ -315,7 +341,7 @@
 
 					<div class="FieldName">Section:</div> 
 					<div class="InputField">
-						<? if($edit){ ?>
+						<?php if($edit){ ?>
 							<select id="section" name="section">
 							<?php
 								$sections = sections::GetAll();
@@ -332,18 +358,18 @@
 								}
 							?>
 							</select>
-						<? } else {
+						<?php } else {
 							echo($pratiquant->GetSection()->libelle);
 						} ?>
 					</div><br>
 				</div>
 			</div>
 
-		<? if($id){ ?>
+		<?php if($id){ ?>
 			<div class="List Contents">
 				<div class="NewTitle">Grades</div>
 				<div class="New">
-					<?
+					<?php
 						if($pratiquant != NULL)
 						{
 							// Récupération des dates de passages de grades
@@ -355,13 +381,13 @@
 					?>
 									<div class="FieldName Grade"><? echo($grade->GetGrade()->libelle); ?>:</div> 
 									<div class="InputField">
-										<? if($edit){ ?>
-											<input type="text" name="grade<? echo($grade->fk_grade); ?>" id="grade<? echo($grade->fk_grade); ?>" value="<? echo(date('d/m/Y', strtotime($grade->date))); ?>">
-										<? } else {
+										<?php if($edit){ ?>
+											<input type="text" name="grade<? echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" value="<?php echo(date('d/m/Y', strtotime($grade->date))); ?>">
+										<?php } else {
 											echo(date('d/m/Y', strtotime($grade->date)));
 										} ?>
 									</div><br>
-					<?			} 
+					<?php		} 
 							}
 						}
 			
@@ -389,92 +415,102 @@
 						
 						<a class="Button" id="Add" href="#" onClick="AddGrade($('gradeList').value, $('gradeList').options[$('gradeList').options.selectedIndex].innerHTML);">Ajouter</a>
 					<br>
-			   <? } ?>
+			   <?php } ?>
 				</div>
 			</div>
-		<? } ?>
+		<?php } ?>
 
-		<? if($id){ ?>
+		<?php if($id){ ?>
 			<div class="List Contents">
 				<div class="NewTitle">Statistiques</div>
 				<div class="New">
 					<div class="FieldName Stat">Présences depuis le dernier grade:</div>
-					<div class="InputField"><? echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
-					<? if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0" size="3"><? } ?>
+					<div class="InputField"><?php echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
+					<?php if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0" size="3"><?php } ?>
 					<br/>
 
 					<div class="FieldName Stat">Présences par saison:</div>
-					<div class="InputField"><? echo($pratiquant->GetPresencesCountForThisSeason()); ?></div><br/>
+					<div class="InputField"><?php echo($pratiquant->GetPresencesCountForThisSeason()); ?></div><br/>
 					
 					<div class="FieldName Stat">Stages du club cette saison:</div>
-					<div class="InputField"><? echo($pratiquant->GetCountStages()); ?></div><br/>
+					<div class="InputField"><?php echo($pratiquant->GetCountStages()); ?></div><br/>
 			
 				</div>
 			</div>
-		<? } ?>
+		<?php } ?>
 
-        <? if($id){ ?>
+        <?php if($id){ ?>
             <div class="List Contents">
                 <div class="NewTitle">Payements</div>
                 <div class="New">
                     <div class="FieldName Stat">Périodes payées:</div>
-                    <? 
+                    <?php
                     $periodes = $pratiquant->GetPaiedPeriodForSeason();
-                    foreach($periodes as $cperiode)
-                    {
-                        $periode = $cperiode->GetPeriode();
-                        
-                        ?><div class="Periode"><? echo($periode->libelle);
-                        /*if($edit)
-                        {
-                            $idPrix = "periodePrix" . $cperiode->fk_periode;
-                            $idOrdre = "periodeOrdre" . $cperiode->fk_periode;
-                            ?>
-                            <input type="text" name="<? echo($idPrix); ?>" id="<? echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
-                            <input type="checkbox" name="<? echo($idOrdre); ?>" id="<? echo($idOrdre); ?>" value="enOrdre"  />
-                            <?
-                        }
-                        else*/
-                        {
-                            ?><img class='Warning' src='css/images/001_06.png'></div><?
-                        }
-                    }
+					$count = count($periodes);
+					if($count > 0)
+					{
+						foreach($periodes as $cperiode)
+						{
+							$periode = $cperiode->GetPeriode();
+
+							?><div class="Periode"><?php echo($periode->libelle);
+							/*if($edit)
+							{
+								$idPrix = "periodePrix" . $cperiode->fk_periode;
+								$idOrdre = "periodeOrdre" . $cperiode->fk_periode;
+								?>
+									<input type="text" name="<? echo($idPrix); ?>" id="<?php echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
+									<input type="checkbox" name="<? echo($idOrdre); ?>" id="<?php echo($idOrdre); ?>" value="enOrdre"  />
+								<?
+							}
+							else*/
+							{
+								?><img class='Warning' src='css/images/001_06.png'></div><?php
+							}
+						}
+					}
                     
                     ?>
 
                     <br/>
             
+					<?php 
+						$periodes = $pratiquant->GetNoPayPeriod();
+						$count = count($periodes);
+					?>
                     <div class="FieldName Stat">Périodes non payées:</div>
-                    <div class="InputField"><? echo($pratiquant->GetCountNoPayPeriod());?></div>
-                    <?
-                        $periodes = $pratiquant->GetNoPayPeriod();
-                        foreach($periodes as $cperiode)
-                        {
-                            $periode = $cperiode->GetPeriode();
-                            
-                            ?><div class="Periode"><? echo($periode->libelle); ?>: <?
-                            if($edit)
-                            {
-                                $idPrix = "periodePrix" . $cperiode->fk_periode;
-                                $idOrdre = "periodeOrdre" . $cperiode->fk_periode;
-                                $enOrdre = ($cperiode->enOrdre == 1);
-                                ?>
-                                    <input type="text" name="<? echo($idPrix); ?>" id="<? echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
-                                <input type="checkbox" name="<? echo($idOrdre); ?>" id="<? echo($idOrdre); ?>" value="enOrdre" <? echo($enOrdre?"checked":""); ?> />
-                                <?
-                            }
-                            else
-                            {
-                                ?><img class='Warning' src='css/images/001_05.png'><?
-                            }
-                            ?></div><?
-                        }
+                    <div class="InputField"><?php echo($count);?></div>
+                    <?php
+                        if($count > 0)
+						{
+							$i = 0;
+							foreach($periodes as $periode)
+							{
+
+								?><div class="Periode"><?php echo($periode->libelle); ?>: <?php
+								if($edit)
+								{
+									$idid = "periodeId" . $i;
+									$idOrdre = "periodeOrdre" . $i;
+									?>
+										<input type="hidden" name="<? echo($idid); ?>" id="<? echo($idid); ?>" value="<?php echo($periode->id); ?>">
+										<input type="checkbox" name="<? echo($idOrdre); ?>" id="<?php echo($idOrdre); ?>" value="enOrdre" />
+									<?php
+								}
+								else
+								{
+									?><img class='Warning' src='css/images/001_05.png'><?php
+								}
+								?></div><?php
+								++$i;
+							}
+						}
                     
                     ?>
                     <br/>
                     <div id="NewPeriode"></div>
 
-                    <? if($edit){ ?>&nbsp;Ajouter une période&nbsp;
+                    <?php if($edit){ ?>&nbsp;Ajouter une période&nbsp;
                        <select id="periodeList" name="periodeList">
 						<?php
                             $periodes = periodes::GetNewForPratiquant($pratiquant->id);
@@ -492,7 +528,7 @@
 						?>
 						</select>
                         <a class="Button" id="AddPeriode" href="#" onClick="AddPeriode($('periodeList').value, $('periodeList').options[$('periodeList').options.selectedIndex].innerHTML);">Ajouter</a>
-                    <? } ?>
+                    <?php } ?>
                     <br/>
             
             
@@ -500,21 +536,21 @@
                     <br/>
                     <div class="FieldName Stat">Cours non payés:</div>
                     <div class="InputField"><? echo($pratiquant->GetCountNoPayLesson()); ?></div>
-                    <? if($edit){ ?>&nbsp;Ajouter des payements&nbsp;<input type="text" name="payements" id="payements" value="0" size="3"><? } ?>
+                    <?php if($edit){ ?>&nbsp;Ajouter des payements&nbsp;<input type="text" name="payements" id="payements" value="0" size="3"><?php } ?>
                     <br/>
     
                 </div>
             </div>
-        <? } ?>
+        <?php } ?>
 
-            <? if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
+        <?php if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
             <div class="Contents">
-				<? if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><? } ?>
-				<? if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><? } ?>
-				<? if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><? } ?>
+				<?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><?php } ?>
+				<?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><?php } ?>
+				<?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><?php } ?>
 				<div class="EndFloat">&nbsp;</div>
 			</div>
-                        <? } ?>
+        <?php } ?>
 
 		</form>
 	</body>

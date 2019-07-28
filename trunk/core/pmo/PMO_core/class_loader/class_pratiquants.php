@@ -7,7 +7,7 @@ require_once("class_cotisationsPeriode.php");
 class pratiquants extends PMO_MyObject{
 	public static $TableName = 'pratiquants';
 	
-	public function IsFamille()
+	public function IsFamilyMember()
 	{
 		if($this->fk_famille == NULL || $this->fk_famille == $this->id)
 		{
@@ -19,9 +19,9 @@ class pratiquants extends PMO_MyObject{
 		}
 	}
 	
-	public function GetChefFamille()
+	public function GetFamilyHead()
 	{
-		if($this->IsFamille() && $this->fk_famille != NULL)
+		if($this->IsFamilyMember() && $this->fk_famille != NULL)
 		{
 			$prat = PMO_MyObject::factory(self::$TableName);
 			$prat->id = $this->fk_famille;
@@ -125,17 +125,21 @@ class pratiquants extends PMO_MyObject{
     // recupere le nombre de periode que le pratiquant n'a pas paye
     public function GetCountNoPayPeriod()
     {
-        return count(cotisationsPeriode::GetToPayByPratiquant($this));
+        return count(periodes::GetToPayByPratiquant($this));
     }
     public function GetNoPayPeriod()
     {
-        return cotisationsPeriode::GetToPayByPratiquant($this);
+        return periodes::GetToPayByPratiquant($this);
+    }
+    public function GetNoPayLessonInPeriod($period)
+    {	
+		return count(presences::GetByPratiquantForThisPeriod($this->id, $period->id));
     }
     public function GetPaiedPeriodForSeason()
     {
         return cotisationsPeriode::GetPaiedByPratiquantForSeason($this);
     }
-    
+
     // recupere le nombre de cours que le pratiquant n'a pas paye
     public function GetCountNoPayLesson()
     {
@@ -172,22 +176,34 @@ class pratiquants extends PMO_MyObject{
 
 	}
     
-    public function GetFamille()
+    public function GetFamily()
 	{
 		$controler = new PMO_MyController();
 		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND fk_famille = " . $this->id . ";");
-        
+
 		return self::GetArray($map);
+	}
+	
+	public function IsHttpPhoto()
+	{
+		return preg_match('/^http(s)?:/', $this->photo);
 	}
 	
 	public function ExistsPhoto()
 	{
-		$fullPath = $this->GetPhotoSystemPath();
-		if($this->photo != null && file_exists($fullPath))
+		if($this->IsHttpPhoto())
 		{
 			return true;
 		}
-		return false;
+		else
+		{
+			$fullPath = $this->GetPhotoSystemPath();
+			if($this->photo != null && 1) //file_exists($fullPath))
+			{
+				return true;
+			}
+			return false;
+		}
 	}
 	
 	public function GetPhotoTitle()
@@ -203,7 +219,10 @@ class pratiquants extends PMO_MyObject{
 	{
 		if($this->ExistsPhoto())
 		{
-			return "photos" . "/" . $this->photo;
+			if ($this->IsHttpPhoto())
+				return $this->photo;
+			else
+				return "photos" . "/DropboxThumb2.php?path=" . $this->photo;
 		}
 		return "css/images/NoPhoto.png";
 	}
@@ -328,6 +347,35 @@ class pratiquants extends PMO_MyObject{
 		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE licenceDate <= current_date;');
 	
 		return self::GetArray($map);		
+	}
+	
+	public static function GetCount($date1, $date2)
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('select * from ' . self::$TableName . ' as pra where pra.id in (select pre.fk_pratiquant from ' . presences::$TableName . ' as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '")');
+	
+		return count(self::GetArray($map));		
+	}
+	
+	public static function GetCountNeupre($date1, $date2)
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('select * from ' . self::$TableName . ' as pra where pra.codePostal in ("4120", "4121", "4122") and pra.id in (select pre.fk_pratiquant from ' . presences::$TableName . ' as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '")');
+	
+		return count(self::GetArray($map));		
+	}
+	
+	public static function GetCountAge($date1, $date2, $age1, $age2, $male)
+	{
+		$today = getdate();
+		$year = $today[year];
+		$dateAge1 = ($year - $age1) . "-12-31";
+		$dateAge2 = ($year - $age2) . "-01-01";
+		
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('select nom, prenom, sexe from pratiquants as pra where pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.sexe = ' . $male . ' and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
+	
+		return count(self::GetArray($map));		
 	}
 }
 

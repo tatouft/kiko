@@ -25,12 +25,14 @@
 		</div>		
 		
 		<div class="List Contents">
-			<?php require_once("controls/ResultHeader.php"); ?>
+			<?php 
+                require_once("services/core/FillTable.php");
+				require_once("controls/ResultHeader.php"); 
+			?>
 			<div id='PratiquantList'>
 				<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formList" id="formList">
 				<?php
 					$action = "all";
-                    require_once("services/core/FillTable.php");
 					require_once("services/core/getPratiquants.php"); 
 				?>
 				</form>

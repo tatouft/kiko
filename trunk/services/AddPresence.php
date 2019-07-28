@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Params:
  * id = pratiquant id

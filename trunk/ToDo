@@ -4,8 +4,8 @@ v Pret à présenter
 - Changer la politique d'affichage des élèves qui doivent payer. Dire qu'il doivent payer une période s'il sont présent à des cours d'une période lié à leur section s'il ne l'ont pas déjà payée
 - Supprimer le payement au cours
 - Check des données d'ajout et de modif pour ne pas faire n'importe quoi
-- Del des grades
-- Photos
+- Ajouter la possibilité de Del des grades
+v Photos
 - Tab examens, section et date du passage de grade, il affiche les gens prets
 - Tab expiration, section et date de l'expiration, il affiche les gens en expiration
 - Montée, Section. Il affiche les élève de cette section à être prêt à changer de section
@@ -14,11 +14,13 @@ v Pret à présenter
 	- Ne pas rafraichir quand on ajoute un grade, sinon on perd le grade en cours (ajax)
 	
 - Partout: Ajouter des control de calendrier pour entrer les dates.
-- Permettre d'ajouter une période
+v Permettre d'ajouter une période
 v Lier les pratiquants aux périodes
 v Permettre de spécifier qu'une période a été payée
 - Générer les virements avec communication structurée
 - Impossible de deleter si on a déjà fait d'autres opérations
+- Connecter au REST de la fédé pour remplir le tab fédé
+- Permettre de restaurer la pouvelle
 
 En cours:
 v Poubelle

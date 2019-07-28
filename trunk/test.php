@@ -52,7 +52,7 @@ test de modif
 	{
 		foreach($pratiquants as $prat)
 		{
-			echo($prat->nom . " " . $prat->prenom . " " . ($prat->IsFamille()?"famille":"pas famille"));
+			echo($prat->nom . " " . $prat->prenom . " " . ($prat->IsFamilyMember()?"famille":"pas famille"));
 			if($prat->GetGrade() != NULL)
 				echo(" " . $prat->GetGrade()->GetGrade()->$libelle);
 			else
@@ -78,7 +78,7 @@ test de modif
 		foreach($pratiquants as $prat)
 		{
 			//echo($prat->IsFamille());
-			echo($prat->nom . " " . $prat->prenom . " " . ($prat->IsFamille()?"famille":"pas famille"));
+			echo($prat->nom . " " . $prat->prenom . " " . ($prat->IsFamilyMember()?"famille":"pas famille"));
 			echo("<br>");
 		}
 	}
@@ -95,7 +95,7 @@ test de modif
 		foreach($pratiquants as $prat)
 		{
 			//echo($prat->IsFamille());
-			echo($prat->nom . " " . $prat->prenom . " " . ($prat->IsFamille()?"famille":"pas famille"));
+			echo($prat->nom . " " . $prat->prenom . " " . ($prat->IsFamilyMember()?"famille":"pas famille"));
 			echo("<br>");
 		}
 	}

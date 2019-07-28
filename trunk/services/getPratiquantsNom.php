@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Params:
  * section = section id split by ','
@@ -26,7 +26,13 @@
 		{				
 			$checked = presences::Exists($prat->id,$today)?'Checked':'Unchecked';
 			echo("<div class='" . $checked . "' onClick='AddPresence(" . $prat->id . ",this)'>");
-			echo("<div class='Identity'><img src='" . $prat->GetPhotoHttpPath() . "' title='" . $prat->GetPhotoTitle() . "'/></div>");
+			echo("<div class='Identity'>");
+			echo("<img src='" . $prat->GetPhotoHttpPath() . "' title='" . $prat->GetPhotoTitle() . "'/>");
+			echo("</div>");
+			if($prat->IsLicenceExpired())
+			{
+				echo("<div class='Licence'><div>Assurance Expirée</div></div>");
+			}
 			echo("<div class='fname'>" . ucfirst($prat->nom) . "</div> <div class='name'>" . ucfirst($prat->prenom) . "</div>");
 			echo("</div>");
 			

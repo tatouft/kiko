@@ -28,24 +28,6 @@
             }
             return $pratiquants;
         }
-        public static function GetToPayByPratiquant($prat)
-        {
-            $controler = new PMO_MyController();
-            
-            
-            $sql = "SELECT cp.*";
-            $sql .= " FROM " . self::$TableName . " as cp";
-            $sql .= "   , " . periodes::$TableName . " as p";
-            $sql .= " WHERE cp.fk_pratiquant = " . $prat->id;
-            $sql .= "   AND cp.fk_periode = p.id";
-            $sql .= "   AND cp.enOrdre = 0";
-            $sql .= " ORDER BY p.dateDebut ASC";
-            
-            $map = $controler->queryController($sql);
-            
-            $table = self::GetArray($map);
-            return $table;
-        }
         
         public static function GetPaiedByPratiquantForSeason($prat)
         {

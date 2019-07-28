@@ -13,6 +13,17 @@
 	font-weight: bold;
 	text-align: center;
 	font-size: +1em;
+        height: 20px;
+}
+
+.Buttons li a#email
+{
+	width:  20px;
+	height: 20px;
+	float: right;
+	margin-left: 3px;
+	background-image: url('images/email.png');
+	background-repeat: no-repeat;
 }
 
 .DivSearchBox
