@@ -22,6 +22,7 @@
 		1F6C0FC10F018E1A00231EAF /* new.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = new.php; sourceTree = "<group>"; };
 		1F763F9A1441F0F0006735A2 /* class_cotisationsSimple.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = class_cotisationsSimple.php; sourceTree = "<group>"; };
 		1F9310B512F8A8E900980D5A /* presences.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = presences.css; sourceTree = "<group>"; };
+		1FAB0E981F6ED28D00785BBE /* saisons.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = saisons.php; sourceTree = "<group>"; };
 		1FBE18DE161249B100A5A519 /* config.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; name = config.php; path = config/config.php; sourceTree = "<group>"; };
 		1FBFA6900EA93082003EA493 /* SearchGauche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchGauche.png; sourceTree = "<group>"; };
 		1FC22C0F0EDA06D500F37789 /* completeName.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = completeName.php; path = services/completeName.php; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 		1FD1E3430EA522E600870DE7 = {
 			isa = PBXGroup;
 			children = (
+				1FAB0E981F6ED28D00785BBE /* saisons.php */,
 				1F4ABAFD1611A3D100484F73 /* calendar */,
 				1F649E2715E8E98600380394 /* fpdf */,
 				1F649E2615E8E7A500380394 /* mail.php */,
@@ -303,6 +305,8 @@
 /* Begin PBXProject section */
 		1FD1E3450EA522E700870DE7 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1FD1E3480EA522E700870DE7 /* Build configuration list for PBXProject "kobukai" */;
 			compatibilityVersion = "Xcode 3.0";
 			developmentRegion = English;

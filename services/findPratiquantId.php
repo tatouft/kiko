@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Params:
  * action = all, section, ...

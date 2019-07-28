@@ -27,8 +27,8 @@
 
 div.name,div.fname
 {
-	width: 94px;
-	text-align: center;
+    width: 94px;
+    text-align: center;
 }
 
 div.Identity
@@ -41,6 +41,22 @@ div.Identity
 div.Identity img
 {
 	width: 100px;
+}
+div.Licence
+{
+    height: 0px;
+}
+div.Licence div
+{
+    overflow: hidden;
+    width: 100px;
+    height: 40px;
+    position: relative;
+    top: -45px;
+    text-align: center;
+    color: white;
+    background-color: #8F0013;
+    opacity: 0.7;
 }
 
 div.Checked,div.Unchecked

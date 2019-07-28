@@ -44,19 +44,22 @@
     {
         if($prat->adresse)
         {  
-            $nom = ucfirst($prat->nom) . " " . ucfirst($prat->prenom);
-            
-            $famille = $prat->GetFamille();
-            if($famille)
-            {
-                foreach($famille as $fam)
-                {
-                    $nom = $nom . "\n" . ucfirst($fam->nom) . " " . ucfirst($fam->prenom);
-                }
-            }
-            
-            $ville = $prat->codePostal . " " . $prat->commune;
-            $data[$i] = utf8_decode($nom) . "\n" . utf8_decode($prat->adresse) . "\n" . utf8_decode($ville);
+			if(!$prat->IsFamilyMember())
+			{
+				$nom = ucfirst($prat->nom) . " " . ucfirst($prat->prenom);
+
+				$famille = $prat->GetFamily();
+				if($famille)
+				{
+					foreach($famille as $fam)
+					{
+						$nom = $nom . "\n" . ucfirst($fam->nom) . " " . ucfirst($fam->prenom);
+					}
+				}
+
+				$ville = $prat->codePostal . " " . $prat->commune;
+				$data[$i] = utf8_decode($nom) . "\n" . utf8_decode($prat->adresse) . "\n" . utf8_decode($ville);
+			}
             $i++;
         }
         else

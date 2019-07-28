@@ -131,6 +131,24 @@ function AddGrade(gradeId, gradeLibelle)
 	++nbNewGrades;
 }
 
+var nbNewNewPeriode = 0;
+function AddNewPeriode(libelleLong, libelleCourt, dateDebut, dateFin)
+{
+	var text = "<div class='NotSaved'><div class='libelle'>" + libelleLong + "</div><div class='court'>" + libelleCourt + "</div><div class='debut date'>" + dateDebut +"</div><div class='fin date'>" + dateFin + "</div>";
+	text += "<input type='hidden' name='newPeriodeLong" + nbNewNewPeriode + "' id='newPeriodeLong" + nbNewNewPeriode + "' value='" + libelleLong + "'>";
+	text += "<input type='hidden' name='newPeriodeCourt" + nbNewNewPeriode + "' id='newPeriodeCourt" + nbNewNewPeriode + "' value='" + libelleCourt + "'>";
+	text += "<input type='hidden' name='newPeriodeDebut" + nbNewNewPeriode + "' id='newPeriodeDebut" + nbNewNewPeriode + "' value='" + dateDebut + "'>";
+	text += "<input type='hidden' name='newPeriodeFin" + nbNewNewPeriode + "' id='newPeriodeFin" + nbNewNewPeriode + "' value='" + dateFin + "'></div> ";
+	$('NewPeriode').innerHTML += text;
+	
+	++nbNewNewPeriode;
+}
+
+function CancelNewPeriode()
+{
+	$('NewPeriode').innerHTML = "";
+}
+
 var nbNewPeriodes = 0;
 function AddPeriode(preiodeId, periodeLibelle)
 {
