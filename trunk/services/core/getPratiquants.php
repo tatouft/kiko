@@ -118,7 +118,7 @@
 				echo("&nbsp;" . $rest);
 //				echo("</td>\n\t\t\t<td>");
  
-//                // Bouttons
+//                // Bouttons b
 //                if(in_array($_SERVER['REMOTE_USER'], $admins))
 //                {
 //                    echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
