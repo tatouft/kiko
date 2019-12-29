@@ -344,7 +344,7 @@ class pratiquants extends PMO_MyObject{
 	public static function GetExpired()
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE licenceDate <= current_date;');
+		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE licenceDate <= current_date AND  deleted = 0;');
 	
 		return self::GetArray($map);		
 	}

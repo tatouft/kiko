@@ -49,7 +49,7 @@
 				<th>License</th>
                 <th>Cotisation</th>
 				<th>Examen</th>
-				<th>&nbsp;</th>
+				<!--<th>&nbsp;</th>-->
 			</tr>
 			<?
 			$mailto = "";
@@ -66,7 +66,7 @@
                 	}
                 }
 
-				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ")' ondblclick='Select(" . $prat->id . ");OpenPersonne();'>");
+				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . $prat->prenom . "\", \"" . $prat->nom . "\")' ondblclick='Select(" . $prat->id . ", \"" . $prat->prenom . "\", \"" . $prat->nom . "\");OpenPersonne();'>");
 				echo("<td><a name='Prat" . $prat->id . "'></a>");
 				
 				// Name
@@ -116,14 +116,14 @@
                 $ready = (($rest + 4) >= 0);
 				echo($ready?"<img class='TableButton' src='css/images/001_06.png'>":"");
 				echo("&nbsp;" . $rest);
-				echo("</td>\n\t\t\t<td>");			
-				
-                // Bouttons
-                if(in_array($_SERVER['REMOTE_USER'], $admins))
-                {
-                    echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
-                }
-                echo("<a href='mailto:" . $prat->email . "' class='TableButton' id='singleEmail' title='" . $prat->email . "' target='_blank'></a>");
+//				echo("</td>\n\t\t\t<td>");
+
+//                // Bouttons
+//                if(in_array($_SERVER['REMOTE_USER'], $admins))
+//                {
+//                    echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
+//                }
+//                echo("<a href='mailto:" . $prat->email . "' class='TableButton' id='singleEmail' title='" . $prat->email . "' target='_blank'></a>");
                 echo("</td></tr>\n\t\t");
 			}
 			?>

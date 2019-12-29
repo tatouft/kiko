@@ -18,6 +18,8 @@
 	</ul>
 	<script type="text/javascript">
 		selectedId = 0;
+		selectedFirstName = '';
+		selectedLastName = '';
 		function DeSelect()
 		{
 			if(selectedId !== 0)
@@ -27,11 +29,13 @@
 				$("ActionButtons").className = "Buttons invisible";
 			}
 		}
-		function Select(id)
+		function Select(id, firstName, lastName)
 		{
 			DeSelect();
 			$('PratRow'+id).className = "Selected";
 			selectedId = id;
+            selectedFirstName = firstName;
+            selectedLastName = lastName;
 			$("ActionButtons").className = "Buttons";
 		}
 		
@@ -42,7 +46,7 @@
 		
 		function DeletePersonne()
 		{
-			DeSelect();
+            DeletePratiquant( selectedFirstName, selectedLastName, selectedId);
 		}
 	</script>
 </div>
