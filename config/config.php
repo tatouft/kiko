@@ -1,15 +1,16 @@
 <?
     require('PdfConfig.php');
-	$debug = true;
+	$debug = false;
 
-	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'] . "";
+	$_SESSION['SiteRoot'] = '/homez.462/komewntp/www/kiko';
+    $_SESSION['DbName'] = 'kome';
 
     $pdfConfig = new PDFPubliConfig;
     $pdfConfig->CellWidth = 95;
-    $pdfConfig->CellHeight = 37;
+    $pdfConfig->CellHeight = 39;
     $pdfConfig->NbCellByLine = 2;
 
 	date_default_timezone_set("Europe/Brussels");
 
-    $admins = array("tatou", "");
+    $admins = array("tatou", "Tatou");
 ?>

@@ -116,12 +116,6 @@ ul.Buttons li:hover
 	background-image: url(images/12.png);	
 }
 
-#singleEmail.TableButton
-{
-    margin-left: 12px;
-    background-image: url('images/email.png');
-    box-shadow: 2px 2px 2px grey;
-}
 
 input
 {
@@ -186,57 +180,19 @@ div.value
     display: inline-block;
 }
 
-div.NewPeriode div
+div#NewPeriode div
 {
     margin: auto;
-    width: 56%;
+    width: 70%;
     overflow: auto;
 }
 
-div.NewPeriode div div
+div#NewPeriode div div
 {
     float: left;
     padding: 5px;
+    width: 27%;
     margin: auto;
     overflow: auto;
 
-}
-div.NewPeriode div.NotSaved
-{
-    background-color: lightyellow;
-}
-div.NewPeriode div div.libelle
-{
-    width: 53%;
-}
-div.NewPeriode div div.court
-{
-    width: 10%;
-}
-div.NewPeriode div div.date
-{
-    text-align: center;
-    width: 15%;
-}
-
-div#NewPeriodeFields
-{
-    padding-top: 10px;
-    margin:auto;
-    width: 30%;
-}
-
-div#NewPeriodeFields div
-{
-    padding: 3px;
-}
-div.NewPeriode div.Header
-{
-    background-color: lightgrey;
-}
-div.NewPeriode div.Header div
-{
-    border-color: white;
-    border-style: solid;
-    border-width: 1px;
 }

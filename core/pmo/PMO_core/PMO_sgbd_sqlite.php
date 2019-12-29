@@ -31,7 +31,7 @@ class PMO_Sgbd_Sqlite extends PMO_Sgbd_Pdo {
 			if(isset($row[2]))
 				$Type = $row[2];	
 
-			if (eregi('auto_increment', $row[2]))
+			if (preg_match('~auto_increment~i', $row[2]))
 				$Extra = "auto_increment";
 			else
 				$Extra = "";	

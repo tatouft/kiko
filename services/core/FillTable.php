@@ -13,6 +13,10 @@
 		{
             $pratiquants = pratiquants::GetByExam($section);
 		}
+        else if($action == "license")
+        {
+            $pratiquants = pratiquants::GetExpired();
+        }
         else if($action == "poubelle")
 		{
             $pratiquants = pratiquants::GetPoubelle($section);

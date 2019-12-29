@@ -46,7 +46,7 @@
             $sql .= "   , " . periodes::$TableName . " as p";
             $sql .= " WHERE cp.fk_pratiquant = " . $prat->id;
             $sql .= "   AND cp.fk_periode = p.id";
-            $sql .= "   AND cp.enOrdre = 1";
+            //$sql .= "   AND cp.enOrdre = 1";
             $sql .= "   AND p.dateDebut >= '" . $year . "-09-01'";
             $sql .= " ORDER BY p.dateDebut ASC";
             

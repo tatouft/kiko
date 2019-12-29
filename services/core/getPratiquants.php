@@ -123,6 +123,7 @@
                 {
                     echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
                 }
+                echo("<a href='mailto:" . $prat->email . "' class='TableButton' id='singleEmail' title='" . $prat->email . "' target='_blank'></a>");
                 echo("</td></tr>\n\t\t");
 			}
 			?>
