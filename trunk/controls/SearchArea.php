@@ -17,6 +17,7 @@
 	
 	<div class="SearchAreaContent Invisible" id="SectionArea">
 		<div id="CSection" class="criteres">
+            Affiche uniquement les pratiquants d'une section.<br/>
 			Section: 
 			<select id="filterSection" name="filterSection">
 				<?php
@@ -48,8 +49,8 @@
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">
-		Sections, date
-		<div class="SearchButton"><input type="button" value="Afficher"></div>
+		Affiche uniquement les pratiquants dont la licence a expiré.
+		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','license','');" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="UpArea">

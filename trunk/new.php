@@ -264,7 +264,7 @@
 						} ?>
 					</div><br>
 					
-					<div class="FieldName">Naissance:</div>	<div class="InputField">
+					<div class="FieldName">Naissance:</div><div class="InputField">
 						<?php if($edit){ ?>
 							<input type="text" autocomplete="off" id="naissance" name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
 						<?php } else {
@@ -272,7 +272,7 @@
 						} ?>
 					</div><br>
 					
-					<div class="FieldName">Famille:</div>	<div class="InputField">
+					<div class="FieldName">Famille:</div><div class="InputField">
 						<?php if($edit){ ?>
 							<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->fk_famille); ?>">
 						<?php } else {
@@ -300,7 +300,7 @@
                         <?php if($edit){ ?>
                             <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
                         <?php } else {
-                            echo($pratiquant->email);
+                            echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
                         } ?>
                     </div><br>
                 </div>

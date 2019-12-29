@@ -64,6 +64,19 @@ function Search(baseUrl, action, param1, param2)
 						 }		
 		);
 	}
+	if(action == "license")
+	{
+		$('PratiquantList').innerHTML = $loading;
+		url = baseUrl + "?action=license";
+		new Ajax.Updater($('PratiquantList'),
+			url, {
+				evalScripts: true,
+				onFailure: function(transport) {
+					alert('oups, ajax problem');
+				}
+			}
+		);
+	}
 	if(action == "presences")
 	{
         $('PratiquantList').innerHTML = $loading;

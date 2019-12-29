@@ -4,8 +4,7 @@
 	<div class="HeaderTitle"><? echo($headerTitle); ?></div>
 	<ul class="Buttons">
 		<li>
-			<?php $pratiquants = FillTable($action, $section); ?>
-			<a href="mailto:<? foreach($pratiquants as $prat) echo($prat->email . ';');  ?>" target="_blank" id="email"></a>
+			<a href="mailto:" target="_blank" id="email"></a>
 		</li>
 	</ul>
 	<ul class="Buttons invisible" id="ActionButtons">

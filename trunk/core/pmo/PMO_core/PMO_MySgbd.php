@@ -76,28 +76,28 @@ abstract class PMO_MySGBD implements PMO_Sgbd {
 	}
 
 	protected function translateType($type){
-		if (eregi('int', $type)) {
+		if (preg_match('~int~i', $type)) {
     		return "int";
 		}
-		if (eregi('float', $type)) {
+		if (preg_match('~float~i', $type)) {
     		return "float";
 		}
-		if (eregi('blob', $type)) {
+		if (preg_match('~blob~i', $type)) {
     		return "alnum";
 		}
-		if (eregi('text', $type)) {
+		if (preg_match('~text~i', $type)) {
     		return "alnum";
 		}
-		if (eregi('char', $type)) {
+		if (preg_match('~char~i', $type)) {
     		return "alnum";
 		}			
-		if (eregi('date', $type)) {
+		if (preg_match('~date~i', $type)) {
     		return "date";
 		}
-		if (eregi('time', $type)) {
+		if (preg_match('~time~i', $type)) {
     		return "date";
 		}
-		if (eregi('double', $type)) {
+		if (preg_match('~double~i', $type)) {
     		return "int";
 		}
 		return "alnum";
