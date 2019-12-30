@@ -24,9 +24,13 @@
 		{
 			if(selectedId !== 0)
 			{
-				$('PratRow'+selectedId).className = "Selectable";
+			    try {
+                    $('PratRow' + selectedId).className = "Selectable";
+                    $("ActionButtons").className = "Buttons invisible";
+                } catch(exception) {
+
+                }
 				selectedId = 0;
-				$("ActionButtons").className = "Buttons invisible";
 			}
 		}
 		function Select(id, firstName, lastName)

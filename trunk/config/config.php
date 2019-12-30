@@ -4,6 +4,7 @@
 
 	$_SESSION['SiteRoot'] = '/homez.462/komewntp/www/kiko';
     $_SESSION['DbName'] = 'kome';
+    $_SESSION['Space'] = '';
 
     $pdfConfig = new PDFPubliConfig;
     $pdfConfig->CellWidth = 95;

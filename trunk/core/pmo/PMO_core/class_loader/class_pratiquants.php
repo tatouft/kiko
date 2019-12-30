@@ -121,7 +121,7 @@ class pratiquants extends PMO_MyObject{
     {
         return 0;
     }
-    
+
     // recupere le nombre de periode que le pratiquant n'a pas paye
     public function GetCountNoPayPeriod()
     {
@@ -147,7 +147,35 @@ class pratiquants extends PMO_MyObject{
     }
     public function GetNoPayLesson()
     {
-        return cotisationsSimple::GetToPayByPratiquant($this);
+        //return cotisationsSimple::GetToPayByPratiquant($this);
+
+		$controler = new PMO_MyController();
+
+		$sql = "select pr.* ";
+		$sql .= "from " . presences::$TableName . " as pr ";
+		$sql .= "where pr.fk_pratiquant = " . $this->id;
+		$sql .= "  AND not exists ( ";
+		$sql .= "           select 1 ";
+		$sql .= "           FROM cotisationsSimple cs ";
+		$sql .= "           WHERE cs.fk_presences = " . $this->id;
+		$sql .= "           )";
+		$sql .= "  AND not exists (";
+		$sql .= "           select 1 ";
+		$sql .= "           from " . periodes::$TableName . " as pe, " . cotisationsPeriode::$TableName . " as co ";
+		$sql .= "           where pe.id = co.fk_periode ";
+		$sql .= "             AND co.fk_pratiquant = " . $this->id;
+		$sql .= "             AND pr.date >= pe.dateDebut ";
+		$sql .= "             AND pr.date <= pe.dateFin ) ";
+
+		$map = $controler->queryController($sql);
+
+		$i = 0;
+		while ($result = $map->fetchMap())
+		{
+			$presences[$i] = $result[presences::$TableName];
+			$i++;
+		}
+		return $presences;
     }
     
     public function GetPresencesCountForThisSeason()

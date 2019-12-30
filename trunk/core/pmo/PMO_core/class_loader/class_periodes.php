@@ -51,12 +51,19 @@
 
             $sql =  "SELECT p.* FROM";
             $sql .= " " . self::$TableName . " as p";
-            $sql .= " WHERE id NOT IN (";
-            $sql .= " SELECT fk_periode FROM " . cotisationsPeriode::$TableName . " as c";
-            $sql .= " WHERE fk_pratiquant = " . $id;
-            $sql .= ")";
-            $sql .= " AND dateFin > '" . $year . "-01-01'";
-            $sql .= "  ORDER BY dateDebut ASC";
+            $sql .= " WHERE ";
+            $sql .= "   id NOT IN (";
+            $sql .= "     SELECT fk_periode FROM " . cotisationsPeriode::$TableName . " as c ";
+            $sql .= "       WHERE fk_pratiquant = " . $id;
+            $sql .= "   )";
+            $sql .= "   AND p.dateFin > '" . $year . "-01-01'";
+            $sql .= "   AND p.dateDebut > (SELECT ps.date FROM passages as ps WHERE ps.fk_pratiquant = " . $id . " ORDER BY ps.date ASC LIMIT 1)";
+            $sql .= "   AND 0 = (SELECT count(c2.fk_periode) FROM cotisationsPeriode as c2, periodes as p2";
+            $sql .= "            WHERE c2.fk_periode = p2.id";
+            $sql .= "              AND fk_pratiquant = " . $id;
+            $sql .= "              AND p2.dateDebut <= p.dateDebut";
+            $sql .= "              AND p2.dateFin >= p.dateFin)";
+            $sql .= "   ORDER BY dateDebut ASC";
             
             $map = $controler->queryController($sql);
             
