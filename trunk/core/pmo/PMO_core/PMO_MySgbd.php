@@ -124,7 +124,7 @@ abstract class PMO_MySGBD implements PMO_Sgbd {
 		
 		$tablefields = $objectTable->getColumns(); 
 		foreach( $tablefields as $field){
-			$object->setAttribute($field, $result[$field]);
+			$object->setAttribute($field, stripslashes($result[$field]));
 		}
 	}
 	
@@ -149,7 +149,7 @@ abstract class PMO_MySGBD implements PMO_Sgbd {
 		$querypk = "";
 		$objectAttributes = $object->getObjectAttribute();
 		$objectTable = $object->getTable();
-			
+
 		foreach ($objectAttributes as $columns=>$value){
 			$tablepk = $objectTable->getPk();
 			if(!isset($tablepk))
@@ -162,7 +162,9 @@ abstract class PMO_MySGBD implements PMO_Sgbd {
 					$queryfield .= ",{$columns}=\"{$value}\"";
 				}
 		}
+
 		$query = "UPDATE {$objectTable->getTableName()} SET ".substr($queryfield, 1, strlen($queryfield))." WHERE ".substr($querypk, 5, strlen($querypk)).";";
+		//echo("<br/>Update: {$query}");
 		$this->querySGBD($query);
 		return TRUE;		
 	}
