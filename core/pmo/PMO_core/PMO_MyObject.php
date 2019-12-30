@@ -100,8 +100,10 @@ class PMO_MyObject implements PMO_Object{
 
 	public function getAttribute($attributename) {
 		// FJA
-		if(isset($this->object_attribute[$attributename]))
+		if(isset($this->object_attribute[$attributename])) {
+			//echo("<br/>Attr: " . $this->object_attribute[$attributename]);
 			return stripslashes($this->object_attribute[$attributename]);
+		}
 		else
 			return NULL;
 				
@@ -122,14 +124,14 @@ class PMO_MyObject implements PMO_Object{
 	public function setAttribute($attributename, $attributevalue) {	
 			//if(!isset($attributevalue))
 			//	throw new Exception("Error: attribute value is undefine: " . $attributename);
-			
 			if($this->object_table->issetAttribute($attributename))
 			{
 				// FJA
 				if(!isset($attributevalue))
 					$this->object_attribute[$attributename] = NULL;
-				else
+				else{
 					$this->object_attribute[$attributename] = addslashes($attributevalue);
+				}
 			}
 			else
 				throw new Exception("Error: attribute value is undefined");
@@ -170,7 +172,7 @@ class PMO_MyObject implements PMO_Object{
 	}
 	
 	public function commit(){
-		$SGBD = PMO_MySgbd::factorySgbd(); 
+		$SGBD = PMO_MySgbd::factorySgbd();
 		if($this->object_new == 0){
 			$SGBD->updateObject($this);
 		} else {

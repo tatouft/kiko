@@ -61,7 +61,7 @@ class PMO_MyController implements PMO_Controller {
 					$currentobject = PMO_MyObject::internalfactory($table);
 					$tablefields = $table->getColumns(); 
 					foreach( $tablefields as $field){
-						$currentobject->setAttribute($field, $db_result[$field]);
+						$currentobject->setAttribute($field, stripslashes($db_result[$field]));
 					}
 					$this->map_hash->addHash($tablename.$tablepk, $currentobject);
 				}

@@ -66,7 +66,7 @@
                 	}
                 }
 
-				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . $prat->prenom . "\", \"" . $prat->nom . "\")' ondblclick='Select(" . $prat->id . ", \"" . $prat->prenom . "\", \"" . $prat->nom . "\");OpenPersonne();'>");
+				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom, ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom, ENT_QUOTES | ENT_HTML401) . "\")' ondblclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom, ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom, ENT_QUOTES | ENT_HTML401) . "\");OpenPersonne();'>");
 				echo("<td><a name='Prat" . $prat->id . "'></a>");
 				
 				// Name
