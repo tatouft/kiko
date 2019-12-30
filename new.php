@@ -217,12 +217,12 @@
 						<?php } else {
 							echo($pratiquant->nom);
 						} ?>
-					</div>
+					</div><?php echo($_SESSION['Space']); ?>
 
 					<div class="InputField Photo">
                         <img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/>
                     </div>	
-                    <div class="FieldName FieldPhoto">Photo:</div>
+                    <div class="FieldName FieldPhoto">Photo:</div><?php echo($_SESSION['Space']); ?>
 					
 					<br><div class="FieldName">Prénom:</div>
 					<div class="InputField">
@@ -231,13 +231,13 @@
 						<?php } else {
 							echo($pratiquant->prenom);
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 					
 					<?php if($edit){ ?>
 						<div class="FieldName">Photo:</div>
 						<div class="InputField">
 							<input type="text" autocomplete="off" id="photo" name="photo" value="<? echo($pratiquant->photo); ?>">
-						</div><br>
+						</div><br><?php echo($_SESSION['Space']); ?>
 					<? } ?>
 
 					<div class="FieldName">Adresse:</div>	<div class="InputField">
@@ -246,7 +246,7 @@
 						<?php } else {
 							echo($pratiquant->adresse);
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 					
 					<div class="FieldName">Code postal:</div>	<div class="InputField">
 						<?php if($edit){ ?>
@@ -254,7 +254,7 @@
 						<?php } else {
 							echo($pratiquant->codePostal);
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 					
 					<div class="FieldName">Commune:</div>	<div class="InputField">
 						<?php if($edit){ ?>
@@ -262,7 +262,7 @@
 						<?php } else {
 							echo($pratiquant->commune);
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 					
 					<div class="FieldName">Naissance:</div><div class="InputField">
 						<?php if($edit){ ?>
@@ -270,7 +270,7 @@
 						<?php } else {
 							echo(date('d/m/Y', strtotime($pratiquant->naissance)));
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 					
 					<div class="FieldName">Famille:</div><div class="InputField">
 						<?php if($edit){ ?>
@@ -278,7 +278,7 @@
 						<?php } else {
 							echo("<a href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->fk_famille . "</a>");
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 
                     <div class="FieldName">Téléphone:</div>	<div class="InputField">
                         <?php if($edit){ ?>
@@ -286,7 +286,7 @@
                         <?php } else {
                                 echo($pratiquant->telephone);
                         } ?>
-                    </div><br>
+                    </div><br><?php echo($_SESSION['Space']); ?>
                     
                     <div class="FieldName">GSM:</div>	<div class="InputField">
                         <?php if($edit){ ?>
@@ -294,7 +294,7 @@
                         <?php } else {
                             echo($pratiquant->gsm);
                         } ?>
-                    </div><br>
+                    </div><br><?php echo($_SESSION['Space']); ?>
 
                     <div class="FieldName">eMail:</div>	<div class="InputField">
                         <?php if($edit){ ?>
@@ -316,7 +316,7 @@
 						<?php } else {
 							echo($pratiquant->licenceNbr);
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 
 					<div class="FieldName">Expiration:</div>
 					<div class="InputField">
@@ -325,7 +325,7 @@
 						<?php } else {
 							echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
 						} ?>
-					</div><br>
+					</div><br><?php echo($_SESSION['Space']); ?>
 
 					<div class="FieldName">Grade:</div> 
 					<div class="InputField">
@@ -425,15 +425,16 @@
 				<div class="NewTitle">Statistiques</div>
 				<div class="New">
 					<div class="FieldName Stat">Présences depuis le dernier grade:</div>
-					<div class="InputField"><?php echo($pratiquant->GetPresencesCountFromLastGrade()); ?></div>
+					<div class="InputField"><?php echo($pratiquant->GetPresencesCountFromLastGrade()); ?> / <?php echo($pratiquant->GetPresencesNeededForNextGrade()); ?></div>
 					<?php if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0" size="3"><?php } ?>
 					<br/>
 
-					<div class="FieldName Stat">Présences par saison:</div>
+					<div class="FieldName Stat">Présences pour cette saison:</div>
 					<div class="InputField"><?php echo($pratiquant->GetPresencesCountForThisSeason()); ?></div><br/>
 					
-					<div class="FieldName Stat">Stages du club cette saison:</div>
-					<div class="InputField"><?php echo($pratiquant->GetCountStages()); ?></div><br/>
+					<!--<div class="FieldName Stat">Stages du club cette saison:</div>
+					<div class="InputField"><?php echo($pratiquant->GetCountStages()); ?></div>-->
+                    <br/>
 			
 				</div>
 			</div>
@@ -453,25 +454,12 @@
 						{
 							$periode = $cperiode->GetPeriode();
 
-							?><div class="Periode"><?php echo($periode->libelle);
-							/*if($edit)
-							{
-								$idPrix = "periodePrix" . $cperiode->fk_periode;
-								$idOrdre = "periodeOrdre" . $cperiode->fk_periode;
-								?>
-									<input type="text" name="<? echo($idPrix); ?>" id="<?php echo($idPrix); ?>" value="<? echo($cperiode->prixPaye); ?>">
-									<input type="checkbox" name="<? echo($idOrdre); ?>" id="<?php echo($idOrdre); ?>" value="enOrdre"  />
-								<?
-							}
-							else*/
-							{
-								?><img class='Warning' src='css/images/001_06.png'></div><?php
-							}
+							?><div class="Periode"><?php echo($periode->libelle);?><img class='Warning' src='css/images/001_06.png'></div><?php
 						}
 					}
                     
                     ?>
-
+                    <div id="NewPeriode"></div>
                     <br/>
             
 					<?php 
@@ -508,7 +496,7 @@
                     
                     ?>
                     <br/>
-                    <div id="NewPeriode"></div>
+
 
                     <?php if($edit){ ?>&nbsp;Ajouter une période&nbsp;
                        <select id="periodeList" name="periodeList">
@@ -535,8 +523,15 @@
             
                     <br/>
                     <div class="FieldName Stat">Cours non payés:</div>
-                    <div class="InputField"><? echo($pratiquant->GetCountNoPayLesson()); ?></div>
-                    <?php if($edit){ ?>&nbsp;Ajouter des payements&nbsp;<input type="text" name="payements" id="payements" value="0" size="3"><?php } ?>
+                    <div class="InputField">
+                        <?
+                        if($pratiquant->GetNoPayLesson())
+                        {
+                            foreach($pratiquant->GetNoPayLesson() as $presences)
+                                echo($presences->date . "<br/>");
+                        }
+                        ?>
+                    </div>
                     <br/>
     
                 </div>

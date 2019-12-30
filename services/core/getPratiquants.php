@@ -112,10 +112,24 @@
 				echo("</td>\n\t\t\t<td>");
 				
 				// Examen
-                $rest = $prat->GetRestToNextGrade();
-                $ready = (($rest + 4) >= 0);
-				echo($ready?"<img class='TableButton' src='css/images/001_06.png'>":"");
-				echo("&nbsp;" . $rest);
+                try {
+
+
+                    if ($prat->GetPresencesNeededForNextGrade() > 0) {
+                        $rest = $prat->GetRestToNextGrade();
+                        $ready = (($rest + 4) >= 0);
+                        $percent = floor(100 / $prat->GetPresencesNeededForNextGrade() * $prat->GetPresencesCountFromLastGrade());
+                        if ($percent > 100)
+                            $percent = 100;
+                        echo("&nbsp;" . $percent . "% ");
+                        if ($rest > 0) {
+                            echo(" + " . $rest);
+                        }
+                        echo($ready ? "<img class='TableButton' src='css/images/001_06.png'>" : "");
+                    }
+                } catch (\Throwable $e) {
+
+                }
 //				echo("</td>\n\t\t\t<td>");
  
 //                // Bouttons b
@@ -129,7 +143,7 @@
 			?>
 		</table>
         <div id='Total'>Total: <? echo($count); ?></div>
-        <script>$('email').href = "mailto:<? echo($mailto); ?>";</script>
+        <script>$('email').href = "mailto:?bcc=<? echo($mailto); ?>";</script>
 		<? 
 	}
 	else

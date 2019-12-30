@@ -34,7 +34,7 @@
             $controler = new PMO_MyController();
 
             $today = getdate();
-            $year = $today[year];
+            $year = $today[year] - 1;
             if($today[mon] < 9)
             {
                 $year = $year - 1;
@@ -47,7 +47,7 @@
             $sql .= " WHERE cp.fk_pratiquant = " . $prat->id;
             $sql .= "   AND cp.fk_periode = p.id";
             //$sql .= "   AND cp.enOrdre = 1";
-            $sql .= "   AND p.dateDebut >= '" . $year . "-09-01'";
+            $sql .= "   AND p.dateDebut >= '" . $year . "-08-01'";
             $sql .= " ORDER BY p.dateDebut ASC";
             
             $map = $controler->queryController($sql);

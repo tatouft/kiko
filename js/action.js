@@ -165,7 +165,9 @@ function CancelNewPeriode()
 var nbNewPeriodes = 0;
 function AddPeriode(preiodeId, periodeLibelle)
 {
-	var text = "<div class='FieldName Periode'>" + periodeLibelle + ":</div> ";
+	var text = "<div class='Periode'>" + periodeLibelle + "</div> ";
+	//text = "<div class='Periode'>" . periodeLibelle . "<img class='Warning' src='css/images/001_06.png'></div>";
+
 	text += "<div class='InputField'><input type='hidden' name='newPeriodeId" + nbNewPeriodes + "' id='newPeriodeId" + nbNewPeriodes + "' value='" + preiodeId + "'></div><br>";
 	$('NewPeriode').innerHTML += text;
     
