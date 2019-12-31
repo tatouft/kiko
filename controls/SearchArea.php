@@ -12,7 +12,7 @@
 	<input type="hidden" id="filterAction">
 	<div class="SearchAreaContent" id="AllArea">
 		Tous les pratiquants
-		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','all');" value="Rafraichir"></div>
+		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','all');" value="Rafraichir"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="SectionArea">
@@ -29,7 +29,7 @@
 				?>
 			</select>
 		</div>
-		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','section',$F('filterSection'));" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','section',$F('filterSection'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExamensArea">
@@ -45,12 +45,12 @@
 				?>
 			</select>
 		</div>
-		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','examens',$F('filterSectionExam'));" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','examens',$F('filterSectionExam'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">
 		Affiche uniquement les pratiquants dont la licence a expiré.
-		<div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','license','');" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','license','');" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="UpArea">
@@ -60,7 +60,7 @@
 
     <div class="SearchAreaContent Invisible" id="PoubelleArea">
         Affiche les pratiquants supprimés
-        <div class="SearchButton"><input type="button" onclick="Search('services/getPratiquants.php','poubelle',0);" value="Afficher"></div>
+        <div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','poubelle',0);" value="Afficher"></div>
     </div>
 </div>
 </form>

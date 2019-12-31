@@ -17,6 +17,7 @@ class PMO_MyParser implements PMO_Parser{
 
 	public function parseRequest($string){
 		$string = addslashes($string);
+		$string = preg_replace('/\s+/', ' ', $string);
 		$str = explode(' ', $string);
 		$str = str_replace(array(';', '\r', '\n'), array('', ' ', ' '), $str);
 

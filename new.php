@@ -272,11 +272,61 @@
 						} ?>
 					</div><br><?php echo($_SESSION['Space']); ?>
 					
-					<div class="FieldName">Famille:</div><div class="InputField">
+					<div class="FieldName">Chef famille:</div><div class="InputField">
 						<?php if($edit){ ?>
-							<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->fk_famille); ?>">
+            				<!--<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom); ?>">-->
+
+                            <select id="famille" name="famille">
+                                <?php
+                                $selected = "";
+                                if($new || !$pratiquant->IsFamilyMember())
+                                {
+                                    $selected = "selected";
+                                }
+                                echo('<option value="' . $pratiquant->id . '" ' . $selected . '>-- Pas de famille --</option>');
+
+                                function RenderChef($chef, $selected)
+                                {
+                                    echo('<option value="' . $chef->id . '" ' . $selected . '>' . $chef->nom . " " . $chef->prenom . '</option>');
+                                }
+
+                                if(!$new)
+                                {
+                                    $myNameMembers = pratiquants::GetByLastNameButMe($pratiquant->nom, $pratiquant->id);
+                                    foreach($myNameMembers as $myNameMember)
+                                    {
+                                        RenderChef($myNameMember, '');
+                                    }
+                                    if(count($myNameMembers) > 0)
+                                    {
+                                        echo('<option value="">-----------</option>');
+                                    }
+                                }
+
+                                if($new)
+                                {
+                                    $id = 0;
+                                }
+                                else
+                                {
+                                    $id = $pratiquant->id;
+                                }
+
+                                $potentialsChefs = pratiquants::GetChefsButMe($id);
+
+                                foreach($potentialsChefs as $potentialChef)
+                                {
+                                    $selected = "";
+                                    if($pratiquant->fk_famille == $potentialChef->id)
+                                    {
+                                        $selected = "selected";
+                                    }
+                                    RenderChef($potentialChef, $selected);
+                                }
+                                ?>
+                            </select>
 						<?php } else {
-							echo("<a href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->fk_famille . "</a>");
+							echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
 						} ?>
 					</div><br><?php echo($_SESSION['Space']); ?>
 

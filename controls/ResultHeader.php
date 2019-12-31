@@ -20,6 +20,7 @@
 		selectedId = 0;
 		selectedFirstName = '';
 		selectedLastName = '';
+		selectedFamily = '';
 		function DeSelect()
 		{
 			if(selectedId !== 0)
@@ -31,15 +32,19 @@
 
                 }
 				selectedId = 0;
+                selectedFirstName = '';
+                selectedLastName = '';
+                selectedFamily = '';
 			}
 		}
-		function Select(id, firstName, lastName)
+		function Select(id, firstName, lastName, family)
 		{
 			DeSelect();
 			$('PratRow'+id).className = "Selected";
 			selectedId = id;
             selectedFirstName = firstName;
             selectedLastName = lastName;
+            selectedFamily = family;
 			$("ActionButtons").className = "Buttons";
 		}
 		
@@ -50,7 +55,14 @@
 		
 		function DeletePersonne()
 		{
-            DeletePratiquant( selectedFirstName, selectedLastName, selectedId);
+		    if(selectedFamily != '')
+            {
+                alert("Vous ne pouvez pas supprimer " + selectedLastName + " " + selectedFirstName + " car il est chef de famille. Modifiez d'abord les chefs de famille des pratiquants suivants: " + selectedFamily);
+            }
+            else
+            {
+                DeletePratiquant( selectedFirstName, selectedLastName, selectedId);
+            }
 		}
 	</script>
 </div>

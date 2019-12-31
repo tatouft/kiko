@@ -9,7 +9,7 @@ class pratiquants extends PMO_MyObject{
 	
 	public function IsFamilyMember()
 	{
-		if($this->fk_famille == NULL || $this->fk_famille == $this->id)
+		if($this->fk_famille == NULL || $this->fk_famille == '' || $this->fk_famille == $this->id)
 		{
 			return false;
 		}
@@ -21,7 +21,7 @@ class pratiquants extends PMO_MyObject{
 	
 	public function GetFamilyHead()
 	{
-		if($this->IsFamilyMember() && $this->fk_famille != NULL)
+		if($this->IsFamilyMember())
 		{
 			$prat = PMO_MyObject::factory(self::$TableName);
 			$prat->id = $this->fk_famille;
@@ -102,7 +102,14 @@ class pratiquants extends PMO_MyObject{
 	}
     public function GetPresencesNeededForNextGrade()
     {
-        return $this->GetGrade()->GetGrade()->GetNextGrade($this->fk_section)->jours;
+    	if($this->GetGrade())
+		{
+			return $this->GetGrade()->GetGrade()->GetNextGrade($this->fk_section)->jours;
+		}
+    	else
+		{
+			return  0;
+		}
     }
 	public function GetRestToNextGrade()
 	{
@@ -207,9 +214,26 @@ class pratiquants extends PMO_MyObject{
     public function GetFamily()
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND fk_famille = " . $this->id . ";");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND fk_famille = " . $this->id . " AND id != " . $this->id .";");
 
 		return self::GetArray($map);
+	}
+
+	public function GetFamilyNameList()
+	{
+		$familyMembers = $this->GetFamily();
+		if(count($familyMembers) == 0)
+		{
+			return "";
+		}
+
+		$memberNames = "";
+		foreach($familyMembers as $familyMember)
+		{
+			$memberNames .= $familyMember->nom . " " . $familyMember->prenom . ", ";
+		}
+
+		return substr($memberNames, 0, -2); // remove last ,
 	}
 	
 	public function IsHttpPhoto()
@@ -332,10 +356,30 @@ class pratiquants extends PMO_MyObject{
 	public static function GetChefs()
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND (fk_famille ISNULL OR fk_famille = id);");
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE deleted = 0 AND (fk_famille ISNULL OR fk_famille = '' OR fk_famille = id);");
 	
 		return self::GetArray($map);
 	}
+
+	public static function GetChefsButMe($myId)
+	{
+		$controler = new PMO_MyController();
+
+		$query = "SELECT 
+    					*
+					FROM " . self::$TableName . "
+					WHERE
+						(fk_famille ISNULL OR fk_famille = '' OR fk_famille = id)
+					    AND id != " . $myId . "
+						AND deleted = 0
+					ORDER BY nom
+				";
+
+		$map = $controler->queryController($query);
+
+		return self::GetArray($map);
+	}
+
 	public static function GetPoubelle()
 	{
 		$controler = new PMO_MyController();
@@ -343,14 +387,31 @@ class pratiquants extends PMO_MyObject{
 	
 		return self::GetArray($map);
 	}
+
+	public static function GetByLastNameButMe($lastName, $myId)
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE deleted = 0 AND nom like "' . $lastName . '%" AND id != ' . $myId . ';');
+
+		return self::GetArray($map);
+	}
+
+	public static function GetByName($firstName, $lastName)
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE prenom like "' . $firstName . '%" AND nom like "' . $lastName . '%" ;');
+
+		return self::GetArray($map);
+	}
+
 	public static function GetByFirstName($name)
 	{
-		return GetByName($name, "");	
+		return pratiquants::GetByName($name, "");
 	}
 	
 	public static function GetByLastName($name)
 	{
-		return GetByName("", $name);
+		return pratiquants::GetByName("", $name);
 	}
 	
 	public static function GetByNameAndLastname($name)
@@ -358,14 +419,6 @@ class pratiquants extends PMO_MyObject{
 		$controler = new PMO_MyController();
 		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE nom || " " || prenom like "' . $name . '%" OR prenom || " " || nom like "' . $name . '%" ;');
 		
-		return self::GetArray($map);
-	}
-	
-	public static function GetByName($firstName, $lastName)
-	{
-		$controler = new PMO_MyController();
-		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE nom like "' . $firstName . '%" AND prenom like "' . $lastName . '%" ;');
-	
 		return self::GetArray($map);
 	}
 	
