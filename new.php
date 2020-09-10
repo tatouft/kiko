@@ -25,6 +25,38 @@
 		?>
 		<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formNew" id="formNew">
 			<?php
+
+                function formatPhoneNumber($phoneNumber) {
+                    $phoneNumber = preg_replace('/[^0-9]/','',$phoneNumber);
+
+                    if(strlen($phoneNumber) > 10) {
+                        $countryCode = substr($phoneNumber, 0, strlen($phoneNumber)-10);
+                        $areaCode = substr($phoneNumber, -10, 3);
+                        $nextThree = substr($phoneNumber, -7, 3);
+                        $lastFour = substr($phoneNumber, -4, 4);
+
+                        $phoneNumber = '+'.$countryCode.' ('.$areaCode.') '.$nextThree.'-'.$lastFour;
+                    }
+                    else if(strlen($phoneNumber) == 10) {
+                        $areaCode = substr($phoneNumber, 0, 4);
+                        $firstTwo = substr($phoneNumber, 4, 2);
+                        $secondTwo = substr($phoneNumber, 6, 2);
+                        $thirdTwo = substr($phoneNumber, 8, 2);
+
+                        $phoneNumber = $areaCode . '/' . $firstTwo . ' ' . $secondTwo . ' ' . $thirdTwo;
+                    }
+                    else if(strlen($phoneNumber) == 9) {
+                        $twoFirst = substr($phoneNumber, 0, 2);
+                        $nextThree = substr($phoneNumber, 2, 3);
+                        $firstTwo =  substr($phoneNumber, 5, 2);
+                        $secondTwo =  substr($phoneNumber, 7, 2);
+
+                        $phoneNumber = $twoFirst . '/' . $nextThree . ' ' . $firstTwo . ' ' . $secondTwo;
+                    }
+
+                    return $phoneNumber;
+                }
+
 				//import_request_variables('GP');
 				extract($_GET);
 				extract($_POST);
@@ -210,213 +242,246 @@
 			<div class="List Contents">
 				<div class="NewTitle">Identité</div>
 				<div class="New">
-					<div class="FieldName">Nom:</div>	
-					<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" autocomplete="off" id="nom"				name="nom"		 value="<? echo($pratiquant->nom); ?>">
-						<?php } else {
-							echo($pratiquant->nom);
-						} ?>
-					</div><?php echo($_SESSION['Space']); ?>
+                    <div class="ItemLeft">
+                        <div class="FieldName">Nom:</div>
+                        <div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="nom"				name="nom"		 value="<? echo($pratiquant->nom); ?>">
+                            <?php } else {
+                                echo($pratiquant->nom);
+                            } ?>
+                        </div>
+                    </div>
 
-					<div class="InputField Photo">
-                        <img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/>
-                    </div>	
-                    <div class="FieldName FieldPhoto">Photo:</div><?php echo($_SESSION['Space']); ?>
-					
-					<br><div class="FieldName">Prénom:</div>
-					<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
-						<?php } else {
-							echo($pratiquant->prenom);
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
-					
+                    <div class="ItemRight">
+                        <div class="InputField Photo">
+                            <img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/>
+                        </div>
+                        <div class="FieldName FieldPhoto">Photo:</div>
+                    </div>
+
+                    <div class="ItemLeft">
+                        <div class="FieldName">Prénom:</div>
+                        <div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
+                            <?php } else {
+                                echo($pratiquant->prenom);
+                            } ?>
+                        </div>
+                    </div>
+
 					<?php if($edit){ ?>
-						<div class="FieldName">Photo:</div>
-						<div class="InputField">
-							<input type="text" autocomplete="off" id="photo" name="photo" value="<? echo($pratiquant->photo); ?>">
-						</div><br><?php echo($_SESSION['Space']); ?>
+                        <div class="ItemLeft">
+                            <div class="FieldName">Photo:</div>
+                            <div class="InputField">
+                                <input type="text" autocomplete="off" id="photo" name="photo" value="<? echo($pratiquant->photo); ?>">
+                            </div>
+                        </div>
 					<? } ?>
 
-					<div class="FieldName">Adresse:</div>	<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<? echo($pratiquant->adresse); ?>">
-						<?php } else {
-							echo($pratiquant->adresse);
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
-					
-					<div class="FieldName">Code postal:</div>	<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" autocomplete="off" id="cp"		name="cp"		 value="<? echo($pratiquant->codePostal); ?>">
-						<?php } else {
-							echo($pratiquant->codePostal);
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
-					
-					<div class="FieldName">Commune:</div>	<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" autocomplete="off" id="commune"		name="commune"	 value="<? echo($pratiquant->commune); ?>">
-						<?php } else {
-							echo($pratiquant->commune);
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
-					
-					<div class="FieldName">Naissance:</div><div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" autocomplete="off" id="naissance" name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
-						<?php } else {
-							echo(date('d/m/Y', strtotime($pratiquant->naissance)));
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
-					
-					<div class="FieldName">Chef famille:</div><div class="InputField">
-						<?php if($edit){ ?>
-            				<!--<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom); ?>">-->
+                    <div class="ItemLeft">
+                        <div class="FieldName">Adresse:</div>	<div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<? echo($pratiquant->adresse); ?>">
+                            <?php } else {
+                                echo($pratiquant->adresse);
+                            } ?>
+                        </div>
+                    </div>
 
-                            <select id="famille" name="famille">
-                                <?php
-                                $selected = "";
-                                if($new || !$pratiquant->IsFamilyMember())
-                                {
-                                    $selected = "selected";
-                                }
-                                echo('<option value="' . $pratiquant->id . '" ' . $selected . '>-- Pas de famille --</option>');
+                    <div class="ItemLeft">
+                        <div class="FieldName">Code postal:</div>	<div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="cp"		name="cp"		 value="<? echo($pratiquant->codePostal); ?>">
+                            <?php } else {
+                                echo($pratiquant->codePostal);
+                            } ?>
+                        </div>
+                    </div>
 
-                                function RenderChef($chef, $selected)
-                                {
-                                    echo('<option value="' . $chef->id . '" ' . $selected . '>' . $chef->nom . " " . $chef->prenom . '</option>');
-                                }
+                    <div class="ItemLeft">
+                        <div class="FieldName">Commune:</div>	<div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="commune"		name="commune"	 value="<? echo($pratiquant->commune); ?>">
+                            <?php } else {
+                                echo($pratiquant->commune);
+                            } ?>
+                        </div>
+                    </div>
 
-                                if(!$new)
-                                {
-                                    $myNameMembers = pratiquants::GetByLastNameButMe($pratiquant->nom, $pratiquant->id);
-                                    foreach($myNameMembers as $myNameMember)
-                                    {
-                                        RenderChef($myNameMember, '');
-                                    }
-                                    if(count($myNameMembers) > 0)
-                                    {
-                                        echo('<option value="">-----------</option>');
-                                    }
-                                }
+                    <div class="ItemLeft">
+                        <div class="FieldName">Naissance:</div><div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="naissance" name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
+                            <?php } else {
+                                echo(date('d/m/Y', strtotime($pratiquant->naissance)));
+                            } ?>
+                        </div>
+                    </div>
 
-                                if($new)
-                                {
-                                    $id = 0;
-                                }
-                                else
-                                {
-                                    $id = $pratiquant->id;
-                                }
+                    <div class="ItemLeft">
+                        <div class="FieldName">Chef famille:</div><div class="InputField">
+                            <?php if($edit){ ?>
+                                <!--<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom); ?>">-->
 
-                                $potentialsChefs = pratiquants::GetChefsButMe($id);
-
-                                foreach($potentialsChefs as $potentialChef)
-                                {
+                                <select id="famille" name="famille">
+                                    <?php
                                     $selected = "";
-                                    if($pratiquant->fk_famille == $potentialChef->id)
+                                    if($new || !$pratiquant->IsFamilyMember())
                                     {
                                         $selected = "selected";
                                     }
-                                    RenderChef($potentialChef, $selected);
-                                }
-                                ?>
-                            </select>
-						<?php } else {
-							echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
+                                    echo('<option value="' . $pratiquant->id . '" ' . $selected . '>-- Pas de famille --</option>');
 
-                    <div class="FieldName">Téléphone:</div>	<div class="InputField">
-                        <?php if($edit){ ?>
-                            <input type="text" autocomplete="off" id="telephone" name="telephone" value="<? echo($pratiquant->telephone); ?>">
-                        <?php } else {
-                                echo($pratiquant->telephone);
-                        } ?>
-                    </div><br><?php echo($_SESSION['Space']); ?>
-                    
-                    <div class="FieldName">GSM:</div>	<div class="InputField">
-                        <?php if($edit){ ?>
-                            <input type="text" autocomplete="off" id="gsm" name="gsm" value="<? echo($pratiquant->gsm); ?>">
-                        <?php } else {
-                            echo($pratiquant->gsm);
-                        } ?>
-                    </div><br><?php echo($_SESSION['Space']); ?>
+                                    function RenderChef($chef, $selected)
+                                    {
+                                        echo('<option value="' . $chef->id . '" ' . $selected . '>' . $chef->nom . " " . $chef->prenom . '</option>');
+                                    }
 
-                    <div class="FieldName">eMail:</div>	<div class="InputField">
-                        <?php if($edit){ ?>
-                            <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
-                        <?php } else {
-                            echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
-                        } ?>
-                    </div><br>
+                                    if(!$new)
+                                    {
+                                        $myNameMembers = pratiquants::GetByLastNameButMe($pratiquant->nom, $pratiquant->id);
+                                        foreach($myNameMembers as $myNameMember)
+                                        {
+                                            RenderChef($myNameMember, '');
+                                        }
+                                        if(count($myNameMembers) > 0)
+                                        {
+                                            echo('<option value="">-----------</option>');
+                                        }
+                                    }
+
+                                    if($new)
+                                    {
+                                        $id = 0;
+                                    }
+                                    else
+                                    {
+                                        $id = $pratiquant->id;
+                                    }
+
+                                    $potentialsChefs = pratiquants::GetChefsButMe($id);
+
+                                    foreach($potentialsChefs as $potentialChef)
+                                    {
+                                        $selected = "";
+                                        if($pratiquant->fk_famille == $potentialChef->id)
+                                        {
+                                            $selected = "selected";
+                                        }
+                                        RenderChef($potentialChef, $selected);
+                                    }
+                                    ?>
+                                </select>
+                            <?php } else {
+                                echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
+                            } ?>
+                        </div>
+                    </div>
+
+                    <div class="ItemLeft">
+                        <div class="FieldName">Téléphone:</div>	<div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="telephone" name="telephone" value="<? echo($pratiquant->telephone); ?>">
+                            <?php } else {
+                                    echo(formatPhoneNumber($pratiquant->telephone));
+                            } ?>
+                        </div>
+                    </div>
+
+                    <div class="ItemLeft">
+                        <div class="FieldName">GSM:</div>	<div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="gsm" name="gsm" value="<? echo($pratiquant->gsm); ?>">
+                            <?php } else {
+                                echo(formatPhoneNumber($pratiquant->gsm));
+                            } ?>
+                        </div>
+                    </div>
+
+                    <div class="ItemLeft">
+                        <div class="FieldName">eMail:</div>	<div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
+                            <?php } else {
+                                echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
+                            } ?>
+                        </div>
+                    </div>
                 </div>
 			</div>
 
 			<div class="List Contents">
 				<div class="NewTitle">Club et fédé</div>
 				<div class="New">
-					<div class="FieldName">N° licence:</div> 
-					<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" id="licence" name="licence"	autocomplete="off"	value="<? echo($pratiquant->licenceNbr); ?>">
-						<?php } else {
-							echo($pratiquant->licenceNbr);
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
+                    <div class="ItemLeft">
+                        <div class="FieldName">N° licence:</div>
+                        <div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" id="licence" name="licence"	autocomplete="off"	value="<? echo($pratiquant->licenceNbr); ?>">
+                            <?php } else {
+                                echo($pratiquant->licenceNbr);
+                            } ?>
+                        </div>
+                    </div>
 
-					<div class="FieldName">Expiration:</div>
-					<div class="InputField">
-						<?php if($edit){ ?>
-							<input type="text" id="licenceDate" name="licenceDate"		value="<? echo(date('d/m/Y', strtotime($pratiquant->licenceDate))); ?>">
-						<?php } else {
-							echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
-						} ?>
-					</div><br><?php echo($_SESSION['Space']); ?>
+                    <div class="ItemLeft">
+                        <div class="FieldName">Expiration:</div>
+                        <div class="InputField">
+                            <?php if($edit){ ?>
+                                <input type="text" id="licenceDate" name="licenceDate"		value="<? echo(date('d/m/Y', strtotime($pratiquant->licenceDate))); ?>">
+                            <?php } else {
+                                echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
+                            } ?>
+                        </div>
+                    </div>
 
-					<div class="FieldName">Grade:</div> 
-					<div class="InputField">
-							<?php 
-								if($action != 'add')
-								{
-									$grade = $pratiquant->GetGrade();		
-									if($grade != NULL)
-										echo($grade->GetGrade()->libelle); 
-								}
-							?>
-					</div><br>
+                    <div class="ItemLeft">
+                        <div class="FieldName">Grade:</div>
+                        <div class="InputField">
+                                <?php
+                                    if($action != 'add')
+                                    {
+                                        $grade = $pratiquant->GetGrade();
+                                        if($grade != NULL)
+                                            echo($grade->GetGrade()->libelle);
+                                    }
+                                ?>
+                        </div>
+                    </div>
 
-					<div class="FieldName">Section:</div> 
-					<div class="InputField">
-						<?php if($edit){ ?>
-							<select id="section" name="section">
-							<?php
-								$sections = sections::GetAll();
-								$i = 0;
-								foreach($sections as $sec)
-								{
-									$selected = "";
-									if(($new && $i == 0) || $pratiquant->fk_section == $sec->id)
-									{
-										$selected = "selected";
-									}
-									echo('<option value="' . $sec->id . '" ' . $selected . '>' . $sec->libelle . '</option>');
-									$i++;
-								}
-							?>
-							</select>
-						<?php } else {
-							echo($pratiquant->GetSection()->libelle);
-						} ?>
-					</div><br>
+                    <div class="ItemLeft">
+                        <div class="FieldName">Section:</div>
+                        <div class="InputField">
+                            <?php if($edit){ ?>
+                                <select id="section" name="section">
+                                <?php
+                                    $sections = sections::GetAll();
+                                    $i = 0;
+                                    foreach($sections as $sec)
+                                    {
+                                        $selected = "";
+                                        if(($new && $i == 0) || $pratiquant->fk_section == $sec->id)
+                                        {
+                                            $selected = "selected";
+                                        }
+                                        echo('<option value="' . $sec->id . '" ' . $selected . '>' . $sec->libelle . '</option>');
+                                        $i++;
+                                    }
+                                ?>
+                                </select>
+                            <?php } else {
+                                echo($pratiquant->GetSection()->libelle);
+                            } ?>
+                        </div>
+                    </div>
 				</div>
 			</div>
 
 		<?php if($id){ ?>
 			<div class="List Contents">
+
 				<div class="NewTitle">Grades</div>
 				<div class="New">
 					<?php

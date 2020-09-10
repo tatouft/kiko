@@ -49,21 +49,21 @@
             $year = intval(date("Y"));
             $year = $year - 1;
 
-            $sql =  "SELECT p.* FROM";
-            $sql .= " " . self::$TableName . " as p";
-            $sql .= " WHERE ";
-            $sql .= "   id NOT IN (";
-            $sql .= "     SELECT fk_periode FROM " . cotisationsPeriode::$TableName . " as c ";
-            $sql .= "       WHERE fk_pratiquant = " . $id;
-            $sql .= "   )";
-            $sql .= "   AND p.dateFin > '" . $year . "-01-01'";
-            $sql .= "   AND p.dateDebut > (SELECT ps.date FROM passages as ps WHERE ps.fk_pratiquant = " . $id . " ORDER BY ps.date ASC LIMIT 1)";
-            $sql .= "   AND 0 = (SELECT count(c2.fk_periode) FROM cotisationsPeriode as c2, periodes as p2";
-            $sql .= "            WHERE c2.fk_periode = p2.id";
-            $sql .= "              AND fk_pratiquant = " . $id;
-            $sql .= "              AND p2.dateDebut <= p.dateDebut";
-            $sql .= "              AND p2.dateFin >= p.dateFin)";
-            $sql .= "   ORDER BY dateDebut ASC";
+            $sql =  "SELECT p.* FROM
+                     " . self::$TableName . " as p
+                     WHERE 
+                       id NOT IN (
+                         SELECT fk_periode FROM " . cotisationsPeriode::$TableName . " as c 
+                           WHERE fk_pratiquant = " . $id . "
+                       )
+                       AND p.dateFin > '" . $year . "-01-01'
+                       AND p.dateFin > (SELECT ps.date FROM passages as ps WHERE ps.fk_pratiquant = " . $id . " ORDER BY ps.date ASC LIMIT 1)
+                       AND 0 = (SELECT count(c2.fk_periode) FROM cotisationsPeriode as c2, periodes as p2
+                                WHERE c2.fk_periode = p2.id
+                                  AND fk_pratiquant = " . $id . "
+                                  AND p2.dateDebut <= p.dateDebut
+                                  AND p2.dateFin >= p.dateFin)
+                       ORDER BY dateDebut ASC";
             
             $map = $controler->queryController($sql);
             
@@ -74,19 +74,19 @@
         {
             $controler = new PMO_MyController();
             
-            $sql =  "SELECT p.* FROM ";
-            $sql .=  self::$TableName . " as p,";
-            $sql .=  presences::$TableName  . " as pr ";
-            $sql .= "WHERE ";
-            $sql .=   "p.dateDebut < pr.date AND p.dateFin >= pr.date ";
-            $sql .=   "AND NOT EXISTS (select * FROM cotisationsPeriode WHERE fk_periode == p.id AND fk_pratiquant == pr.fk_pratiquant) ";
-            $sql .=   "AND NOT EXISTS (select * FROM cotisationsPeriode cp, periodes as pp ";
-            $sql .=                            "WHERE pp.id == cp.fk_periode AND cp.fk_pratiquant == pr.fk_pratiquant ";
-            $sql .=                              "AND pp.dateDebut < pr.date AND pp.dateFin >= pr.date) ";
-            $sql .=   "AND (p.dateFin - p.dateDebut) == (SELECT MIN(dateFin - dateDebut) FROM periodes WHERE dateDebut < pr.date AND dateFin >= pr.date) ";
-            $sql .=   "AND pr.fk_pratiquant == " . $prat->id . " ";
-            $sql .= "GROUP BY p.id ";
-            $sql .= "ORDER BY p.dateDebut ASC";
+            $sql =  "SELECT p.* FROM 
+                       " . self::$TableName . " as p,
+                       " . presences::$TableName  . " as pr
+                       WHERE 
+                         p.dateDebut < pr.date AND p.dateFin >= pr.date
+                         AND NOT EXISTS (select * FROM cotisationsPeriode WHERE fk_periode == p.id AND fk_pratiquant == pr.fk_pratiquant)
+                         AND NOT EXISTS (select * FROM cotisationsPeriode cp, periodes as pp
+                                                  WHERE pp.id == cp.fk_periode AND cp.fk_pratiquant == pr.fk_pratiquant
+                                                    AND pp.dateDebut < pr.date AND pp.dateFin >= pr.date)
+                         AND (p.dateFin - p.dateDebut) == (SELECT MIN(dateFin - dateDebut) FROM periodes WHERE dateDebut < pr.date AND dateFin >= pr.date)
+                         AND pr.fk_pratiquant == " . $prat->id . "
+                       GROUP BY p.id
+                       ORDER BY p.dateDebut ASC";
 
             //print($sql);
             

@@ -17,6 +17,17 @@
 	padding: 10px;
 }
 
+.ItemLeft
+{
+	float: left;
+	width: 60%;
+}
+
+.ItemRight
+{
+	float: right;
+}
+
 .FieldName
 {
 	width: 100px;

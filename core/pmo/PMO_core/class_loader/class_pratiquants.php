@@ -76,7 +76,7 @@ class pratiquants extends PMO_MyObject{
 	
 	public function IsLicenceExpired()
 	{
-		if($this->licenceDate <= date("Y-m-d"))
+		if($this->licenceNbr != "" && $this->licenceDate <= date("Y-m-d"))
 			return true;
 		else
 			return false;
@@ -457,6 +457,18 @@ class pratiquants extends PMO_MyObject{
 		$map = $controler->queryController('select nom, prenom, sexe from pratiquants as pra where pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.sexe = ' . $male . ' and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
 	
 		return count(self::GetArray($map));		
+	}
+	public static function GetCountAgeNeupre($date1, $date2, $age1, $age2)
+	{
+		$today = getdate();
+		$year = $today[year];
+		$dateAge1 = ($year - $age1) . "-12-31";
+		$dateAge2 = ($year - $age2) . "-01-01";
+
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('select nom, prenom, sexe from pratiquants as pra where pra.codePostal in ("4120", "4121", "4122") AND pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
+
+		return count(self::GetArray($map));
 	}
 }
 
