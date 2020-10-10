@@ -454,7 +454,7 @@ class pratiquants extends PMO_MyObject{
 		$dateAge2 = ($year - $age2) . "-01-01";
 		
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('select nom, prenom, sexe from pratiquants as pra where pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.sexe = ' . $male . ' and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
+		$map = $controler->queryController('select nom, prenom, sexe from ' . self::$TableName . ' as pra where pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.sexe = ' . $male . ' and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
 	
 		return count(self::GetArray($map));		
 	}
@@ -466,10 +466,28 @@ class pratiquants extends PMO_MyObject{
 		$dateAge2 = ($year - $age2) . "-01-01";
 
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('select nom, prenom, sexe from pratiquants as pra where pra.codePostal in ("4120", "4121", "4122") AND pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
+		$map = $controler->queryController('select nom, prenom, sexe from ' . self::$TableName . ' as pra where pra.codePostal in ("4120", "4121", "4122") AND pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
 
 		return count(self::GetArray($map));
 	}
+    public static function GetPresencesBetweenTwoDates($date1, $date2)
+    {
+		$sql = "SELECT DISTINCT pra.*
+				FROM
+					" . self::$TableName . " as pra INNER JOIN
+					presences as pre
+				WHERE
+					pra.id = pre.fk_pratiquant AND
+					pre.date >= '" . $date1 . "' AND
+					pre.date <= '" . $date2 . "'
+				ORDER BY
+					pra.nom";
+
+		$controler = new PMO_MyController();
+		$map = $controler->queryController($sql);
+
+		return self::GetArray($map);
+    }
 }
 
 ?>
