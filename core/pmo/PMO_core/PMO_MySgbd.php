@@ -158,7 +158,7 @@ abstract class PMO_MySGBD implements PMO_Sgbd {
 			foreach( $tablepk as $pk)
 				if($pk == $columns){
 					$querypk .= " AND {$pk}=\"{$value}\"";
-				}elseif(!empty($value)){
+				}elseif(isset($value)){
 					$queryfield .= ",{$columns}=\"{$value}\"";
 				}
 		}

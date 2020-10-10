@@ -9,6 +9,8 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
 		<link rel="stylesheet" href="css/New.css" type="text/css">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/09e5bbb46b.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<?php    
@@ -86,7 +88,14 @@
 				{
 					echo('Action: ' . $action);
 				}
-				if($action == 'add' || $action == 'save')
+				if($action == 'undelete')
+                {
+                    $pratiquant->deleted = 0;
+                    $pratiquant->commit();
+
+                    $edit = false;
+                }
+				else if($action == 'add' || $action == 'save')
 				{
 					if($action == 'add')
 					{
@@ -95,6 +104,7 @@
 						
 					$pratiquant->nom = $nom;
 					$pratiquant->prenom = $prenom;
+					$pratiquant->sexe = $sexe;
 					$pratiquant->photo = $photo;
 					$pratiquant->adresse = $adresse;
 					$pratiquant->codePostal = $cp;
@@ -232,15 +242,16 @@
 			<?php echo($_SERVER['REMOTE_USER']);?>
             <?php if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
 			<div class="Contents">
-				<?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><?php } ?>
-				<?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><?php } ?>
-				<?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><?php } ?>
+                <?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><i class="fas fa-edit"></i> Modifier</a><?php } ?>
+                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
+                <?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><i class="fas fa-window-close" style="color:red;"></i> Annuler</a><?php } ?>
+                <?php if($pratiquant->deleted){ ?><a class="Button" id="Undelete" href="#" onClick="SetHidden('action', 'undelete'); $('formNew').submit()"><i class="fas fa-recycle" style="color:darkorange;"></i> Restaurer</a><?php } ?>
 				<div class="EndFloat">&nbsp;</div>
 			</div>
             <?php } ?>
 
 			<div class="List Contents">
-				<div class="NewTitle">Identité</div>
+				<div class="NewTitle <? echo($pratiquant->deleted?'Deleted':''); ?>">Identité</div>
 				<div class="New">
                     <div class="ItemLeft">
                         <div class="FieldName">Nom:</div>
@@ -267,6 +278,20 @@
                                 <input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
                             <?php } else {
                                 echo($pratiquant->prenom);
+                            } ?>
+                        </div>
+                    </div>
+
+                    <div class="ItemLeft">
+                        <div class="FieldName">Sexe:</div>
+                        <div class="InputField">
+                            <?php if($edit){ ?>
+                                <select id="sexe" name="sexe">
+                                    <option value="0" <? echo($pratiquant->sexe?'':'selected'); ?>>Femme</option>
+                                    <option value="1" <? echo($pratiquant->sexe?'selected':''); ?>>Homme</option>
+                                </select>
+                            <?php } else {
+                                echo($pratiquant->sexe?'Homme':'Femme');
                             } ?>
                         </div>
                     </div>
@@ -655,9 +680,10 @@
 
         <?php if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
             <div class="Contents">
-				<?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><img src="css/images/24.png"/> Modifier</a><?php } ?>
-				<?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><img src="css/images/45.png"/> Enregistrer</a><?php } ?>
-				<?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><img src="css/images/001_29.png"/> Annuler</a><?php } ?>
+                <?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><i class="fas fa-edit"></i> Modifier</a><?php } ?>
+                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
+                <?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><i class="fas fa-window-close" style="color:red;"></i> Annuler</a><?php } ?>
+                <?php if($pratiquant->deleted){ ?><a class="Button" id="Undelete" href="#" onClick="SetHidden('action', 'undelete'); $('formNew').submit()"><i class="fas fa-recycle" style="color:darkorange;"></i> Restaurer</a><?php } ?>
 				<div class="EndFloat">&nbsp;</div>
 			</div>
         <?php } ?>

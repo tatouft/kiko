@@ -12,6 +12,12 @@
 	background-color: lightgrey;
 }
 
+
+.Deleted
+{
+	background-color: lightcoral;
+}
+
 .New
 {
 	padding: 10px;
