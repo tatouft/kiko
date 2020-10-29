@@ -45,6 +45,7 @@
 			<tr>
 				<th>Nom/Prenom</th>
 				<th>Section</th>
+                <th>Pub</th>
 				<th>Grade</th>
 				<th>License</th>
                 <th>Cotisation</th>
@@ -75,25 +76,48 @@
 				
 				// Section
 				echo($prat->GetSection()->libelle);
-				echo("</td>\n\t\t\t<td>");
-				
-				// Grade
+				echo("</td>\n\t\t\t<td align='center'>");
+
+				// Pub
+                if($prat->UnknownPub())
+                {
+
+                }
+                elseif($prat->AllowPub())
+                {
+                    echo("<i class=\"fas fa-photo-video\" style='color: green;'></i>");
+                }
+                elseif($prat->DisallowPub())
+                {
+                    echo("<i class=\"fas fa-photo-video\" style='color: crimson;'></i>");
+                }
+                echo("</td>\n\t\t\t<td>");
+
+
+                // Grade
                 $grade = $prat->GetGrade();
 				echo(($grade == NULL)?"---":$grade->GetGrade()->libelle);
 				echo("</td>\n\t\t\t<td>");
 				
 				// License
-				echo($prat->IsLicenceExpired()?"<img class='TableButton' src='css/images/001_05.png'>":"<img class='TableButton' src='css/images/001_06.png'>");
-				$dt = date_create($prat->licenceDate);
-				
-				echo("&nbsp;" . $dt->format('d/m/Y'));
+                if($prat->HasLicence())
+                {
+                    echo($prat->IsLicenceExpired() ? "<a href='./services/GetLicence.php?id=" . $prat->id . "'><i class=\"fas fa-file-download\" style='color: crimson;'></i></a>" : "<i class=\"fas fa-check-circle\" style='color: green;'></i>");
+                    $dt = date_create($prat->licenceDate);
+
+                    echo("&nbsp;" . $dt->format('d/m/Y'));
+                    if ($prat->IsLicenceExpiredInNextMonth())
+                    {
+                        echo("&nbsp;&nbsp;");
+                    }
+                }
 				echo("</td>\n\t\t\t<td>");
                 
                 // Cotisation
                 $lessons = $prat->GetCountNoPayLesson();
                 $periodes = $prat->GetNoPayPeriod();
                 $enOrdre = (count($periodes) > 0 || $lessons > 0);
-                echo($enOrdre?"<img class='TableButton' src='css/images/001_05.png'>":"<img class='TableButton' src='css/images/001_06.png'>");
+                echo($enOrdre?"<i class=\"fas fa-times-circle\" style='color: crimson;'></i>":"<i class=\"fas fa-check-circle\" style='color: green;'></i>");
                 echo("&nbsp;");
                 if(count($periodes) > 0)
                 {
@@ -112,20 +136,23 @@
 				echo("</td>\n\t\t\t<td>");
 				
 				// Examen
-                try {
+                try
+                {
 
 
-                    if ($prat->GetPresencesNeededForNextGrade() > 0) {
+                    if ($prat->GetPresencesNeededForNextGrade() > 0)
+                    {
                         $rest = $prat->GetRestToNextGrade();
                         $ready = (($rest + 4) >= 0);
                         $percent = floor(100 / $prat->GetPresencesNeededForNextGrade() * $prat->GetPresencesCountFromLastGrade());
                         if ($percent > 100)
                             $percent = 100;
+                        echo($ready ? "<i class=\"fas fa-check-circle\" style='color: green;'></i>" : "");
                         echo("&nbsp;" . $percent . "% ");
-                        if ($rest > 0) {
+                        if ($rest > 0)
+                        {
                             echo(" + " . $rest);
                         }
-                        echo($ready ? "<img class='TableButton' src='css/images/001_06.png'>" : "");
                     }
                 } catch (\Throwable $e) {
 

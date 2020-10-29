@@ -112,6 +112,7 @@
                     $pratiquant->telephone = $telephone;
                     $pratiquant->gsm = $gsm;
                     $pratiquant->email = $email;
+                    $pratiquant->pub = $pub;
                     $pratiquant->fk_famille = $famille;
 					$datet = explode("/", $naissance);
 					$date = date_create();
@@ -431,6 +432,33 @@
                                 <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
                             <?php } else {
                                 echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
+                            } ?>
+                        </div>
+                    </div>
+
+                    <div class="ItemLeft">
+                        <div class="FieldName">Publicité:</div>
+                        <div class="InputField">
+                            <?php
+                            if($edit){ ?>
+                                <select id="pub" name="pub">
+                                    <option value="0" <? echo($pratiquant->UnknownPub()?'selected':''); ?>>Inconnu</option>
+                                    <option value="1" <? echo($pratiquant->AllowPub()?'selected':''); ?>>Autorisé</option>
+                                    <option value="-1" <? echo($pratiquant->DisallowPub()?'selected':''); ?>>Interdit</option>
+                                </select>
+                            <?php } else {
+                                if($pratiquant->UnknownPub())
+                                {
+                                    echo("Inconnu");
+                                }
+                                elseif ($pratiquant->AllowPub())
+                                {
+                                    echo("Autorisé");
+                                }
+                                elseif ($pratiquant->DisallowPub())
+                                {
+                                    echo("Interdit");
+                                }
                             } ?>
                         </div>
                     </div>

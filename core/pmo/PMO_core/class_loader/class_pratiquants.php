@@ -73,10 +73,24 @@ class pratiquants extends PMO_MyObject{
 			$presence->commit();
 		}
 	}
-	
+
+	public function HasLicence()
+	{
+		return $this->licenceNbr != "" ;
+	}
 	public function IsLicenceExpired()
 	{
 		if($this->licenceNbr != "" && $this->licenceDate <= date("Y-m-d"))
+			return true;
+		else
+			return false;
+	}
+	public function IsLicenceExpiredInNextMonth()
+	{
+		$exp = strtotime($this->licenceDate);
+		$willExp = strtotime('-1 month', $exp);
+
+		if($this->licenceNbr != "" && $willExp <= strtotime("now"))
 			return true;
 		else
 			return false;
@@ -86,7 +100,6 @@ class pratiquants extends PMO_MyObject{
 	{
 		return passages::GetByPratiquant($this->id);
 	}
-	
 	public function GetGrade()
 	{
 		return passages::GetGradeByPratiquant($this->id);
@@ -283,7 +296,38 @@ class pratiquants extends PMO_MyObject{
 	{
 		return $_SESSION['SiteRoot'] . "/photos" . "/" . $this->photo;
 	}
-	
+
+	public function HasMoreThan14()
+	{
+		$nais = strtotime($this->naissance);
+		$fourteen = strtotime('+14 year', $nais);
+		return ($fourteen <= strtotime("now"));
+	}
+
+	public function AllowPub()
+	{
+		return $this->pub == 1;
+	}
+	public function SetAllowPub()
+	{
+		$this->pub = 1;
+	}
+	public function DisallowPub()
+	{
+		return $this->pub == -1;
+	}
+	public function SetDisallowPub()
+	{
+		$this->pub = -1;
+	}
+	public function UnknownPub()
+	{
+		return $this->pub == 0;
+	}
+	public function SetUnknownPub()
+	{
+		$this->pub = 0;
+	}
 	/********************
 	 *** Private Static *************************************
 	 ********************/

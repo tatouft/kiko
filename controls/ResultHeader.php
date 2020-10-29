@@ -4,15 +4,15 @@
 	<div class="HeaderTitle"><? echo($headerTitle); ?></div>
 	<ul class="Buttons">
 		<li>
-			<a href="mailto:" target="_blank" id="email"></a>
+			<a href="mailto:" target="_blank" id="email"><i class="far fa-envelope"> Mail</i></a>
 		</li>
 	</ul>
 	<ul class="Buttons invisible" id="ActionButtons">
-		<li onclick="OpenPersonne()">Afficher</li>
+		<li onclick="OpenPersonne()"><i class="far fa-file-alt"></i> Afficher</li>
 		<?php 
 		if(in_array($_SERVER['REMOTE_USER'], $admins))
 		{ ?>
-			<li onclick="DeletePersonne()">Supprimer</li>
+			<li onclick="DeletePersonne()"><i class="far fa-trash-alt"></i> Supprimer</li>
 		<?php } ?>
 		
 	</ul>

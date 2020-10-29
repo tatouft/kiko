@@ -88,7 +88,7 @@ ul.Buttons li
     padding-left: 4px;
     padding-right: 4px;
     padding-top: 2px;
-    padding-bottom: 0px;
+    padding-bottom: 1px;
     cursor: pointer;
 }
 ul.Buttons li:hover
