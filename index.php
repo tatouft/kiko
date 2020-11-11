@@ -21,7 +21,7 @@
 		?>
 		<div id="debug">&nbsp;</div>
         <?php if($maintenance){ ?>
-            <div class="warning">
+            <div class="ToolTip">
                 <i class="fas fa-exclamation-triangle"></i>
                 Maintenance en cours. Impossible de faire des modifications pour le moment.
             </div>

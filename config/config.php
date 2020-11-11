@@ -1,7 +1,7 @@
 <?
     require('PdfConfig.php');
 	$debug = false;
-	$maintenance = true;
+	$maintenance = false;
 
 	$_SESSION['SiteRoot'] = '/homez.462/komewntp/www/kiko';
     $_SESSION['DbName'] = 'kome';

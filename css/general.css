@@ -123,7 +123,7 @@ ul.Buttons li:hover
     box-shadow: 2px 2px 2px grey;
 }
 
-.warning
+.ToolTip
 {
     border: solid 1px orangered;
     background-color: lightpink;
@@ -135,7 +135,7 @@ ul.Buttons li:hover
     margin-right: auto;
 }
 
-.warning i
+.ToolTip i
 {
     color: orangered;
     font-size: x-large;
