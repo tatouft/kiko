@@ -1,6 +1,7 @@
 <?
     require('PdfConfig.php');
 	$debug = false;
+	$maintenance = true;
 
 	$_SESSION['SiteRoot'] = '/homez.462/komewntp/www/kiko';
     $_SESSION['DbName'] = 'kome';
@@ -13,5 +14,12 @@
 
 	date_default_timezone_set("Europe/Brussels");
 
-    $admins = array("tatou", "Tatou");
+	if(!$maintenance)
+    {
+        $admins = array("tatou", "Tatou");
+    }
+	else
+    {
+        $admins = array();
+    }
 ?>

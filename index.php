@@ -20,6 +20,12 @@
                     require_once("controls/PageHeader.php"); 
 		?>
 		<div id="debug">&nbsp;</div>
+        <?php if($maintenance){ ?>
+            <div class="warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                Maintenance en cours. Impossible de faire des modifications pour le moment.
+            </div>
+        <?php }?>
 		<div class="LittelTabs">
 			<?php require_once("controls/MenuTabs.php"); ?>
 			<?php require_once("controls/SearchArea.php"); ?>
