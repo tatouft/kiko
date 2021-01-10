@@ -9,6 +9,7 @@
          *************/
         public static function  GetArray($map)
         {
+            $pratiquants = array();
             $i = 0;
             while ($result = $map->fetchMap())
             {

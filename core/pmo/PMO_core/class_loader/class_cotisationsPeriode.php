@@ -21,6 +21,7 @@
         private static function  GetArray($map)
         {
             $i = 0;
+            $pratiquants = array();
             while ($result = $map->fetchMap())
             {
                 $pratiquants[$i] = $result[self::$TableName];
@@ -34,8 +35,8 @@
             $controler = new PMO_MyController();
 
             $today = getdate();
-            $year = $today[year] - 1;
-            if($today[mon] < 9)
+            $year = $today["year"] - 1;
+            if($today["mon"] < 9)
             {
                 $year = $year - 1;
             }

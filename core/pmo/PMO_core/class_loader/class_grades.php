@@ -44,6 +44,7 @@ class grades extends PMO_MyObject{
 	private static function  GetArray($map)
 	{
 		$i = 0;
+		$pratiquants = array();
 		while ($result = $map->fetchMap())
 		{
 			$pratiquants[$i] = $result[self::$TableName];

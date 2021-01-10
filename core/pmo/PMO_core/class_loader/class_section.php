@@ -8,6 +8,7 @@ class sections extends PMO_MyObject{
 	 *************/
 	private static function  GetArray($map)
 	{
+		$pratiquants = array();
 		$i = 0;
 		while ($result = $map->fetchMap())
 		{
