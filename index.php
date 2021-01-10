@@ -13,6 +13,8 @@
 		<link rel="stylesheet" href="css/general.css" type="text/css">
         <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/09e5bbb46b.js" crossorigin="anonymous"></script>
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
 	</head>
 	<body>
 		<?php

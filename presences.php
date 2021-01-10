@@ -13,6 +13,8 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
 		<link rel="stylesheet" href="css/presences.css" type="text/css">
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
 	</head>
 	<body>
 		<div id="debug">&nbsp;</div>
