@@ -478,7 +478,7 @@ class pratiquants extends PMO_MyObject{
 	public static function GetCount($date1, $date2)
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('select * from ' . self::$TableName . ' as pra where pra.id in (select pre.fk_pratiquant from ' . presences::$TableName . ' as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '")');
+		$map = $controler->queryController('select * from ' . self::$TableName . ' as pra where licenceNbr is not "" AND deleted != 1 AND pra.id in (select pre.fk_pratiquant from ' . presences::$TableName . ' as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '")');
 	
 		return count(self::GetArray($map));		
 	}
@@ -486,7 +486,7 @@ class pratiquants extends PMO_MyObject{
 	public static function GetCountNeupre($date1, $date2)
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('select * from ' . self::$TableName . ' as pra where pra.codePostal in ("4120", "4121", "4122") and pra.id in (select pre.fk_pratiquant from ' . presences::$TableName . ' as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '")');
+		$map = $controler->queryController('select * from ' . self::$TableName . ' as pra where licenceNbr is not "" AND deleted != 1 AND pra.codePostal in ("4120", "4121", "4122") and pra.id in (select pre.fk_pratiquant from ' . presences::$TableName . ' as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '")');
 	
 		return count(self::GetArray($map));		
 	}
@@ -494,24 +494,24 @@ class pratiquants extends PMO_MyObject{
 	public static function GetCountAge($date1, $date2, $age1, $age2, $male)
 	{
 		$today = getdate();
-		$year = $today[year];
+		$year = $today["year"];
 		$dateAge1 = ($year - $age1) . "-12-31";
 		$dateAge2 = ($year - $age2) . "-01-01";
 		
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('select nom, prenom, sexe from ' . self::$TableName . ' as pra where pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.sexe = ' . $male . ' and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
+		$map = $controler->queryController('select nom, prenom, sexe from ' . self::$TableName . ' as pra where licenceNbr is not "" AND deleted != 1 AND pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.sexe = ' . $male . ' and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
 	
 		return count(self::GetArray($map));		
 	}
 	public static function GetCountAgeNeupre($date1, $date2, $age1, $age2)
 	{
 		$today = getdate();
-		$year = $today[year];
+		$year = $today["year"];
 		$dateAge1 = ($year - $age1) . "-12-31";
 		$dateAge2 = ($year - $age2) . "-01-01";
 
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('select nom, prenom, sexe from ' . self::$TableName . ' as pra where pra.codePostal in ("4120", "4121", "4122") AND pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
+		$map = $controler->queryController('select nom, prenom, sexe from ' . self::$TableName . ' as pra where licenceNbr is not "" AND deleted != 1 AND pra.codePostal in ("4120", "4121", "4122") AND pra.id in (select pre.fk_pratiquant from presences as pre where pre.date > "' . $date1 . '" and pre.date < "' . $date2 . '") and pra.naissance >= "' . $dateAge2 . '" and pra.naissance <= "' . $dateAge1 . '" ');
 
 		return count(self::GetArray($map));
 	}

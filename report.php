@@ -20,13 +20,13 @@
 		<div id="debug">&nbsp;</div>
 		<div>
 			<?php 
-				$lastYeardate1 = "2018-09-01";
-				$lastYeardate2 = "2019-07-01";
-				$thisYeardate1 = "2019-09-01";
-				$thisYeardate2 = "2020-07-01";
+				$lastYeardate1 = "2019-09-01";
+				$lastYeardate2 = "2020-07-01";
+				$thisYeardate1 = "2020-09-01";
+				$thisYeardate2 = "2021-07-01";
 			?>
-			<div class="title">Affiliés 2018-2019:</div> <div class="value"><?php echo(pratiquants::GetCount($lastYeardate1, $lastYeardate2)); ?></div><br/>
-			<div class="title">Affiliés 2019-2020:</div> <div class="value"><?php echo(pratiquants::GetCount($thisYeardate1, $thisYeardate2)); ?></div><br/>
+			<div class="title">Affiliés 2019-2020:</div> <div class="value"><?php echo(pratiquants::GetCount($lastYeardate1, $lastYeardate2)); ?></div><br/>
+			<div class="title">Affiliés 2020-2021:</div> <div class="value"><?php echo(pratiquants::GetCount($thisYeardate1, $thisYeardate2)); ?></div><br/>
 			<div class="title">Affiliés de neupré:</div> <div class="value"><?php echo(pratiquants::GetCountNeupre($thisYeardate1, $thisYeardate2)); ?></div><br/>
 			<div class="title"><?php $a1=2;  $a2=5;   ?> Affiliés <?php echo($a1 . '-' . $a2);?>:</div> <div class="value"><?php echo(pratiquants::GetCountAge( $thisYeardate1, $thisYeardate2, $a1, $a2, 0)); ?> femmes, <?php echo(pratiquants::GetCountAge($thisYeardate1, $thisYeardate2, $a1, $a2, 1)); ?> hommes, <?php echo(pratiquants::GetCountAgeNeupre($thisYeardate1, $thisYeardate2, $a1, $a2)); ?> Neurpéens</div><br/>
 			<div class="title"><?php $a1=6;  $a2=8;  ?> Affiliés <?php echo($a1 . '-' . $a2);?>:</div> <div class="value"><?php echo(pratiquants::GetCountAge( $thisYeardate1, $thisYeardate2, $a1, $a2, 0)); ?> femmes, <?php echo(pratiquants::GetCountAge($thisYeardate1, $thisYeardate2, $a1, $a2, 1)); ?> hommes, <?php echo(pratiquants::GetCountAgeNeupre($thisYeardate1, $thisYeardate2, $a1, $a2)); ?> Neurpéens</div><br/>
