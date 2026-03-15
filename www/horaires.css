@@ -1,0 +1,234 @@
+/* =====================================================
+   KOME DOJO — horaires.css
+   Utilisé uniquement dans horaires.php
+   ===================================================== */
+
+/* --- GRILLE DES COURS --- */
+.cours-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.cours-card {
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-rule);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.cours-card--featured {
+  border-top: 3px solid var(--orange);
+  padding-top: 45px;
+}
+
+.cours-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cours-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+
+.cours-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.cours-subtitle {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* Blocs info dans la carte */
+.cours-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cours-block-title {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--paper-rule);
+}
+
+/* Horaires */
+.horaire-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.horaire-jour {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.horaire-heure {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--orange);
+  white-space: nowrap;
+}
+
+/* Tarifs */
+.tarif-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.tarif-label {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--ink-mid);
+}
+
+.tarif-prix {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.tarif-annuel {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--paper-rule);
+}
+
+.tarif-annuel .tarif-prix {
+  color: var(--orange);
+  font-size: 16px;
+}
+
+.tarif-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Professeur */
+.prof-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.prof-grade {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* --- BANNIÈRE ESSAI GRATUIT --- */
+.essai-banner {
+  max-width: var(--max-w);
+  margin: 0 auto 60px;
+  padding: 0 40px;
+}
+
+.essai-inner {
+  background: var(--orange);
+  padding: 5px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.essai-inner .bg-pattern {
+  position: absolute;
+  inset: 0;
+}
+
+.essai-inner > *:not(.bg-pattern) {
+  position: relative;
+  z-index: 1;
+}
+
+.essai-text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.essai-text span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  margin-top: 4px;
+}
+
+.essai-cta {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.6);
+  padding: 10px 22px;
+  white-space: nowrap;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.essai-cta:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 820px) {
+  .cours-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 72px;
+  }
+  .essai-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 580px) {
+  .cours-section { padding-left: 20px; padding-right: 20px; }
+  .essai-banner { padding-left: 20px; padding-right: 20px; }
+  .cours-card { padding: 32px 24px; }
+}

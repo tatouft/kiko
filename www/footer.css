@@ -1,0 +1,101 @@
+/* =====================================================
+   KOME DOJO — footer.css
+   Inclus via footer.php (toutes les pages)
+   ===================================================== */
+
+.site-footer {
+  background: var(--orange);
+  border-top: none;
+  padding: 0px 0;
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-logo {
+  height: 106px;
+  width: auto;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+.footer-logo:hover { opacity: 0.85; }
+
+.footer-center { text-align: center; }
+
+.footer-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.footer-copy {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 3px;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Icônes sociales */
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.85);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.social-link:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255,255,255,0.15);
+}
+.social-link svg { flex-shrink: 0; }
+
+.footer-afa {
+  padding: 6px 12px;
+  transition: color 0.2s, border-color 0.2s;
+  max-width: 50%;
+}
+.footer-afa:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.7);
+}
+.footer-afa-img {
+  height: 100px;
+  width: auto;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 580px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+  }
+  .footer-right { align-items: center; }
+}

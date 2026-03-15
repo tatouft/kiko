@@ -7,6 +7,7 @@
   <meta name="keywords" content="Aïkido, aikido, art martial, Neupré, stages, dojo">
   <title>Kome Dojo Neupré &mdash; Stages</title>
   <?php include("links.php"); ?> 
+  <link rel="stylesheet" href="stages.css">
 </head>
 <body>
 

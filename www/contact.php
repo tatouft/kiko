@@ -7,7 +7,7 @@
   <meta name="keywords" content="Aïkido, aikido, art martial, Neupré, contact, dojo">
   <title>Kome Dojo Neupré &mdash; Contact</title>
   <?php include("links.php"); ?> 
-
+  <link rel="stylesheet" href="contact.css">
 </head>
 <body>
 
