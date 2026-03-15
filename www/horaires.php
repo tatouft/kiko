@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kome Dojo Neupré &mdash; Horaires &amp; Tarifs</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600&family=Yuji+Mai&display=swap" rel="stylesheet">
+  <?php include("links.php"); ?> 
 
   <style>
     /* --- PAGE HORAIRES --- */
@@ -199,7 +196,7 @@
 
     .essai-inner {
       background: var(--orange);
-      padding: 28px 40px;
+      padding: 5px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -400,43 +397,6 @@
   <!-- BANNIÈRE ESSAI GRATUIT -->
   <div class="essai-banner">
     <div class="essai-inner">
-
-      <!-- Pattern seigaiha dans la bannière -->
-    <div class="bg-pattern" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-        <defs>
-          <radialGradient id="grad-header" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="9%"  stop-color="#e8d5a0"/>
-            <stop offset="10%" stop-color="#c4601a"/>
-            <stop offset="19%" stop-color="#c4601a"/>
-            <stop offset="20%" stop-color="#e8d5a0"/>
-            <stop offset="29%" stop-color="#e8d5a0"/>
-            <stop offset="30%" stop-color="#c4601a"/>
-            <stop offset="39%" stop-color="#c4601a"/>
-            <stop offset="40%" stop-color="#e8d5a0"/>
-            <stop offset="49%" stop-color="#e8d5a0"/>
-            <stop offset="50%" stop-color="#c4601a"/>
-            <stop offset="59%" stop-color="#c4601a"/>
-            <stop offset="60%" stop-color="#e8d5a0"/>
-            <stop offset="69%" stop-color="#e8d5a0"/>
-            <stop offset="70%" stop-color="#c4601a"/>
-            <stop offset="79%" stop-color="#c4601a"/>
-            <stop offset="80%" stop-color="#e8d5a0"/>
-            <stop offset="89%" stop-color="#e8d5a0"/>
-            <stop offset="90%" stop-color="#c4601a"/>
-          </radialGradient>
-          <pattern id="seigaiha-header" x="0" y="0" width="100" height="60" patternUnits="userSpaceOnUse">
-            <circle fill="url(#grad-header)" cx="0"   cy="27" r="57"/>
-            <circle fill="url(#grad-header)" cx="100" cy="27" r="57"/>
-            <circle fill="url(#grad-header)" cx="50"  cy="57" r="57"/>
-            <circle fill="url(#grad-header)" cx="0"   cy="87" r="57"/>
-            <circle fill="url(#grad-header)" cx="100" cy="87" r="57"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#seigaiha-header)" opacity="0.10"/>
-      </svg>
-    </div>
-
       <div class="essai-text">
         3 cours d&rsquo;essai gratuits
         <span>Pour tous les nouveaux membres &mdash; enfants et adultes</span>

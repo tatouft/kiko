@@ -7,193 +7,7 @@
   <meta name="keywords" content="Aïkido, aikido, art martial, Neupré, contact, dojo">
   <title>Kome Dojo Neupré &mdash; Contact</title>
   <?php include("links.php"); ?> 
-  <style>
-    /* ── Page hero ── */
-    .page-hero {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: calc(var(--nav-h) + 64px) 40px 48px;
-    }
-    .page-eyebrow {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 14px;
-    }
-    .page-title {
-      font-family: var(--font-display);
-      font-size: clamp(40px, 5vw, 64px);
-      font-weight: 500;
-      line-height: 1.05;
-      color: var(--ink);
-    }
-    .page-title em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--orange);
-    }
 
-    /* ── Contact layout ── */
-    .contact-section {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 40px 100px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-
-    /* ── Left column: info + social ── */
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 36px;
-    }
-
-    .contact-block {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .contact-block-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--orange);
-    }
-
-    .contact-block-body {
-      font-size: 15px;
-      font-weight: 300;
-      color: var(--ink-mid);
-      line-height: 1.85;
-    }
-
-    .contact-block-body a {
-      color: var(--ink-mid);
-      transition: color 0.2s;
-      border-bottom: 1px solid var(--paper-rule);
-      padding-bottom: 1px;
-    }
-    .contact-block-body a:hover { color: var(--orange); border-color: var(--orange); }
-
-    /* ── Social cards ── */
-    .social-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .social-card {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      background: var(--paper-warm);
-      border: 1px solid var(--paper-rule);
-      padding: 18px 22px;
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    }
-    .social-card:hover {
-      background: #e8dfc9;
-      border-color: var(--orange);
-      transform: translateX(4px);
-    }
-
-    .social-card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: #fff;
-    }
-    .social-card-icon--fb { background: #1877f2; }
-    .social-card-icon--ig {
-      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-    }
-
-    .social-card-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .social-card-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--ink);
-      letter-spacing: 0.03em;
-    }
-    .social-card-handle {
-      font-size: 12px;
-      font-weight: 300;
-      color: var(--ink-soft);
-      letter-spacing: 0.06em;
-    }
-    .social-card-arrow {
-      margin-left: auto;
-      font-size: 18px;
-      color: var(--orange);
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .social-card:hover .social-card-arrow {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* ── Map ── */
-    .contact-map {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .map-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--orange);
-    }
-
-    .map-frame {
-      width: 100%;
-      aspect-ratio: 4/3;
-      border: 1px solid var(--paper-rule);
-      display: block;
-    }
-
-    .map-link {
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      transition: color 0.2s;
-      text-align: right;
-    }
-    .map-link:hover { color: var(--orange); }
-
-    /* ── Responsive ── */
-    @media (max-width: 720px) {
-      .contact-section {
-        grid-template-columns: 1fr;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 72px;
-      }
-      .page-hero { padding-left: 20px; padding-right: 20px; }
-    }
-  </style>
 </head>
 <body>
 
@@ -203,7 +17,7 @@
 
   <!-- EN-TÊTE DE PAGE -->
   <div class="page-hero">
-    <p class="page-eyebrow">Nous trouver</p>
+    <p class="hero-eyebrow">Nous trouver</p>
     <h1 class="page-title">Nous <em>contacter</em></h1>
   </div>
 
@@ -232,7 +46,7 @@
       <div class="contact-block">
         <span class="contact-block-label">Coordonn&eacute;es</span>
         <p class="contact-block-body">
-          <a href="mailto:info@kome.be">info@kome.be</a><br>
+          <a href="/cdn-cgi/l/email-protection#234a4d454c63484c4e460d4146"><span class="__cf_email__" data-cfemail="85ecebe3eac5eeeae8e0abe7e0">[email&#160;protected]</span></a><br>
           <a href="tel:003242870091">+32 (0)4 287 00 91</a>
         </p>
       </div>
@@ -291,15 +105,4 @@
         target="_blank"
         rel="noopener"
         class="map-link">
-        Ouvrir dans Google Maps &rarr;
-      </a>
-    </div>
-
-  </section>
-
-  <!-- FOOTER -->
-  <?php include("footer.php"); ?> 
-
-
-</body>
-</html>
+        Ouvrir dans Google
