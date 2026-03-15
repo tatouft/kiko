@@ -5,6 +5,10 @@
     <nav class="nav-inner">
       <a href="index.php" class="nav-brand">
         <img src="https://kome.be/images/LogoKomeOfficial.png" alt="Kome Dojo" class="nav-logo">
+        <span class="nav-brand-text">
+          <span class="nav-brand-name">Kome Dojo</span>
+          <span class="nav-brand-location">Neupré</span>
+        </span>
       </a>
       <button class="nav-burger" aria-label="Menu" aria-expanded="false" onclick="toggleMenu(this)">
         <span></span><span></span><span></span>
