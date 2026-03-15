@@ -29,7 +29,7 @@
   <section class="cours-section">
 
     <!-- ENFANTS -->
-    <div class="cours-card">
+    <div class="cours-card cours-card--featured">
 
       <div class="cours-header">
         <span class="cours-label">01 &mdash; Enfants</span>
