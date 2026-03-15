@@ -381,7 +381,7 @@ ul { list-style: none; }
 .footer-inner {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -447,19 +447,17 @@ ul { list-style: none; }
 }
 
 .footer-afa {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
-  border: 0px solid rgba(255,255,255,0.35);
   padding: 6px 12px;
   transition: color 0.2s, border-color 0.2s;
-  width: 250px;
+  max-width: 50%;
 }
 .footer-afa:hover {
   color: #fff;
   border-color: rgba(255,255,255,0.7);
+}
+.footer-afa-img { 
+  height: 100px; 
+  width: auto; 
 }
 
 /* --- ANIMATION --- */
