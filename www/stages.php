@@ -7,135 +7,6 @@
   <meta name="keywords" content="Aïkido, aikido, art martial, Neupré, stages, dojo">
   <title>Kome Dojo Neupré &mdash; Stages</title>
   <?php include("links.php"); ?> 
-
-
-  <style>
-    .page-hero {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: calc(var(--nav-h) + 64px) 40px 48px;
-    }
-    .page-eyebrow {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 14px;
-    }
-    .page-title {
-      font-family: var(--font-display);
-      font-size: clamp(40px, 5vw, 64px);
-      font-weight: 500;
-      line-height: 1.05;
-      color: var(--ink);
-    }
-    .page-title em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--orange);
-    }
-
-    .stages-section {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 40px 100px;
-      display: flex;
-      flex-direction: column;
-      gap: 56px;
-    }
-
-    .stage-mois {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .stage-mois-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .stage-mois-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--ink);
-      white-space: nowrap;
-    }
-
-    .stage-mois-line {
-      flex: 1;
-      height: 1px;
-      background: var(--paper-rule);
-    }
-
-    .stage-mois-diamond {
-      width: 6px;
-      height: 6px;
-      background: var(--orange);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
-
-    .stage-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 16px;
-    }
-
-    .stage-card {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: var(--paper-warm);
-      border: 1px solid var(--paper-rule);
-      padding: 14px;
-      transition: background 0.2s, border-color 0.2s;
-      text-decoration: none;
-    }
-    .stage-card:hover {
-      background: #e8dfc9;
-      border-color: var(--orange);
-    }
-    .stage-card img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      display: block;
-      background: var(--paper-rule);
-    }
-    .stage-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .stage-card-name {
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--ink-mid);
-      line-height: 1.4;
-      flex: 1;
-    }
-    .stage-card-dl {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--orange);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .stage-card:hover .stage-card-dl { text-decoration: underline; }
-
-    @media (max-width: 580px) {
-      .page-hero      { padding-left: 20px; padding-right: 20px; }
-      .stages-section { padding-left: 20px; padding-right: 20px; padding-bottom: 72px; }
-      .stage-grid     { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
 </head>
 <body>
 
@@ -145,7 +16,7 @@
 
   <!-- EN-TÊTE DE PAGE -->
   <div class="page-hero">
-    <p class="page-eyebrow">Agenda</p>
+    <p class="hero-eyebrow">Agenda</p>
     <h1 class="page-title">Stages &amp; <em>&eacute;v&eacute;nements</em></h1>
   </div>
 
