@@ -6,11 +6,8 @@
   <meta name="description" content="Stages d'aïkido organisés par le Kome Dojo de Neupré">
   <meta name="keywords" content="Aïkido, aikido, art martial, Neupré, stages, dojo">
   <title>Kome Dojo Neupré &mdash; Stages</title>
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600&family=Yuji+Mai&display=swap" rel="stylesheet">
+  <?php include("links.php"); ?> 
+
 
   <style>
     .page-hero {
