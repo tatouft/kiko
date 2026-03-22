@@ -9,28 +9,42 @@
 </head>
 <body>
 
-
   <?php include("header.php"); ?> 
 
   <!-- HERO -->
   <section class="hero">
 
     <div class="hero-content">
-      <p class="hero-kana" aria-hidden="true">合気道</p>
-      <p class="hero-eyebrow">Art martial &middot; Neuville-en-Condroz</p>
-      <h1 class="hero-title">
-        L&rsquo;art<br>
-        <em>de la paix</em>
-      </h1>
-      <p class="hero-body">
-        L&rsquo;a&iuml;kido canalise l&rsquo;attaque de l&rsquo;adversaire afin de l&rsquo;annuler
-        par projection ou immobilisation &mdash; sans comp&eacute;tition,
-        seulement la progression de soi.
-      </p>
-      <div class="hero-actions">
-        <a href="contact.php" class="btn-main">Nous contacter</a>
-        <a href="horaires.php" class="btn-ghost">Voir les horaires</a>
+
+      <!-- Aïkido + Neuville : au-dessus du layout kanji -->
+      <p class="hero-aikido">Aïkido</p>
+      <p class="hero-eyebrow">Neuville-en-Condroz</p>
+
+      <!-- Kanji centrés face au titre uniquement -->
+      <div class="hero-kanji-layout">
+
+        <div class="hero-kanji-col" aria-hidden="true">
+          <span class="hero-kanji-vertical">合気道</span>
+        </div>
+
+        <div class="hero-kanji-body">
+          <h1 class="hero-title">
+            L&rsquo;art<br>
+            <em>de la paix</em>
+          </h1>
+          <p class="hero-body">
+            Art martial japonais fondé sur l'harmonie plutôt que l'affrontement, 
+            l'aïkido capte l'attaque de l'adversaire pour le neutraliser 
+            par des projections ou des immobilisations — sans jamais chercher à le blesser.
+          </p>
+          <div class="hero-actions">
+            <a href="contact.php" class="btn-main">Nous contacter</a>
+            <a href="horaires.php" class="btn-ghost">Voir les horaires</a>
+          </div>
+        </div>
+
       </div>
+
     </div>
 
   </section>
@@ -47,17 +61,15 @@
     <div class="info-grid">
 
       <div class="info-card">
-        <span class="card-index">01</span>
         <h2 class="card-title">La voie</h2>
         <p class="card-body">
-          L&rsquo;a&iuml;kido ne comporte pas de comp&eacute;tition &mdash; l&rsquo;attaque
-          ne fait pas partie de l&rsquo;enseignement. Les grades sont
-          d&eacute;cern&eacute;s lors d&rsquo;examens &eacute;valuant la progression de chaque &eacute;l&egrave;ve.
+          L'<a target="_blank" href="http://fr.wikipedia.org/wiki/A%C3%AFkido" class="card-link">aïkido</a> est un art martial sans compétition. 
+          La progression de chaque élève est reconnue lors d'examens 
+          évaluant la maîtrise technique acquise au fil de la pratique.
         </p>
       </div>
 
       <div class="info-card info-card--featured">
-        <span class="card-index">02</span>
         <h2 class="card-title">Le dojo</h2>
         <p class="card-body">
           Hall de Neuville-en-Condroz<br>
@@ -68,10 +80,9 @@
       </div>
 
       <div class="info-card">
-        <span class="card-index">03</span>
         <h2 class="card-title">Contact</h2>
         <p class="card-body">
-          <a href="/cdn-cgi/l/email-protection#a4cdcac2cbe4cfcbc9c18ac6c1"><span class="__cf_email__" data-cfemail="c0a9aea6af80abafada5eea2a5">[email&#160;protected]</span></a><br>
+          <a href="mailto:info@kome.be">info@kome.be</a><br>
           <a href="tel:003242870091">+32 (0)4 287 00 91</a>
         </p>
         <a href="horaires.php" class="card-link">Voir les horaires &rarr;</a>

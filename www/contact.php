@@ -46,7 +46,7 @@
       <div class="contact-block">
         <span class="contact-block-label">Coordonn&eacute;es</span>
         <p class="contact-block-body">
-          <a href="/cdn-cgi/l/email-protection#234a4d454c63484c4e460d4146"><span class="__cf_email__" data-cfemail="85ecebe3eac5eeeae8e0abe7e0">[email&#160;protected]</span></a><br>
+          <a href="mailto:info@kome.be">info@kome.be</a><br>
           <a href="tel:003242870091">+32 (0)4 287 00 91</a>
         </p>
       </div>
@@ -106,3 +106,10 @@
         rel="noopener"
         class="map-link">
         Ouvrir dans Google
+      </a>
+    </div>
+  </section>
+    <!-- FOOTER -->
+  <?php include("footer.php"); ?> 
+</body>
+</html>

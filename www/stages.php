@@ -21,12 +21,12 @@
     <h1 class="page-title">Stages &amp; <em>&eacute;v&eacute;nements</em></h1>
   </div>
 
-  <!-- SÉPARATEUR -->
+  <!-- SÉPARATEUR 
   <div class="section-rule" style="margin-bottom: 48px;">
     <span class="rule-line"></span>
     <span class="rule-diamond"></span>
     <span class="rule-line"></span>
-  </div>
+  </div>-->
 
   <!-- STAGES — générés dynamiquement depuis Dropbox -->
   <section class="stages-section">
@@ -52,11 +52,14 @@
       function RenderStageCard($dropboxPath, $name) {
         $dlUrl    = "DropboxDownload.php?path=" . urlencode($dropboxPath);
         $thumbUrl = "DropboxThumb2.php?path="   . urlencode($dropboxPath);
+        $displayName = pathinfo($name, PATHINFO_FILENAME);
         echo '
         <a class="stage-card" href="../' . $dlUrl . '" target="_blank" rel="noopener">
+          <div class="stage-card-header">
+            <span class="stage-card-name">' . htmlspecialchars($displayName) . '</span>
+          </div>
           <img src="../' . $thumbUrl . '" alt="' . htmlspecialchars($name) . '" title="' . htmlspecialchars($name) . '">
           <div class="stage-card-footer">
-            <span class="stage-card-name">' . htmlspecialchars($name) . '</span>
             <span class="stage-card-dl">PDF &darr;</span>
           </div>
         </a>';

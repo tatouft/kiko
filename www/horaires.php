@@ -33,7 +33,7 @@
     <div class="cours-card cours-card--featured">
 
       <div class="cours-header">
-        <span class="cours-label">01 &mdash; Enfants</span>
+        <span class="cours-label">&mdash; Enfants &mdash;</span>
         <h2 class="cours-title">Cours<br><em style="font-style:italic;color:var(--orange)">enfants</em></h2>
         <p class="cours-subtitle">De 6 &agrave; 12 ans</p>
       </div>
@@ -83,7 +83,7 @@
     <div class="cours-card cours-card--featured">
 
       <div class="cours-header">
-        <span class="cours-label">02 &mdash; Adultes</span>
+        <span class="cours-label">&mdash; Adultes &mdash;</span>
         <h2 class="cours-title">Cours<br><em style="font-style:italic;color:var(--orange)">adultes</em></h2>
         <p class="cours-subtitle">D&egrave;s 12 ans</p>
       </div>
