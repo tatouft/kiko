@@ -2,3 +2,4 @@ db/*
 .DS_Store
 .idea/
 licence2.pdf
+config/credentials.php

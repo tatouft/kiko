@@ -31,7 +31,7 @@
   <!-- STAGES — générés dynamiquement depuis Dropbox -->
   <section class="stages-section">
     <?php
-      require_once "../dropbox/access.php";
+      require_once "dropbox/access.php";
 
       function GetFolderList($path, $accessToken) {
         $ch = curl_init('https://api.dropboxapi.com/2/files/list_folder');
@@ -54,11 +54,11 @@
         $thumbUrl = "DropboxThumb2.php?path="   . urlencode($dropboxPath);
         $displayName = pathinfo($name, PATHINFO_FILENAME);
         echo '
-        <a class="stage-card" href="../' . $dlUrl . '" target="_blank" rel="noopener">
+        <a class="stage-card" href="' . $dlUrl . '" target="_blank" rel="noopener">
           <div class="stage-card-header">
             <span class="stage-card-name">' . htmlspecialchars($displayName) . '</span>
           </div>
-          <img src="../' . $thumbUrl . '" alt="' . htmlspecialchars($name) . '" title="' . htmlspecialchars($name) . '">
+          <img src="' . $thumbUrl . '" alt="' . htmlspecialchars($name) . '" title="' . htmlspecialchars($name) . '">
           <div class="stage-card-footer">
             <span class="stage-card-dl">PDF &darr;</span>
           </div>
