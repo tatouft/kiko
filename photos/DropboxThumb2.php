@@ -2,7 +2,14 @@
 
 	$path = "/Photos/" . $_GET['path'];
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/www/dropbox/access.php");
+    if($local)
+    {
+    	require_once($_SERVER['DOCUMENT_ROOT'] . "/www/dropbox/access.php");
+    }
+    else
+    {
+    	require_once($_SERVER['DOCUMENT_ROOT'] . "/dropbox/access.php");
+    }
 //	require_once($_SERVER['DOCUMENT_ROOT'] . "../../dropbox/access.php");
 
 	// Setup cURL

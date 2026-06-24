@@ -13,7 +13,7 @@
             $this->en = $en;
         }
     }
-    $state = SeminarStatus::closed;
+    $state = SeminarStatus::Closed;
     $formLink = "https://forms.gle/M9WCHkW9szyoav4H6";
     $title = new Text("Inscription", "Registration");
     $desc = new Text("Les inscriptions au séminaire de kenjutsu", "Registration for the kenjutsu seminar");

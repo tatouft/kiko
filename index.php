@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/config/config.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/core/pmo/PMO_core/PMO_MyController.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/core/pmo/PMO_core/class_loader/class_pratiquants.php");
+    if($local)
+    {
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/config/config.php");
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/core/pmo/PMO_core/PMO_MyController.php");
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/core/pmo/PMO_core/class_loader/class_pratiquants.php");
+    }
+    else
+    {
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/config/config.php");
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/core/pmo/PMO_core/PMO_MyController.php");
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/core/pmo/PMO_core/class_loader/class_pratiquants.php");
+    }
 ?>
 <html>
 	<head>

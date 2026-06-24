@@ -13,7 +13,7 @@
             $this->en = $en;
         }
     }
-    $state = SeminarStatus::open;
+    $state = SeminarStatus::Open;
     $formLink = "https://forms.gle/brMuGB6NZCVyminC6";
     $title = new Text("Réservation", "Registration");
     $desc = new Text("Les réservations", "Registration");
