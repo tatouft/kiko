@@ -1,7 +1,7 @@
   <!-- FOOTER -->
   <footer class="site-footer">
 
-    <?php include("seigaiha.php"); ?> 
+    <?php include($_SERVER['DOCUMENT_ROOT'] . "/seigaiha.php"); ?>
     
 
     <div class="footer-inner">
@@ -9,7 +9,7 @@
       <div class="footer-brand">
         <!--<img src="https://kome.be/images/LogoKomeOfficial.png" alt="Kome Dojo" class="footer-logo">-->
         <a href="http://www.aikido.be" target="_blank" rel="noopener" class="footer-afa">
-          <img src="https://kome.be/images/MembreAfa.png" alt="Membre AFA" class="footer-afa-img">
+          <img src="/images/MembreAfa.png" alt="Membre AFA" class="footer-afa-img">
         </a>
       </div>
 

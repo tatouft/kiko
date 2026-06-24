@@ -1,0 +1,117 @@
+/* Print styles for enfants page */
+@media print {
+	body {
+		background: white;
+		margin: 0;
+		padding: 10mm;
+	}
+
+	.pageContainer {
+		max-width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.pageTitle {
+		page-break-after: avoid;
+		margin-bottom: 20px;
+		border-bottom: 1px solid #999;
+		padding-bottom: 10px;
+	}
+
+	.pageTitle h1 {
+		margin: 0;
+		font-size: 2em;
+	}
+
+	.enfantsGrid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 15px;
+		padding: 0;
+		background-color: white;
+		border: none;
+		page-break-inside: avoid;
+	}
+
+	.enfantCard {
+		page-break-inside: avoid;
+		padding: 10px;
+		border: 1px solid #ccc;
+		box-shadow: none;
+		background: white;
+	}
+
+	.enfantCard:hover {
+		transform: none;
+		box-shadow: none;
+	}
+
+	.enfantPhoto {
+		width: 100%;
+		height: auto;
+		margin-bottom: 8px;
+		background-color: white;
+	}
+
+	.enfantPhoto img {
+		width: 100%;
+		height: auto;
+		max-width: 100%;
+		/* Force absolute paths for PDF export */
+		filter: brightness(1);
+	}
+
+	.enfantInfo {
+		font-size: 11px;
+	}
+
+	.enfantName {
+		font-size: 12px;
+		margin-bottom: 2px;
+	}
+
+	.enfantLastName {
+		font-size: 10px;
+	}
+
+	.enfantAge {
+		font-size: 10px;
+		padding: 2px 4px;
+		background: #e8f0ff;
+		border-radius: 3px;
+		display: inline-block;
+		margin-top: 4px;
+	}
+
+	.enfantCount {
+		text-align: right;
+		padding: 10px;
+		margin-top: 15px;
+		border-top: 1px solid #ccc;
+		font-size: 12px;
+	}
+
+	.noContent {
+		padding: 20px;
+		text-align: center;
+	}
+
+	/* Avoid breaking content */
+	table, img {
+		page-break-inside: avoid;
+	}
+
+	/* Adjust for different paper sizes */
+	@page {
+		size: A4;
+		margin: 10mm;
+	}
+
+	@media (max-width: 800px) {
+		.enfantsGrid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+}
+

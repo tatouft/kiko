@@ -1,0 +1,220 @@
+.pageContainer {
+	margin: 20px 50px;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.pageTitle {
+	text-align: center;
+	margin-bottom: 30px;
+	border-bottom: 2px solid #999;
+	padding-bottom: 15px;
+}
+
+.pageTitle h1 {
+	margin: 0;
+	color: #333;
+	font-size: 2.5em;
+}
+
+.enfantsGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 25px;
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+}
+
+.enfantCard {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+	border-radius: 8px;
+	padding: 15px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	text-align: center;
+}
+
+.enfantCard:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.enfantPhoto {
+	width: 140px;
+	height: 140px;
+	margin-bottom: 12px;
+	border-radius: 8px;
+	overflow: hidden;
+	background-color: #f0f0f0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.enfantPhoto img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top;
+}
+
+.enfantInfo {
+	width: 100%;
+}
+
+.enfantName {
+	font-weight: 600;
+	font-size: 1.1em;
+	color: #333;
+	margin-bottom: 4px;
+	word-break: break-word;
+}
+
+.enfantLastName {
+	font-weight: 400;
+	font-size: 0.95em;
+	color: #666;
+	word-break: break-word;
+	margin-bottom: 6px;
+}
+
+.enfantAge {
+	font-weight: 500;
+	font-size: 0.9em;
+	color: #0066cc;
+	background-color: #e8f0ff;
+	padding: 3px 8px;
+	border-radius: 4px;
+	display: inline-block;
+}
+
+.enfantCount {
+	text-align: right;
+	padding: 15px 20px;
+	color: #666;
+	font-style: italic;
+	font-size: 0.95em;
+	border-top: 1px solid #ddd;
+	margin-top: 20px;
+}
+
+.noContent {
+	padding: 40px;
+	text-align: center;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	color: #666;
+	font-size: 1.1em;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+	.enfantsGrid {
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+		gap: 20px;
+	}
+
+	.enfantPhoto {
+		width: 120px;
+		height: 120px;
+	}
+
+	.enfantName {
+		font-size: 1em;
+	}
+
+	.enfantLastName {
+		font-size: 0.9em;
+	}
+
+	.enfantAge {
+		font-size: 0.85em;
+		padding: 2px 6px;
+	}
+}
+
+@media (max-width: 768px) {
+	.pageContainer {
+		margin: 15px 20px;
+	}
+
+	.enfantsGrid {
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+		gap: 15px;
+		padding: 15px;
+	}
+
+	.enfantCard {
+		padding: 10px;
+	}
+
+	.enfantPhoto {
+		width: 100px;
+		height: 100px;
+		margin-bottom: 8px;
+	}
+
+	.enfantName {
+		font-size: 0.9em;
+	}
+
+	.enfantLastName {
+		font-size: 0.8em;
+	}
+
+	.enfantAge {
+		font-size: 0.75em;
+		padding: 2px 5px;
+	}
+
+	.pageTitle h1 {
+		font-size: 1.8em;
+	}
+}
+
+@media (max-width: 480px) {
+	.enfantsGrid {
+		grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+		gap: 10px;
+		padding: 10px;
+	}
+
+	.enfantCard {
+		padding: 8px;
+	}
+
+	.enfantPhoto {
+		width: 80px;
+		height: 80px;
+		margin-bottom: 6px;
+	}
+
+	.enfantName {
+		font-size: 0.8em;
+	}
+
+	.enfantLastName {
+		font-size: 0.75em;
+	}
+
+	.enfantAge {
+		font-size: 0.7em;
+		padding: 2px 4px;
+	}
+
+	.pageTitle h1 {
+		font-size: 1.4em;
+	}
+
+	.pageTitle {
+		margin-bottom: 20px;
+	}
+}
+

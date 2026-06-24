@@ -1,6 +1,6 @@
   <!-- NAVIGATION -->
   <header class="site-header">
-    <?php include("seigaiha.php"); ?> 
+    <?php include($_SERVER['DOCUMENT_ROOT'] . "/seigaiha.php"); ?>
  
     <nav class="nav-inner">
       <a href="index.php" class="nav-brand">
@@ -14,10 +14,10 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links">
-        <li><a href="index.php" onclick="closeMenu()">Accueil</a></li>
-        <li><a href="horaires.php" onclick="closeMenu()">En pratique</a></li>
-        <li><a href="stages.php" onclick="closeMenu()">Stages</a></li>
-        <li><a href="contact.php" class="nav-cta" onclick="closeMenu()">Contact</a></li>
+        <li><a href="/index.php" onclick="closeMenu()">Accueil</a></li>
+        <li><a href="/horaires.php" onclick="closeMenu()">En pratique</a></li>
+        <li><a href="/stages.php" onclick="closeMenu()">Stages</a></li>
+        <li><a href="/contact.php" class="nav-cta" onclick="closeMenu()">Contact</a></li>
       </ul>
     </nav>
     <script>

@@ -69,7 +69,14 @@
         $children = GetFolderList($folderPath, $accessToken);
         if (empty($children["entries"])) return;
 
-        sort($children["entries"]);
+        usort($children["entries"], function($a, $b) {
+            // Extraire le nombre au début du nom
+            preg_match('/^\d+/', $a["name"], $matchA);
+            preg_match('/^\d+/', $b["name"], $matchB);
+            $numA = isset($matchA[0]) ? (int)$matchA[0] : 0;
+            $numB = isset($matchB[0]) ? (int)$matchB[0] : 0;
+            return $numA - $numB;
+        });
         echo '
         <div class="stage-mois">
           <div class="stage-mois-header">
@@ -90,7 +97,13 @@
 
       // Récupération des dossiers racine /Stages
       $folderMetadata = GetFolderList("/Stages", $accessToken);
-      sort($folderMetadata["entries"]);
+      usort($folderMetadata["entries"], function($a, $b) {
+          preg_match('/^\d+/', $a["name"], $matchA);
+          preg_match('/^\d+/', $b["name"], $matchB);
+          $numA = isset($matchA[0]) ? (int)$matchA[0] : 0;
+          $numB = isset($matchB[0]) ? (int)$matchB[0] : 0;
+          return $numA - $numB;
+      });
 
       foreach ($folderMetadata["entries"] as $folder) {
         if ($folder[".tag"] === "folder") {
