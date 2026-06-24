@@ -1,14 +1,14 @@
-<?
+<?php
 
 	require_once("../config/config.php");
 	require_once("../core/pmo/PMO_core/PMO_MyController.php");
 	require_once("../core/pmo/PMO_core/class_loader/class_pratiquants.php");
     
 
-	$action = $_REQUEST['action'];
-	$section = $_REQUEST['section'];
+	$action = $_REQUEST['action'] ?? '';
+	$section = $_REQUEST['section'] ?? '';
 ?>
-<? 	
+<?php
     require_once("core/FillTable.php");
     require_once("core/getPratiquants.php"); 
 ?>

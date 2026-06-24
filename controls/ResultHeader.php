@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" href="css/ResultHeader.css" type="text/css">
 <div class="Header">
-	<div class="HeaderTitle"><? echo($headerTitle); ?></div>
+	<div class="HeaderTitle"><?php echo($headerTitle); ?></div>
 	<ul class="Buttons">
 		<li>
 			<a href="mailto:" target="_blank" id="email"><i class="far fa-envelope"> Mail</i></a>
@@ -10,7 +10,7 @@
 	<ul class="Buttons invisible" id="ActionButtons">
 		<li onclick="OpenPersonne()"><i class="far fa-file-alt"></i> Afficher</li>
 		<?php 
-		if(in_array($_SERVER['REMOTE_USER'], $admins))
+		if(in_array($_SERVER['REMOTE_USER'] ?? '', $admins))
 		{ ?>
 			<li onclick="DeletePersonne()"><i class="far fa-trash-alt"></i> Supprimer</li>
 		<?php } ?>

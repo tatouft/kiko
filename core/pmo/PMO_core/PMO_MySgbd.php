@@ -124,7 +124,7 @@ abstract class PMO_MySGBD implements PMO_Sgbd {
 		
 		$tablefields = $objectTable->getColumns(); 
 		foreach( $tablefields as $field){
-			$object->setAttribute($field, stripslashes($result[$field]));
+			$object->setAttribute($field, stripslashes($result[$field] ?? ''));
 		}
 	}
 	

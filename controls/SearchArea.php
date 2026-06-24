@@ -7,7 +7,7 @@
 ?>
 
 <link rel="stylesheet" href="css/SearchArea.css" type="text/css">
-<form method="post" action="<? $_SERVER['REQUEST_URI'] ?>" id="formSearch">
+<form method="post" action="<?php $_SERVER['REQUEST_URI'] ?>" id="formSearch">
 <div id="SearchArea">
 	<input type="hidden" id="filterAction">
 	<div class="SearchAreaContent" id="AllArea">

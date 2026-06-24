@@ -27,11 +27,11 @@
 			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_grades.php");
 			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
 		?>
-		<form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formNew" id="formNew">
+		<form method="post" action="<?php echo($_SERVER['REQUEST_URI']); ?>" name="formNew" id="formNew">
 			<?php
 
                 function formatPhoneNumber($phoneNumber) {
-                    $phoneNumber = preg_replace('/[^0-9]/','',$phoneNumber);
+                    $phoneNumber = preg_replace('/[^0-9]/','',$phoneNumber ?? '');
 
                     if(strlen($phoneNumber) > 10) {
                         $countryCode = substr($phoneNumber, 0, strlen($phoneNumber)-10);
@@ -240,13 +240,13 @@
 				}
 			?>
 			<input type="hidden" id="action" name="action" />
-			<input type="hidden" id="edit" name="edit" value="<? echo($edit); ?>" />
+			<input type="hidden" id="edit" name="edit" value="<?php echo($edit); ?>" />
 
-			<?php echo($_SERVER['REMOTE_USER']);?>
-            <?php if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
+			<?php echo($_SERVER['REMOTE_USER'] ?? '');?>
+            <?php if(in_array($_SERVER['REMOTE_USER'] ?? '', $admins)){ ?>
 			<div class="Contents">
                 <?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><i class="fas fa-edit"></i> Modifier</a><?php } ?>
-                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
+                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<?php echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
                 <?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><i class="fas fa-window-close" style="color:red;"></i> Annuler</a><?php } ?>
                 <?php if($pratiquant->deleted){ ?><a class="Button" id="Undelete" href="#" onClick="SetHidden('action', 'undelete'); $('formNew').submit()"><i class="fas fa-recycle" style="color:darkorange;"></i> Restaurer</a><?php } ?>
 				<div class="EndFloat">&nbsp;</div>
@@ -254,13 +254,13 @@
             <?php } ?>
 
 			<div class="List Contents">
-				<div class="NewTitle <? echo($pratiquant->deleted?'Deleted':''); ?>">Identité</div>
+				<div class="NewTitle <?php echo($pratiquant->deleted?'Deleted':''); ?>">Identité</div>
 				<div class="New">
                     <div class="ItemLeft">
                         <div class="FieldName">Nom:</div>
                         <div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="nom"				name="nom"		 value="<? echo($pratiquant->nom); ?>">
+                                <input type="text" autocomplete="off" id="nom"				name="nom"		 value="<?php echo($pratiquant->nom); ?>">
                             <?php } else {
                                 echo($pratiquant->nom);
                             } ?>
@@ -269,7 +269,7 @@
 
                     <div class="ItemRight">
                         <div class="InputField Photo">
-                            <img src="<? echo($pratiquant->GetPhotoHttpPath()); ?>" title="<? echo($pratiquant->GetPhotoTitle()); ?>"/>
+                            <img src="<?php echo($pratiquant->GetPhotoHttpPath()); ?>" title="<?php echo($pratiquant->GetPhotoTitle()); ?>"/>
                         </div>
                         <div class="FieldName FieldPhoto">Photo:</div>
                     </div>
@@ -278,7 +278,7 @@
                         <div class="FieldName">Prénom:</div>
                         <div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<? echo($pratiquant->prenom); ?>">
+                                <input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<?php echo($pratiquant->prenom); ?>">
                             <?php } else {
                                 echo($pratiquant->prenom);
                             } ?>
@@ -290,8 +290,8 @@
                         <div class="InputField">
                             <?php if($edit){ ?>
                                 <select id="sexe" name="sexe">
-                                    <option value="0" <? echo($pratiquant->sexe?'':'selected'); ?>>Femme</option>
-                                    <option value="1" <? echo($pratiquant->sexe?'selected':''); ?>>Homme</option>
+                                    <option value="0" <?php echo($pratiquant->sexe?'':'selected'); ?>>Femme</option>
+                                    <option value="1" <?php echo($pratiquant->sexe?'selected':''); ?>>Homme</option>
                                 </select>
                             <?php } else {
                                 echo($pratiquant->sexe?'Homme':'Femme');
@@ -303,15 +303,15 @@
                         <div class="ItemLeft">
                             <div class="FieldName">Photo:</div>
                             <div class="InputField">
-                                <input type="text" autocomplete="off" id="photo" name="photo" value="<? echo($pratiquant->photo); ?>">
+                                <input type="text" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
                             </div>
                         </div>
-					<? } ?>
+					<?php } ?>
 
                     <div class="ItemLeft">
                         <div class="FieldName">Adresse:</div>	<div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<? echo($pratiquant->adresse); ?>">
+                                <input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<?php echo($pratiquant->adresse); ?>">
                             <?php } else {
                                 echo($pratiquant->adresse);
                             } ?>
@@ -321,7 +321,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">Code postal:</div>	<div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="cp"		name="cp"		 value="<? echo($pratiquant->codePostal); ?>">
+                                <input type="text" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
                             <?php } else {
                                 echo($pratiquant->codePostal);
                             } ?>
@@ -331,7 +331,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">Commune:</div>	<div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="commune"		name="commune"	 value="<? echo($pratiquant->commune); ?>">
+                                <input type="text" autocomplete="off" id="commune"		name="commune"	 value="<?php echo($pratiquant->commune); ?>">
                             <?php } else {
                                 echo($pratiquant->commune);
                             } ?>
@@ -341,7 +341,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">Naissance:</div><div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="naissance" name="naissance" value="<? echo(date('d/m/Y', strtotime($pratiquant->naissance))); ?>">
+                                <input type="text" autocomplete="off" id="naissance" name="naissance" value="<?php echo(date('d/m/Y', strtotime($pratiquant->naissance ?? ''))); ?>">
                             <?php } else {
                                 echo(date('d/m/Y', strtotime($pratiquant->naissance)));
                             } ?>
@@ -351,7 +351,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">Chef famille:</div><div class="InputField">
                             <?php if($edit){ ?>
-                                <!--<input type="text" id="famille"	name="famille" value="<? echo($pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom); ?>">-->
+                                <!--<input type="text" id="famille"	name="famille" value="<?php echo($pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom); ?>">-->
 
                                 <select id="famille" name="famille">
                                     <?php
@@ -403,7 +403,11 @@
                                     ?>
                                 </select>
                             <?php } else {
-                                echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
+                                if($pratiquant->GetFamilyHead())
+                                {
+                                    echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
+                                }
+
                             } ?>
                         </div>
                     </div>
@@ -411,7 +415,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">Téléphone:</div>	<div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="telephone" name="telephone" value="<? echo($pratiquant->telephone); ?>">
+                                <input type="text" autocomplete="off" id="telephone" name="telephone" value="<?php echo($pratiquant->telephone); ?>">
                             <?php } else {
                                     echo(formatPhoneNumber($pratiquant->telephone));
                             } ?>
@@ -421,7 +425,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">GSM:</div>	<div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="gsm" name="gsm" value="<? echo($pratiquant->gsm); ?>">
+                                <input type="text" autocomplete="off" id="gsm" name="gsm" value="<?php echo($pratiquant->gsm); ?>">
                             <?php } else {
                                 echo(formatPhoneNumber($pratiquant->gsm));
                             } ?>
@@ -431,7 +435,7 @@
                     <div class="ItemLeft">
                         <div class="FieldName">eMail:</div>	<div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="email" name="email" value="<? echo($pratiquant->email); ?>">
+                                <input type="text" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
                             <?php } else {
                                 echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
                             } ?>
@@ -444,9 +448,9 @@
                             <?php
                             if($edit){ ?>
                                 <select id="pub" name="pub">
-                                    <option value="0" <? echo($pratiquant->UnknownPub()?'selected':''); ?>>Inconnu</option>
-                                    <option value="1" <? echo($pratiquant->AllowPub()?'selected':''); ?>>Autorisé</option>
-                                    <option value="-1" <? echo($pratiquant->DisallowPub()?'selected':''); ?>>Interdit</option>
+                                    <option value="0" <?php echo($pratiquant->UnknownPub()?'selected':''); ?>>Inconnu</option>
+                                    <option value="1" <?php echo($pratiquant->AllowPub()?'selected':''); ?>>Autorisé</option>
+                                    <option value="-1" <?php echo($pratiquant->DisallowPub()?'selected':''); ?>>Interdit</option>
                                 </select>
                             <?php } else {
                                 if($pratiquant->UnknownPub())
@@ -474,7 +478,7 @@
                         <div class="FieldName">N° licence:</div>
                         <div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" id="licence" name="licence"	autocomplete="off"	value="<? echo($pratiquant->licenceNbr); ?>">
+                                <input type="text" id="licence" name="licence"	autocomplete="off"	value="<?php echo($pratiquant->licenceNbr); ?>">
                             <?php } else {
                                 echo($pratiquant->licenceNbr);
                             } ?>
@@ -485,7 +489,7 @@
                         <div class="FieldName">Expiration:</div>
                         <div class="InputField">
                             <?php if($edit){ ?>
-                                <input type="text" id="licenceDate" name="licenceDate"		value="<? echo(date('d/m/Y', strtotime($pratiquant->licenceDate))); ?>">
+                                <input type="text" id="licenceDate" name="licenceDate"		value="<?php echo(date('d/m/Y', strtotime($pratiquant->licenceDate ?? ''))); ?>">
                             <?php } else {
                                 echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
                             } ?>
@@ -549,10 +553,10 @@
 								foreach($grades as $grade)
 								{
 					?>
-									<div class="FieldName Grade"><? echo($grade->GetGrade()->libelle); ?>:</div> 
+									<div class="FieldName Grade"><?php echo($grade->GetGrade()->libelle); ?>:</div> 
 									<div class="InputField">
 										<?php if($edit){ ?>
-											<input type="text" name="grade<? echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" value="<?php echo(date('d/m/Y', strtotime($grade->date))); ?>">
+											<input type="text" name="grade<?php echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" value="<?php echo(date('d/m/Y', strtotime($grade->date))); ?>">
 										<?php } else {
 											echo(date('d/m/Y', strtotime($grade->date)));
 										} ?>
@@ -651,8 +655,8 @@
 									$idid = "periodeId" . $i;
 									$idOrdre = "periodeOrdre" . $i;
 									?>
-										<input type="hidden" name="<? echo($idid); ?>" id="<? echo($idid); ?>" value="<?php echo($periode->id); ?>">
-										<input type="checkbox" name="<? echo($idOrdre); ?>" id="<?php echo($idOrdre); ?>" value="enOrdre" />
+										<input type="hidden" name="<?php echo($idid); ?>" id="<?php echo($idid); ?>" value="<?php echo($periode->id); ?>">
+										<input type="checkbox" name="<?php echo($idOrdre); ?>" id="<?php echo($idOrdre); ?>" value="enOrdre" />
 									<?php
 								}
 								else
@@ -694,7 +698,7 @@
                     <br/>
                     <div class="FieldName Stat">Cours non payés:</div>
                     <div class="InputField">
-                        <?
+                        <?php
                         if($pratiquant->GetNoPayLesson())
                         {
                             foreach($pratiquant->GetNoPayLesson() as $presences)
@@ -708,10 +712,10 @@
             </div>
         <?php } ?>
 
-        <?php if(in_array($_SERVER['REMOTE_USER'], $admins)){ ?>
+        <?php if(in_array($_SERVER['REMOTE_USER'] ?? '', $admins)){ ?>
             <div class="Contents">
                 <?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><i class="fas fa-edit"></i> Modifier</a><?php } ?>
-                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<? echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
+                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<?php echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
                 <?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><i class="fas fa-window-close" style="color:red;"></i> Annuler</a><?php } ?>
                 <?php if($pratiquant->deleted){ ?><a class="Button" id="Undelete" href="#" onClick="SetHidden('action', 'undelete'); $('formNew').submit()"><i class="fas fa-recycle" style="color:darkorange;"></i> Restaurer</a><?php } ?>
 				<div class="EndFloat">&nbsp;</div>

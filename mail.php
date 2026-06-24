@@ -33,8 +33,8 @@
     $pdf->AddPage();
     $pdf->SetFont('Arial','',12);
     
-    $action = $_REQUEST['action'];
-	$section = $_REQUEST['section'];
+    $action = $_REQUEST['action'] ?? '';
+	$section = $_REQUEST['section'] ?? '';
     $pratiquants = FillTable($action, $section);
 
     $incomplets = "Incomplets: ";
@@ -58,7 +58,7 @@
 				}
 
 				$ville = $prat->codePostal . " " . $prat->commune;
-				$data[$i] = utf8_decode($nom) . "\n" . utf8_decode($prat->adresse) . "\n" . utf8_decode($ville);
+				$data[$i] = mb_convert_encoding($nom, 'ISO-8859-1', 'UTF-8') . "\n" . mb_convert_encoding($prat->adresse, 'ISO-8859-1', 'UTF-8') . "\n" . mb_convert_encoding($ville, 'ISO-8859-1', 'UTF-8');
 			}
             $i++;
         }

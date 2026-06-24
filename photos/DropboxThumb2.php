@@ -2,21 +2,8 @@
 
 	$path = "/Photos/" . $_GET['path'];
 
-	//require_once "../../dropbox-sdk/Dropbox/autoload.php";
-	require_once "../../dropbox/access.php";
-
-/*	use \Dropbox as dbx;
-
-	$appInfo = dbx\AppInfo::loadFromJsonFile("../../dropbox/app-info.json");
-	$webAuth = new dbx\WebAuthNoRedirect($appInfo, "PHP-Example/1.0");
-
-	$dbxClient = new dbx\Client($accessToken, "PHP-Example/1.0");
-
-	list($metadata, $data) = $dbxClient->getThumbnail($path, "jpeg", "m");
-*/
-
-	// The data to send to the API
-	//$postData = array();
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/www/dropbox/access.php");
+//	require_once($_SERVER['DOCUMENT_ROOT'] . "../../dropbox/access.php");
 
 	// Setup cURL
 	$ch = curl_init('https://content.dropboxapi.com/2/files/get_thumbnail');

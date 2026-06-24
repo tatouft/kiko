@@ -15,7 +15,7 @@
             $pratiquants = array();
             while ($result = $map->fetchMap())
             {
-                $pratiquants[$i] = $result[self::$TableName];
+                $pratiquants[$i] = $result[self::$TableName] ?? null;
                 $i++;
             }
             return $pratiquants;

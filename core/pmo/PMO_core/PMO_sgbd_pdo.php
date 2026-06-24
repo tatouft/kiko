@@ -10,7 +10,7 @@
 
 class PMO_Sgbd_Pdo extends PMO_MySgbd {
 
-	public function __construct(PDO $pdo = NULL) {
+	public function __construct(PDO $pdo = null) {
 		if(isset($pdo))
 			$this->setDB($pdo);
 	}

@@ -117,7 +117,7 @@ class pratiquants extends PMO_MyObject{
     {
     	if($this->GetGrade())
 		{
-			return $this->GetGrade()->GetGrade()->GetNextGrade($this->fk_section)->jours;
+			return $this->GetGrade()->GetGrade()->GetNextGrade($this->fk_section)->jours ?? null;
 		}
     	else
 		{
@@ -251,7 +251,7 @@ class pratiquants extends PMO_MyObject{
 	
 	public function IsHttpPhoto()
 	{
-		return preg_match('/^http(s)?:/', $this->photo);
+		return preg_match('/^http(s)?:/', $this->photo ?? '');
 	}
 	
 	public function ExistsPhoto()

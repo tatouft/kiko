@@ -33,15 +33,8 @@
 			{
 				echo("<div class='Licence'><div>Assurance Expirée</div></div>");
 			}
-			echo("<div class='fname'>" . ucfirst($prat->nom) . "</div> <div class='name'>" . ucfirst($prat->prenom) . "</div>");
+			echo("<div class='fname'>" . ucfirst($prat->nom ?? '') . "</div> <div class='name'>" . ucfirst($prat->prenom ?? '') . "</div>");
 			echo("</div>");
-			
-			// License
-//			echo($prat->IsLicenceExpired()?"<img class='TableButton' src='css/images/001_05.png'>":"<img class='TableButton' src='css/images/001_06.png'>");
-//			$dt = date_create($prat->licenceDate);
-			
-//			echo("&nbsp;" . $dt->format('d/m/Y'));
-//			echo("</td>\n\t\t\t<td>");
 		}
 	}
 	else

@@ -35,7 +35,7 @@ class grades extends PMO_MyObject{
 		$map = $controler->queryController($sql);
         
         $array = self::GetArray($map);
-		return $array[0];
+		return $array[0] ?? null;
     }
 
 	/*************

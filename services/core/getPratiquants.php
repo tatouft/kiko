@@ -1,4 +1,4 @@
-<?
+<?php
 	/*
 	 * Params:
 	 * action = all, section, ...
@@ -7,8 +7,12 @@
 	 *
 	 * return (tableau de pratiquants)
 	 */
-	$id = $_REQUEST['pratiquantId'];
-	$baction = $_REQUEST['baction'];
+	$id = $_REQUEST['pratiquantId'] ?? '';
+	$baction = $_REQUEST['baction'] ?? '';
+	if(!isset($section))
+	{
+    	$section = '';
+	}
 
 	if($debug == true)
 	{
@@ -35,12 +39,12 @@
 	<input type="hidden" id="pratiquantId" name="pratiquantId">
 	<input type="hidden" id="baction" name="baction" />
 
-<?
+<?php
 	if(count($pratiquants) != 0)
 	{
         $count = 0;
 
-		?>
+?>
 		<table id="TablePratiquants">
 			<tr>
 				<th>Nom/Prenom</th>
@@ -52,7 +56,7 @@
 				<th>Examen</th>
 				<!--<th>&nbsp;</th>-->
 			</tr>
-			<?
+<?php
 			$mailto = "";
 			foreach($pratiquants as $prat)
 			{
@@ -67,11 +71,11 @@
                 	}
                 }
 
-				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom, ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom, ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList(), ENT_QUOTES | ENT_HTML401) . "\")' ondblclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom, ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom, ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList(), ENT_QUOTES | ENT_HTML401) . "\");OpenPersonne();'>");
+				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\")' ondblclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\");OpenPersonne();'>");
 				echo("<td><a name='Prat" . $prat->id . "'></a>");
 				
 				// Name
-				echo(ucfirst($prat->nom) . " " . ucfirst($prat->prenom));
+				echo(ucfirst($prat->nom ?? '') . " " . ucfirst($prat->prenom ?? ''));
 				echo("</td>\n\t\t\t<td>");
 				
 				// Section
@@ -138,8 +142,6 @@
 				// Examen
                 try
                 {
-
-
                     if ($prat->GetPresencesNeededForNextGrade() > 0)
                     {
                         $rest = $prat->GetRestToNextGrade();
@@ -157,21 +159,13 @@
                 } catch (\Throwable $e) {
 
                 }
-//				echo("</td>\n\t\t\t<td>");
- 
-//                // Bouttons b
-//                if(in_array($_SERVER['REMOTE_USER'], $admins))
-//                {
-//                    echo("<a href='#' class='TableButton' id='delete' title='Supprimer' onClick='DeletePratiquant(\"" . $prat->nom . "\", \"" . $prat->prenom . "\", " . $prat->id . ");'></a>");
-//                }
-//                echo("<a href='mailto:" . $prat->email . "' class='TableButton' id='singleEmail' title='" . $prat->email . "' target='_blank'></a>");
                 echo("</td></tr>\n\t\t");
 			}
-			?>
+?>
 		</table>
-        <div id='Total'>Total: <? echo($count); ?></div>
-        <script>$('email').href = "mailto:?bcc=<? echo($mailto); ?>";</script>
-		<? 
+        <div id='Total'>Total: <?php echo($count); ?></div>
+        <script>$('email').href = "mailto:?bcc=<?php echo($mailto); ?>";</script>
+<?php
 	}
 	else
 	{

@@ -1,8 +1,9 @@
-<?
-    require('PdfConfig.php');
+<?php
+    require($_SERVER['DOCUMENT_ROOT'] . '/config/PdfConfig.php');
 	$debug = false;
 	$maintenance = false;
 
+//	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'];
 	$_SESSION['SiteRoot'] = '/homez.462/komewntp/www/kiko';
     $_SESSION['DbName'] = 'kome';
     $_SESSION['Space'] = '';

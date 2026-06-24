@@ -22,7 +22,7 @@
 
         <div class="List Contents">
             <div id='Saisons'>
-                <form method="post" action="<? echo($_SERVER['REQUEST_URI']); ?>" name="formList" id="formList">
+                <form method="post" action="<?php echo($_SERVER['REQUEST_URI']); ?>" name="formList" id="formList">
                     <?php
                         extract($_GET);
                         extract($_POST);
