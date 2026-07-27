@@ -92,7 +92,8 @@
                 <h2 class="card-title">🇫🇷 <?php echo($title->fr); ?></h2>
                 <p class="card-body">
                     ⚠️ <?php echo($desc->fr); ?> sont désormais clôturées. <br/>
-                    Merci à toutes et tous pour votre participation !
+                    Merci à toutes et tous pour votre participation ! <br/>
+                    <?php echo($msg->fr ?? ''); ?>
                 </p>
             </div>
             <div class="info-card">
@@ -102,7 +103,8 @@
                 <h2 class="card-title">🇬🇧 <?php echo($title->en); ?></h2>
                 <p class="card-body">
                     ⚠️ <?php echo($desc->en); ?> is now closed. <br/>
-                    Thank you all for your interest!
+                    Thank you all for your interest! <br/>
+                                                                        <?php echo($msg->en ?? ''); ?>
                 </p>
             </div>
         <?php endif; ?>
