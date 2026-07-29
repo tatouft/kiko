@@ -15,7 +15,7 @@ $captcha_solution = isset($_POST['frc-captcha-response']) ? trim($_POST['frc-cap
 // Variables de validation
 $errors = array();
 $success = false;
-$captcha_valid = false; // reused name for compatibility (will be set after FriendlyCaptcha check)
+$recaptcha_valid = false; // sera mis à true après vérification FriendlyCaptcha réussie
 
 // ===== VALIDATION DES DONNÉES =====
 
@@ -60,30 +60,52 @@ if (empty($captcha_solution)) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    // Ajouter les headers requis (Content-Type et X-API-Key)
+    // Ajouter le header requis (X-API-Key)
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'X-API-Key: ' . $friendly_secret_key,
     ]);
 
     $response = curl_exec($ch);
     $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
     if ($http_status === 200 && $response !== false) {
         $response_data = json_decode($response, true);
         // Vérifier que success est true
         if (isset($response_data['success']) && $response_data['success'] === true) {
-            $captcha_valid = true;
+            $recaptcha_valid = true; // FIX: c'était $captcha_valid, jamais lu ensuite
         } else {
             $errors[] = 'Vérification captcha échouée';
         }
     } else {
-        $errors[] = 'Erreur lors de la vérification du captcha';
+        // Le service de vérification est indisponible ou mal configuré (timeout, panne,
+        // mauvaise config serveur...). Conformément à la recommandation FriendlyCaptcha,
+        // on n'ajoute PAS de blocage : mieux vaut accepter temporairement un éventuel bot
+        // que de rejeter tous les utilisateurs légitimes. On journalise l'incident et on
+        // envoie une alerte email pour pouvoir investiguer.
+        error_log('[FriendlyCaptcha] Échec de la vérification siteverify - http_status=' . $http_status . ' response=' . var_export($response, true));
+
+        $alert_subject = '[ALERTE] Échec vérification FriendlyCaptcha - Kome Dojo';
+        $alert_body = "La vérification du captcha (siteverify) a échoué sur initiation.php.\n\n"
+            . "Date : " . date('d/m/Y à H:i:s', time()) . "\n"
+            . "Code HTTP retourné : " . $http_status . "\n"
+            . "Réponse brute : " . var_export($response, true) . "\n\n"
+            . "La soumission a été acceptée malgré tout (fail-open) pour ne pas bloquer les utilisateurs légitimes.\n"
+            . "Vérifiez le statut du service sur https://status.friendlycaptcha.com et la configuration de la clé API.";
+        $alert_headers = "MIME-Version: 1.0\r\n";
+        $alert_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $alert_headers .= "From: Kome Dojo <noreply@kome.be>\r\n";
+        // On n'utilise pas $mail_sent ici : une éventuelle erreur d'envoi de l'alerte
+        // ne doit jamais bloquer ou modifier le traitement du formulaire.
+        @mail($initiation_email, $alert_subject, $alert_body, $alert_headers);
+
+        $recaptcha_valid = true;
     }
 }
 
 // ===== SI TOUTES LES VALIDATIONS SONT OK, ENVOYER L'EMAIL =====
 
-if (empty($errors) && $captcha_valid) {
+if (empty($errors) && $recaptcha_valid) {
 
     // Préparer l'email HTML
     $subject = 'Nouvelle réservation d\'initiation - ' . $nom . ' ' . $prenom;
@@ -403,5 +425,3 @@ if (empty($errors) && $captcha_valid) {
 
 </body>
 </html>
-
-
