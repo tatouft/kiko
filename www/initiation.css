@@ -1,0 +1,268 @@
+/* =====================================================
+   KOME DOJO — initiation.css
+   Utilisé uniquement dans initiation.php
+   ===================================================== */
+
+/* --- PAGE HERO --- */
+.page-hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: calc(var(--nav-h) + 60px) 40px 60px;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.page-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--orange);
+}
+
+/* --- SECTION FORMULAIRE --- */
+.initiation-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+
+.initiation-intro {
+  max-width: 720px;
+  margin: 0 auto 48px;
+  text-align: center;
+  padding: 32px;
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+}
+
+.initiation-intro h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.initiation-intro p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink-mid);
+  line-height: 1.85;
+}
+
+/* --- FORMULAIRE --- */
+.initiation-form {
+  max-width: 600px;
+  margin: 48px auto 0;
+  padding: 48px;
+  background: var(--paper);
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 32px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.form-required {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--paper-rule);
+  border-radius: 3px;
+  padding: 12px 14px;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--orange);
+  background: #fafaf6;
+}
+
+.form-group input::placeholder {
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+/* --- FriendlyCaptcha Widget --- */
+.captcha-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #fafaf6;
+  border: 2px solid var(--paper-rule);
+  border-radius: 3px;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.captcha-group.completed {
+  border-color: var(--orange);
+  background: #f0e8d8;
+}
+
+.captcha-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.frc-captcha {
+  display: flex;
+  justify-content: center;
+  min-height: 100px;
+  align-items: center;
+}
+
+.captcha-info {
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+.form-error {
+  font-size: 13px;
+  color: #d32f2f;
+  margin-top: 4px;
+  min-height: 18px;
+  font-weight: 400;
+}
+
+/* --- BOUTON SOUMETTRE --- */
+.btn-submit {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, transform 0.15s;
+}
+
+.btn-submit:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: translateY(-1px);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 820px) {
+  .page-hero {
+    padding: calc(var(--nav-h) + 40px) 30px 40px;
+  }
+
+  .initiation-intro {
+    padding: 24px;
+  }
+
+  .initiation-form {
+    padding: 32px;
+    margin: 32px 0 0;
+  }
+
+  .page-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 580px) {
+  .page-hero {
+    padding: calc(var(--nav-h) + 30px) 20px 30px;
+  }
+
+  .initiation-intro {
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+
+  .initiation-intro h2 {
+    font-size: 20px;
+  }
+
+  .initiation-intro p {
+    font-size: 14px;
+  }
+
+  .initiation-section {
+    padding: 0 20px 60px;
+  }
+
+  .initiation-form {
+    padding: 24px;
+    border: none;
+    background: transparent;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .btn-submit {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+

@@ -38,7 +38,7 @@
             par des projections ou des immobilisations — sans jamais chercher à le blesser.
           </p>
           <div class="hero-actions">
-            <a href="contact.php" class="btn-main">Nous contacter</a>
+            <a href="initiation.php" class="btn-main">Réserver votre initiation</a>
             <a href="horaires.php" class="btn-ghost">Voir les horaires</a>
           </div>
         </div>
