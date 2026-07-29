@@ -84,12 +84,10 @@
         <label class="captcha-label">Vérification anti-bot <span class="form-required">*</span></label>
         <div class="frc-captcha" data-sitekey="<?php echo htmlspecialchars($friendly_site_key); ?>" data-lang="fr"></div>
         <p class="captcha-info">Veuillez compléter cette vérification pour confirmer que vous êtes un utilisateur réel.</p>
+        <span class="form-error" id="captcha-error"></span>
       </div>
 
-      <!-- Input caché pour la solution FriendlyCaptcha -->
-      <input type="hidden" name="frc-captcha-solution" id="frc-captcha-solution" value="">
-
-      <button type="submit" class="btn-submit" id="submitBtn">Réserver mon initiation</button>
+      <button type="submit" class="btn-submit" id="submitBtn" disabled>Réserver mon initiation</button>
 
     </form>
 
@@ -98,56 +96,161 @@
   <?php include("footer.php"); ?>
 
   <script>
-    // Simplified client-side logic inspired by FriendlyCaptcha docs
-    // - Validate input fields
-    // - Check that FriendlyCaptcha produced a solution in the hidden input
-    // If both pass, allow the normal form submission to proceed.
-
-    document.getElementById('initiationForm').addEventListener('submit', function(e) {
-      // Validate fields first
-      if (!validateForm()) {
-        e.preventDefault();
-        return;
-      }
-
-      // FriendlyCaptcha injects a hidden input named 'frc-captcha-solution' when solved
-      const solutionEl = document.querySelector('input[name="frc-captcha-response"]');
-      const solution = solutionEl ? solutionEl.value.trim() : '';
-      if (!solution) {
-        e.preventDefault();
-        alert('Veuillez compléter le captcha FriendlyCaptcha (le puzzle) avant de soumettre.');
-        return;
-      }
-
-      // allow normal submission; server will verify the solution
-    });
-
-    function validateForm() {
-      let isValid = true;
-      document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
-
-      const nom = document.getElementById('nom').value.trim();
-      if (!nom) { document.getElementById('nom-error').textContent = 'Le nom est requis'; isValid = false; }
-
-      const prenom = document.getElementById('prenom').value.trim();
-      if (!prenom) { document.getElementById('prenom-error').textContent = 'Le prénom est requis'; isValid = false; }
-
-      const age = document.getElementById('age').value;
-      if (!age) { document.getElementById('age-error').textContent = 'Veuillez sélectionner une option'; isValid = false; }
-
-      const email = document.getElementById('email').value.trim();
-      if (!email || !isValidEmail(email)) { document.getElementById('email-error').textContent = 'Email invalide'; isValid = false; }
-
-      const telephone = document.getElementById('telephone').value.trim();
-      if (!telephone) { document.getElementById('telephone-error').textContent = 'Le téléphone est requis'; isValid = false; }
-
-      return isValid;
-    }
+    // Validation en temps réel : chaque champ affiche son erreur dès qu'il est modifié
+    // (ligne rouge + message sous le champ), et le bouton reste grisé tant que le
+    // formulaire (y compris le captcha) n'est pas entièrement valide. Plus de popup.
 
     function isValidEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     }
+
+    function isValidPhone(phone) {
+      // Retire espaces, points, tirets et parenthèses pour ne garder que
+      // le "+" éventuel et les chiffres, puis vérifie une longueur plausible.
+      // Accepte aussi bien un format belge local (04xx xx xx xx, 9 chiffres)
+      // qu'un format international (+32 4xx xx xx xx, +33 6 xx xx xx xx, etc.)
+      const cleaned = phone.replace(/[\s().-]/g, '');
+      return /^\+?[0-9]{8,15}$/.test(cleaned);
+    }
+
+    const fields = {
+      nom: {
+        el: document.getElementById('nom'),
+        validate: v => v.trim().length >= 2 ? true : 'Le nom est requis (2 caractères min.)'
+      },
+      prenom: {
+        el: document.getElementById('prenom'),
+        validate: v => v.trim().length >= 2 ? true : 'Le prénom est requis (2 caractères min.)'
+      },
+      age: {
+        el: document.getElementById('age'),
+        validate: v => v ? true : 'Veuillez sélectionner une option'
+      },
+      email: {
+        el: document.getElementById('email'),
+        validate: v => isValidEmail(v.trim()) ? true : 'Email invalide'
+      },
+      telephone: {
+        el: document.getElementById('telephone'),
+        validate: v => isValidPhone(v.trim()) ? true : 'Numéro invalide (ex. 04XX XX XX XX ou +32 4XX XX XX XX)'
+      }
+    };
+
+    let captchaValid = false;
+    let formTouched = false;
+
+    function validateField(name, forceDisplay) {
+      const field = fields[name];
+      const result = field.validate(field.el.value);
+      const errorEl = document.getElementById(name + '-error');
+      const valid = result === true;
+
+      if (valid) {
+        field.el.classList.remove('invalid');
+        errorEl.textContent = '';
+      } else if (forceDisplay || field.el.dataset.touched === 'true') {
+        field.el.classList.add('invalid');
+        errorEl.textContent = result;
+      }
+      return valid;
+    }
+
+    function isFormValid() {
+      let allValid = true;
+      Object.keys(fields).forEach(name => {
+        if (fields[name].validate(fields[name].el.value) !== true) allValid = false;
+      });
+      return allValid && captchaValid;
+    }
+
+    function updateSubmitState() {
+      document.getElementById('submitBtn').disabled = !isFormValid();
+    }
+
+    Object.keys(fields).forEach(name => {
+      const el = fields[name].el;
+      const eventType = (el.tagName === 'SELECT') ? 'change' : 'input';
+      el.addEventListener(eventType, function() {
+        el.dataset.touched = 'true';
+        validateField(name);
+        updateSubmitState();
+      });
+      el.addEventListener('blur', function() {
+        el.dataset.touched = 'true';
+        validateField(name);
+        updateSubmitState();
+      });
+    });
+
+    // Événements du widget FriendlyCaptcha (voir doc officielle) pour piloter
+    // l'état du bouton sans avoir à lire l'input caché manuellement.
+    const captchaWidget = document.querySelector('.frc-captcha');
+    const captchaGroup = document.querySelector('.captcha-group');
+    const captchaError = document.getElementById('captcha-error');
+
+    captchaWidget.addEventListener('frc:widget.complete', function() {
+      captchaValid = true;
+      captchaError.textContent = '';
+      captchaGroup.classList.add('completed');
+      updateSubmitState();
+    });
+
+    captchaWidget.addEventListener('frc:widget.error', function(event) {
+      captchaValid = false;
+      captchaError.textContent = 'Erreur lors de la vérification anti-bot, veuillez réessayer.';
+      captchaGroup.classList.remove('completed');
+      updateSubmitState();
+    });
+
+    captchaWidget.addEventListener('frc:widget.expire', function() {
+      captchaValid = false;
+      captchaError.textContent = 'La vérification a expiré, veuillez la recompléter.';
+      captchaGroup.classList.remove('completed');
+      updateSubmitState();
+    });
+
+    // FriendlyCaptcha peut se résoudre en arrière-plan très rapidement (voire avant
+    // que ce script n'ait eu le temps d'attacher les écouteurs ci-dessus). On vérifie
+    // donc aussi, immédiatement et pendant quelques secondes après le chargement, si
+    // l'input caché "frc-captcha-response" a déjà une valeur - au cas où l'événement
+    // "frc:widget.complete" serait parti avant qu'on ne l'écoute.
+    function checkCaptchaAlreadySolved() {
+      if (captchaValid) return true;
+      const responseInput = captchaWidget.querySelector('input[name="frc-captcha-response"]');
+      if (responseInput && responseInput.value) {
+        captchaValid = true;
+        captchaError.textContent = '';
+        captchaGroup.classList.add('completed');
+        updateSubmitState();
+        return true;
+      }
+      return false;
+    }
+
+    checkCaptchaAlreadySolved();
+    const captchaPoll = setInterval(function() {
+      if (checkCaptchaAlreadySolved()) {
+        clearInterval(captchaPoll);
+      }
+    }, 300);
+    setTimeout(function() { clearInterval(captchaPoll); }, 8000);
+
+    document.getElementById('initiationForm').addEventListener('submit', function(e) {
+      formTouched = true;
+      let allValid = true;
+      Object.keys(fields).forEach(name => {
+        if (!validateField(name, true)) allValid = false;
+      });
+      if (!captchaValid) {
+        captchaError.textContent = 'Veuillez compléter la vérification anti-bot avant de soumettre.';
+        allValid = false;
+      }
+      if (!allValid) {
+        e.preventDefault();
+        updateSubmitState();
+      }
+    });
   </script>
 
 </body>

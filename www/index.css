@@ -98,18 +98,18 @@
 /* Boutons */
 .btn-main {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  padding: 13px 28px;
-  background: var(--ink);
+  padding: 14px 32px;
+  background: var(--orange);
   color: var(--paper);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--orange);
   transition: background 0.25s, border-color 0.25s;
 }
 .btn-main:hover {
-  background: var(--orange);
-  border-color: var(--orange);
+  background: var(--ink);
+  border-color: var(--ink);
 }
 
 .btn-ghost {

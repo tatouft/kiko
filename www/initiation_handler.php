@@ -94,7 +94,7 @@ if (empty($captcha_solution)) {
             . "Vérifiez le statut du service sur https://status.friendlycaptcha.com et la configuration de la clé API.";
         $alert_headers = "MIME-Version: 1.0\r\n";
         $alert_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $alert_headers .= "From: Kome Dojo <noreply@kome.be>\r\n";
+        $alert_headers .= "From: Kome Dojo <info@kome.be>\r\n";
         // On n'utilise pas $mail_sent ici : une éventuelle erreur d'envoi de l'alerte
         // ne doit jamais bloquer ou modifier le traitement du formulaire.
         // On vérifie aussi que le destinataire est bien défini pour éviter un warning
@@ -183,7 +183,7 @@ if (empty($errors) && $recaptcha_valid) {
     // Headers email
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: Kome Dojo <noreply@kome.be>\r\n";
+    $headers .= "From: Kome Dojo <info@kome.be>\r\n";
     $headers .= "Reply-To: " . $email . "\r\n";
 
     // Envoyer l'email

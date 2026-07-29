@@ -120,6 +120,11 @@
   background: #fafaf6;
 }
 
+.form-group input.invalid,
+.form-group select.invalid {
+  border-color: #d32f2f;
+}
+
 .form-group input::placeholder {
   color: var(--ink-soft);
   font-weight: 300;
