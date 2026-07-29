@@ -97,7 +97,14 @@ if (empty($captcha_solution)) {
         $alert_headers .= "From: Kome Dojo <noreply@kome.be>\r\n";
         // On n'utilise pas $mail_sent ici : une éventuelle erreur d'envoi de l'alerte
         // ne doit jamais bloquer ou modifier le traitement du formulaire.
-        @mail($initiation_email, $alert_subject, $alert_body, $alert_headers);
+        // On vérifie aussi que le destinataire est bien défini pour éviter un warning
+        // "Undefined variable" et l'erreur mail() avec un destinataire null.
+        $alert_recipient = (isset($initiation_email) && !empty($initiation_email)) ? $initiation_email : null;
+        if ($alert_recipient !== null) {
+            @mail($alert_recipient, $alert_subject, $alert_body, $alert_headers);
+        } else {
+            error_log('[FriendlyCaptcha] Alerte non envoyée : $initiation_email n\'est pas défini (vérifier config.php).');
+        }
 
         $recaptcha_valid = true;
     }
