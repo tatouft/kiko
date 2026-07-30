@@ -60,8 +60,8 @@
         <label for="age">Âge <span class="form-required">*</span></label>
         <select id="age" name="age" required>
           <option value="">-- Sélectionnez une option --</option>
-          <option value="moins_13">Moins de 13 ans</option>
-          <option value="plus_13">13 ans ou plus</option>
+          <option value="moins_12">Moins de 12 ans</option>
+          <option value="plus_12">12 ans ou plus</option>
         </select>
         <span class="form-error" id="age-error"></span>
       </div>

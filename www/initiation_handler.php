@@ -30,7 +30,7 @@ if (empty($prenom) || strlen($prenom) < 2 || strlen($prenom) > 100) {
 }
 
 // Valider âge
-if (!in_array($age, array('moins_13', 'plus_13'))) {
+if (!in_array($age, array('moins_12', 'plus_12'))) {
     $errors[] = 'Sélection d\'âge invalide';
 }
 
@@ -117,7 +117,7 @@ if (empty($errors) && $recaptcha_valid) {
     // Préparer l'email HTML
     $subject = 'Nouvelle réservation d\'initiation - ' . $nom . ' ' . $prenom;
 
-    $age_label = ($age === 'moins_13') ? 'Moins de 13 ans' : '13 ans ou plus';
+    $age_label = ($age === 'moins_12') ? 'Moins de 12 ans' : '12 ans ou plus';
     $date_submission = date('d/m/Y à H:i:s', time());
 
     $email_body = '<!DOCTYPE html>
@@ -390,7 +390,7 @@ if (empty($errors) && $recaptcha_valid) {
                 </div>
                 <div class="data-row">
                     <span class="data-label">Âge</span>
-                    <span class="data-value"><?php echo ($age === 'moins_13') ? 'Moins de 13 ans' : '13 ans ou plus'; ?></span>
+                    <span class="data-value"><?php echo ($age === 'moins_12') ? 'Moins de 12 ans' : '12 ans ou plus'; ?></span>
                 </div>
                 <div class="data-row">
                     <span class="data-label">Email</span>
