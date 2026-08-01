@@ -72,7 +72,7 @@
         <div class="faq-item">
           <h3 class="faq-question">Combien de temps dure la séance ?</h3>
           <p class="faq-answer">
-            Le temps d&rsquo;un cours normal : environ 1h pour les enfants, 1h30 pour les adultes.
+            Le temps d&rsquo;un cours : 1h pour les enfants, 1h30 pour les adultes.
           </p>
         </div>
 

@@ -1,0 +1,170 @@
+/* =====================================================
+   KOME DOJO — evenements.css
+   Utilisé uniquement dans evenements.php
+   ===================================================== */
+
+.events-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.event-mois {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-mois-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.event-mois-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.event-mois-line {
+  flex: 1;
+  height: 1px;
+  background: var(--paper-rule);
+}
+
+.event-mois-diamond {
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--paper-warm);
+  border: 1px solid var(--paper-rule);
+  padding: 14px;
+  transition: background 0.2s, border-color 0.2s;
+  text-decoration: none;
+}
+.event-card:hover {
+  background: #e8dfc9;
+  border-color: var(--orange);
+}
+.event-card img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  background: var(--paper-rule);
+}
+
+.event-card-header {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-card-footer {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-card-footer--center {
+  justify-content: center;
+}
+
+.event-card-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--orange);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.event-card-dl {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.event-card:hover .event-card-dl { text-decoration: underline; }
+
+/* --- CARTE TEXTE (événement sans image) --- */
+.event-card--text {
+  cursor: default;
+}
+
+.event-card-visual {
+  width: 100%;
+  aspect-ratio: 3/4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 14px;
+  background: linear-gradient(155deg, var(--paper-warm) 0%, var(--paper) 100%);
+  border: 1px solid var(--paper-rule);
+}
+
+/* Le titre sert d'"image" : gros texte, taille calculée côté PHP,
+   tronqué proprement en dernier recours si le titre est très long. */
+.event-card-visual-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.event-card-visual-mark {
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.event-card-note {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-mid);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 580px) {
+  .events-section { padding-left: 20px; padding-right: 20px; padding-bottom: 72px; }
+  .event-grid { grid-template-columns: repeat(2, 1fr); }
+}

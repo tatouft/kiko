@@ -51,21 +51,23 @@
       <div class="info-card">
         <h2 class="card-title">Au jō</h2>
         <p class="card-body">
-          Le jō, bâton de bois d&rsquo;environ 1,30&nbsp;m, prolonge le travail à mains nues. Il affine la précision
-          des trajectoires, la posture et le sens de la distance face à une arme longue.
+          Le jō, bâton de bois d&rsquo;environ 1,30&nbsp;m, affine la précision des trajectoires, la posture et le sens
+          de la distance face à une arme longue — des repères qui viennent ensuite nourrir directement le taijutsu.
         </p>
       </div>
 
       <div class="info-card">
         <h2 class="card-title">Au ken</h2>
         <p class="card-body">
-          Le ken, sabre de bois (bokken), introduit les principes du sabre japonais : coupe, garde, déplacement.
-          C&rsquo;est aussi la porte d&rsquo;entrée vers le kenjutsu <strong>Kashima no Tachi</strong> pratiqué au dojo.
+          Le ken, sabre de bois (bokken), introduit les principes du sabre japonais : coupe, garde, déplacement,
+          dont la rigueur vient à son tour affiner les mouvements à mains nues. C&rsquo;est aussi la porte d&rsquo;entrée
+          vers le kenjutsu <strong>Kashima no Tachi</strong> pratiqué au dojo.
         </p>
       </div>
 
     </div>
   </section>
+
 
   <!-- ACCESSIBLE À TOUS -->
   <section class="info-section" style="padding-top: 0;">
@@ -79,6 +81,45 @@
       </p>
     </div>
   </section>
+
+  <!-- NOTRE HISTOIRE -->
+  <section class="info-section" style="padding-top: 0;">
+    <div class="section-heading">
+      <p class="hero-eyebrow">Depuis 2012</p>
+      <h2>Notre <em>histoire</em></h2>
+    </div>
+    <div class="info-grid">
+
+      <div class="info-card">
+        <h2 class="card-title">Une histoire de famille</h2>
+        <p class="card-body">
+          Fabian a grandi sur les tatamis du dojo d&rsquo;Esneux, fondé par son père Jean-Pierre Jacquet Shihan,
+          7<sup>e</sup> dan Aïkikaï — c&rsquo;est là qu&rsquo;il commence l&rsquo;aïkido en 1989. Michelle, sa mère,
+          le pratique depuis 1976. En 2012, mère et fils fondent ensemble le Kome Dojo, quand Fabian s&rsquo;installe
+          à Neupré avec l&rsquo;envie de transmettre à son tour.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h2 class="card-title">Pourquoi « Kome » ?</h2>
+        <p class="card-body">
+          Au Japon, le riz — 米, kome — est considéré comme une source d&rsquo;énergie. Un indice
+          s&rsquo;en cache peut-être déjà dans le mot aïkido lui-même&nbsp;: à vous de le débusquer.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h2 class="card-title">Kashima no Tachi et liens japonais</h2>
+        <p class="card-body">
+          C&rsquo;est vers 2010 que le dojo découvre l&rsquo;école du Kashima no Tachi (école de kenjutsu), aux côtés de Benoît Mabire
+          sensei, qui depuis y donne plusieurs stages chaque année. En 2015, lors d&rsquo;un séminaire
+          ISBA à Prague, le club a l&rsquo;opportunité de nouer directement des liens avec l&rsquo;école japonaise.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
 
   <!-- FOOTER -->
   <?php include("footer.php"); ?>
