@@ -15,6 +15,7 @@
       </button>
       <ul class="nav-links">
         <li><a href="/index.php" onclick="closeMenu()">Accueil</a></li>
+        <li><a href="/aikido.php" onclick="closeMenu()">L&rsquo;aïkido</a></li>
         <li><a href="/horaires.php" onclick="closeMenu()">En pratique</a></li>
         <li><a href="/stages.php" onclick="closeMenu()">Stages</a></li>
         <li><a href="/contact.php" onclick="closeMenu()">Contact</a></li>

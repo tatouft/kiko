@@ -1,0 +1,38 @@
+/* =====================================================
+   KOME DOJO — aikido.css
+   Utilisé uniquement dans aikido.php
+   ===================================================== */
+
+.page-lead {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 40px 56px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  text-align: center;
+}
+
+.kashima-block {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 44px 40px;
+  background: var(--paper-warm);
+  border-top: 3px solid var(--orange);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kashima-block .card-title { font-size: 26px; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 820px) {
+  .page-lead { padding-left: 20px; padding-right: 20px; }
+  .kashima-block { padding: 36px 24px; }
+}
+
+@media (max-width: 580px) {
+  .page-lead { padding-bottom: 40px; }
+}

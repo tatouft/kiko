@@ -97,6 +97,74 @@
   white-space: nowrap;
 }
 
+/* Sous-ligne horaire (ex: 2e séance le même jour) */
+.horaire-row--sub {
+  margin-top: -6px;
+  padding-left: 16px;
+}
+
+.horaire-jour--sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.horaire-jour--sub::before {
+  content: "\21B3";
+  color: var(--paper-rule);
+  font-style: normal;
+}
+
+.horaire-heure--sub {
+  font-size: 13px;
+  color: var(--ink-mid);
+}
+
+/* Mise en avant temporaire — à retirer quand le cours sera bien installé */
+.horaire-row--highlight {
+  background: var(--orange-pale);
+  padding: 6px 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.horaire-row--highlight .horaire-jour--sub {
+  color: var(--orange-warm);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.horaire-row--highlight .horaire-jour--sub::before {
+  color: var(--orange);
+}
+
+.horaire-row--highlight .horaire-heure--sub {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.horaire-row--highlight .horaire-badge {
+  background: var(--orange);
+  color: var(--paper);
+}
+
+.horaire-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  background: var(--orange-pale);
+  padding: 2px 7px;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
 /* Tarifs */
 .tarif-row {
   display: flex;

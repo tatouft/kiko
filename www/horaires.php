@@ -94,6 +94,10 @@
           <span class="horaire-jour">Mardi</span>
           <span class="horaire-heure">18:30 &ndash; 20:00</span>
         </div>
+        <div class="horaire-row horaire-row--sub horaire-row--highlight">
+          <span class="horaire-jour horaire-jour--sub">kenjutsu <span class="horaire-badge">Nouveau</span></span>
+          <span class="horaire-heure horaire-heure--sub">20:00 &ndash; 21:00</span>
+        </div>
         <div class="horaire-row">
           <span class="horaire-jour">Jeudi</span>
           <span class="horaire-heure">18:30 &ndash; 20:00</span>
@@ -138,7 +142,7 @@
         3 cours d&rsquo;essai gratuits
         <span>Pour tous les nouveaux membres &mdash; enfants et adultes</span>
       </div>
-      <a href="contact.php" class="essai-cta">Nous contacter &rarr;</a>
+      <a href="initiation.php" class="essai-cta">Réserver votre initiation</a>
     </div>
   </div>
 
