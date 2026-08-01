@@ -67,6 +67,51 @@
   line-height: 1.85;
 }
 
+/* --- FAQ PRATIQUE --- */
+.initiation-faq {
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+
+.initiation-faq h2 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--paper-rule);
+  border: 1px solid var(--paper-rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.faq-item {
+  background: var(--paper);
+  padding: 24px;
+}
+
+.faq-question {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.faq-answer {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+
 /* --- FORMULAIRE --- */
 .initiation-form {
   max-width: 600px;
@@ -237,6 +282,10 @@
   .initiation-intro {
     padding: 20px;
     margin-bottom: 32px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
   }
 
   .initiation-intro h2 {

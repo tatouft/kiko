@@ -10,21 +10,21 @@
     <loc>http://kome.be/</loc>
   </url>
   <url>
-    <loc>http://kome.be/index.php</loc>
+    <loc>https://kome.be/index.php</loc>
   </url>
   <url>
-    <loc>http://kome.be/aikido.php</loc>
+    <loc>https://kome.be/aikido.php</loc>
   </url>
   <url>
-    <loc>http://kome.be/horaires.php</loc>
+    <loc>https://kome.be/horaires.php</loc>
   </url>
   <url>
-    <loc>http://kome.be/contact.php</loc>
+    <loc>https://kome.be/contact.php</loc>
   </url>
   <url>
-    <loc>http://kome.be/stages.php</loc>
+    <loc>https://kome.be/evenements.php</loc>
   </url>
   <url>
-    <loc>http://kome.be/initiation.php</loc>
+    <loc>https://kome.be/initiation.php</loc>
   </url>
 </urlset>

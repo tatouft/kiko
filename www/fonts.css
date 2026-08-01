@@ -1,0 +1,85 @@
+/* =====================================================
+   KOME DOJO — fonts.css
+   Polices auto-hébergées (remplace le chargement direct
+   depuis fonts.googleapis.com/fonts.gstatic.com).
+   Sous-ensembles latin/latin-ext uniquement — le texte du
+   site est en français — sauf Yuji Mai, où seuls les deux
+   fragments couvrant 合気道 (utilisé dans le kanji du hero)
+   sont conservés.
+   ===================================================== */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('fonts/inter-latin-var.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/shippori-mincho-400-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/shippori-mincho-500-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/shippori-mincho-600-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/mplus-rounded-300-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/mplus-rounded-400-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/mplus-rounded-500-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/mplus-rounded-700-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Yuji Mai';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+5408, U+6C17;
+  src: url('fonts/yuji-mai-400-kanji-1.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Yuji Mai';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+9053;
+  src: url('fonts/yuji-mai-400-kanji-2.woff2') format('woff2');
+}

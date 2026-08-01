@@ -108,7 +108,6 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  font-style: italic;
   color: var(--ink-soft);
 }
 
@@ -120,20 +119,30 @@
 
 .horaire-heure--sub {
   font-size: 13px;
-  color: var(--ink-mid);
+  color: var(--orange);
 }
 
-/* Mise en avant temporaire — à retirer quand le cours sera bien installé */
+/* Mise en avant temporaire — à retirer quand le cours sera bien installé.
+   Le fond est peint via ::before en position absolue plutôt qu'avec du
+   padding/margin sur la ligne, pour ne pas décaler le texte par rapport
+   aux autres sous-lignes (qui n'ont, elles, que le padding-left de --sub). */
 .horaire-row--highlight {
+  position: relative;
+  z-index: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.horaire-row--highlight::before {
+  content: "";
+  position: absolute;
+  inset: -4px -10px;
   background: var(--orange-pale);
-  padding: 6px 10px;
-  margin-left: -10px;
-  margin-right: -10px;
+  z-index: -1;
 }
 
 .horaire-row--highlight .horaire-jour--sub {
   color: var(--orange-warm);
-  font-style: normal;
   font-weight: 500;
 }
 

@@ -67,6 +67,19 @@
     </div>
   </section>
 
+  <!-- ACCESSIBLE À TOUS -->
+  <section class="info-section" style="padding-top: 0;">
+    <div class="aikido-note">
+      <h2 class="card-title">Un art accessible à tous</h2>
+      <p class="card-body">
+        L&rsquo;aïkido ne repose ni sur la force ni sur le gabarit : chacun progresse à son rythme, quel que soit
+        son âge, son sexe ou sa condition physique. Au Kome Dojo, la parité est réelle et les cours réunissent
+        avec plaisir différentes générations et différents niveaux, des débutants aux pratiquants confirmés,
+        dans une bonne entente qui fait la richesse du dojo.
+      </p>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <?php include("footer.php"); ?>
 

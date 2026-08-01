@@ -42,6 +42,43 @@
       </p>
     </div>
 
+    <div class="initiation-faq">
+      <h2>Avant votre venue</h2>
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <h3 class="faq-question">Que dois-je porter ?</h3>
+          <p class="faq-answer">
+            Une tenue de sport souple (jogging, t-shirt) suffit pour l&rsquo;essai — pas besoin de kimono.
+            On pratique pieds nus sur le tatami.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">À partir de quel âge ?</h3>
+          <p class="faq-answer">
+            Dès 6 ans pour les cours enfants, dès 12 ans pour les cours adultes.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Faut-il être sportif ?</h3>
+          <p class="faq-answer">
+            Non, aucune condition physique particulière n&rsquo;est requise. L&rsquo;aïkido se pratique
+            à son propre rythme, quel que soit l&rsquo;âge ou la forme physique.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Combien de temps dure la séance ?</h3>
+          <p class="faq-answer">
+            Le temps d&rsquo;un cours normal : environ 1h pour les enfants, 1h30 pour les adultes.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
     <form id="initiationForm" class="initiation-form" method="POST" action="initiation_handler.php">
 
       <div class="form-group">

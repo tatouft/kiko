@@ -92,7 +92,10 @@
         <p class="cours-block-title">Horaires</p>
         <div class="horaire-row">
           <span class="horaire-jour">Mardi</span>
-          <span class="horaire-heure">18:30 &ndash; 20:00</span>
+        </div>
+        <div class="horaire-row horaire-row--sub">
+          <span class="horaire-jour horaire-jour--sub">aïkido</span>
+          <span class="horaire-heure horaire-heure--sub">18:30 &ndash; 20:00</span>
         </div>
         <div class="horaire-row horaire-row--sub horaire-row--highlight">
           <span class="horaire-jour horaire-jour--sub">kenjutsu <span class="horaire-badge">Nouveau</span></span>
@@ -142,7 +145,7 @@
         3 cours d&rsquo;essai gratuits
         <span>Pour tous les nouveaux membres &mdash; enfants et adultes</span>
       </div>
-      <a href="initiation.php" class="essai-cta">Réserver votre initiation</a>
+      <a href="initiation.php" class="essai-cta">Réserver</a>
     </div>
   </div>
 

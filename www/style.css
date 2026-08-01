@@ -71,7 +71,7 @@ ul { list-style: none; }
   z-index: 1;
 }
 
-/* --- SÉPARATEUR (utilisé dans index, contact, horaires, stages) --- */
+/* --- SÉPARATEUR (utilisé dans index, contact, horaires, evenements) --- */
 .section-rule {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -95,7 +95,7 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 
-/* --- EN-TÊTE DE SOUS-PAGES (contact, horaires, stages) --- */
+/* --- EN-TÊTE DE SOUS-PAGES (contact, horaires, evenements) --- */
 .page-hero {
   max-width: var(--max-w);
   margin: 0 auto;
