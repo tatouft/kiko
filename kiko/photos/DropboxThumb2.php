@@ -4,15 +4,7 @@
 
 	$path = "/Photos/" . $_GET['path'];
 
-    if($local)
-    {
-    	require_once($_SERVER['DOCUMENT_ROOT'] . "/www/dropbox/access.php");
-    }
-    else
-    {
-    	require_once($_SERVER['DOCUMENT_ROOT'] . "/dropbox/access.php");
-    }
-//	require_once($_SERVER['DOCUMENT_ROOT'] . "../../dropbox/access.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dropbox/access.php");
 
 	// Setup cURL
 	$ch = curl_init('https://content.dropboxapi.com/2/files/get_thumbnail');

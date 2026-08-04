@@ -1,16 +1,9 @@
 <?php
-    $local = true;
-
     require($_SERVER['DOCUMENT_ROOT'] . '/kiko/config/PdfConfig.php');
-    if($local)
-    {
-    	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'] . '/kiko';
-    }
-    else
-    {
-    	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'];
-    }
-	$debug = true;
+
+    $_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'] . '/kiko';
+
+	$debug = false;
 	$maintenance = false;
 
     $_SESSION['DbName'] = 'kome';
