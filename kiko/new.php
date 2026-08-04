@@ -538,6 +538,50 @@
 				</div>
 			</div>
 
+		<?php if($id){
+			// Lecture directe via getAttribute() : PMO_MyObject n'a pas de __isset(),
+			// donc isset()/empty()/?? sur $pratiquant->fede_xxx renverraient toujours "vide".
+			$fedeLicence = $pratiquant->getAttribute('fede_licence');
+			$fedeLicenceDate = $pratiquant->getAttribute('fede_licence_date');
+			$fedeNaissance = $pratiquant->getAttribute('fede_naissance');
+			$fedeEmail = $pratiquant->getAttribute('fede_email');
+			$fedeAdresse = $pratiquant->getAttribute('fede_adresse');
+		?>
+			<div class="List Contents">
+				<div class="NewTitle">Fédération</div>
+				<div class="New">
+					<div class="ItemLeft">
+						<div class="FieldName">N° licence:</div>
+						<div class="InputField"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); ?></div>
+					</div>
+
+					<div class="ItemLeft">
+						<div class="FieldName">Expiration:</div>
+						<div class="InputField"><?php echo($fedeLicenceDate ? date('d/m/Y', strtotime($fedeLicenceDate)) : '—'); ?></div>
+					</div>
+
+					<div class="ItemLeft">
+						<div class="FieldName">Naissance:</div>
+						<div class="InputField"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); ?></div>
+					</div>
+
+					<div class="ItemLeft">
+						<div class="FieldName">eMail:</div>
+						<div class="InputField">
+							<?php if($fedeEmail){ ?>
+								<a href="mailto:<?php echo($fedeEmail); ?>" target="new"><?php echo($fedeEmail); ?></a>
+							<?php } else { echo('—'); } ?>
+						</div>
+					</div>
+
+					<div class="ItemLeft">
+						<div class="FieldName">Adresse:</div>
+						<div class="InputField"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); ?></div>
+					</div>
+				</div>
+			</div>
+		<?php } ?>
+
 		<?php if($id){ ?>
 			<div class="List Contents">
 

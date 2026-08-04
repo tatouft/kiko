@@ -1,5 +1,7 @@
 <?php
 
+    require_once __DIR__ . '/../config/config.php';
+
 	$path = "/Photos/" . $_GET['path'];
 
     if($local)

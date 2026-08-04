@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <?php
-    if($local)
-    {
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/config/config.php");
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/core/pmo/PMO_core/PMO_MyController.php");
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/core/pmo/PMO_core/class_loader/class_pratiquants.php");
-    }
-    else
-    {
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/config/config.php");
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/core/pmo/PMO_core/PMO_MyController.php");
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/core/pmo/PMO_core/class_loader/class_pratiquants.php");
-    }
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/config/config.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/core/pmo/PMO_core/PMO_MyController.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/kiko/core/pmo/PMO_core/class_loader/class_pratiquants.php");
 ?>
 <html>
 	<head>
@@ -38,13 +29,13 @@
                 Maintenance en cours. Impossible de faire des modifications pour le moment.
             </div>
         <?php }?>
-<!--        <div class="mb-3">
+        <div class="mb-3">
             <form method="post" action="sync_all.php" onsubmit="return confirm('Êtes-vous sûr de vouloir lancer la synchronisation de tous les membres actifs ? Cette opération peut prendre du temps.');">
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-sync"></i> Synchroniser avec la fédération
                 </button>
             </form>
-        </div>-->
+        </div>
 		<div class="LittelTabs">
 			<?php require_once("controls/MenuTabs.php"); ?>
 			<?php require_once("controls/SearchArea.php"); ?>

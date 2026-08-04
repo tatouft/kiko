@@ -1,5 +1,5 @@
 db/*
 .DS_Store
 .idea/
-licence2.pdf
-config/credentials.php
+kiko/config/credentials.php
+www/dropbox/access.php

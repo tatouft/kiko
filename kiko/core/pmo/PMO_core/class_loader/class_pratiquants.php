@@ -350,8 +350,17 @@ class pratiquants extends PMO_MyObject{
 	{
 		$prat = PMO_MyObject::factory(self::$TableName);
 		$prat->id = $id;
-		$prat->load();		
+		$prat->load();
 		return $prat;
+	}
+
+	public static function GetByLicenceNbr($licenceNbr)
+	{
+		$controler = new PMO_MyController();
+		$map = $controler->queryController("SELECT * FROM " . self::$TableName . " WHERE licenceNbr = '" . $licenceNbr . "' LIMIT 1;");
+
+		$result = self::GetArray($map);
+		return $result[0] ?? null;
 	}
 	
 	public static function GetAll()

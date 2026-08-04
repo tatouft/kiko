@@ -52,6 +52,7 @@
                 <th>Pub</th>
 				<th>Grade</th>
 				<th>License</th>
+				<th>Fédé</th>
                 <th>Cotisation</th>
 				<th>Examen</th>
 				<!--<th>&nbsp;</th>-->
@@ -115,8 +116,24 @@
                         echo("&nbsp;&nbsp;");
                     }
                 }
+				echo("</td>\n\t\t\t<td align='center'>");
+
+				// Fédé : alerte si la date de licence fédération diffère de celle du club
+				// (getAttribute() direct : PMO_MyObject n'a pas de __isset(), donc
+				// isset()/empty()/?? sur $prat->fede_licence_date renverraient toujours "vide")
+				$fedeLicenceDate = $prat->getAttribute('fede_licence_date');
+				if ($fedeLicenceDate !== null && $fedeLicenceDate !== '')
+				{
+					$localLicenceDate = $prat->getAttribute('licenceDate');
+					if ($fedeLicenceDate !== $localLicenceDate)
+					{
+						$fedeFormatted = date('d/m/Y', strtotime($fedeLicenceDate));
+						$localFormatted = ($localLicenceDate !== null && $localLicenceDate !== '') ? date('d/m/Y', strtotime($localLicenceDate)) : '—';
+						echo("<i class=\"fas fa-exclamation-triangle\" style='color: darkorange;' title='Fédération: " . $fedeFormatted . " / Club: " . $localFormatted . "'></i>");
+					}
+				}
 				echo("</td>\n\t\t\t<td>");
-                
+
                 // Cotisation
                 $lessons = $prat->GetCountNoPayLesson();
                 $periodes = $prat->GetNoPayPeriod();

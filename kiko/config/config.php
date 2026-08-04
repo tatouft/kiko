@@ -1,17 +1,16 @@
 <?php
-    $local = false;
+    $local = true;
 
+    require($_SERVER['DOCUMENT_ROOT'] . '/kiko/config/PdfConfig.php');
     if($local)
     {
-        require($_SERVER['DOCUMENT_ROOT'] . '/config/PdfConfig.php');
-    	$_SESSION['SiteRoot'] = '/homez.462/komewntp/www/kiko';
+    	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'] . '/kiko';
     }
     else
     {
-        require($_SERVER['DOCUMENT_ROOT'] . '/kiko/config/PdfConfig.php');
     	$_SESSION['SiteRoot'] = $_SERVER['DOCUMENT_ROOT'];
     }
-	$debug = false;
+	$debug = true;
 	$maintenance = false;
 
     $_SESSION['DbName'] = 'kome';
