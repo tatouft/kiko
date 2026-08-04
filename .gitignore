@@ -3,3 +3,6 @@ db/*
 .idea/
 kiko/config/credentials.php
 www/dropbox/access.php
+kome*
+kobukai*
+*.pdf
