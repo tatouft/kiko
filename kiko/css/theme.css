@@ -1,0 +1,83 @@
+/* =====================================================
+   Thème KiKo (admin) — reprend la palette du site officiel
+   (www/style.css : papier washi crème + terracotta dojo)
+   À charger après bootstrap.min.css.
+   ===================================================== */
+
+:root {
+	--kiko-paper:       #f4efe4;
+	--kiko-paper-warm:  #ede5d2;
+	--kiko-paper-rule:  #d8cebc;
+
+	--kiko-ink:         #261e14;
+	--kiko-ink-mid:     #5c5040;
+	--kiko-ink-soft:    #9c8e7c;
+
+	--kiko-orange:      #c4601a;
+	--kiko-orange-warm: #d97830;
+	--kiko-orange-pale: #f2dcc8;
+
+	/* Bootstrap 5.3+ lit ces variables pour la plupart des composants */
+	--bs-primary: var(--kiko-orange);
+	--bs-primary-rgb: 196, 96, 26;
+	--bs-body-bg: var(--kiko-paper);
+	--bs-body-color: var(--kiko-ink);
+	--bs-border-color: var(--kiko-paper-rule);
+	--bs-link-color: var(--kiko-orange);
+	--bs-link-hover-color: var(--kiko-orange-warm);
+	--bs-link-color-rgb: 196, 96, 26;
+	--bs-link-hover-color-rgb: 217, 120, 48;
+}
+
+/* Les nuances de survol/focus de Bootstrap sont pré-calculées dans le CSS
+   compilé (pas de build Sass ici) : on les fixe explicitement. */
+.btn-primary
+{
+	--bs-btn-bg: var(--kiko-orange);
+	--bs-btn-border-color: var(--kiko-orange);
+	--bs-btn-hover-bg: var(--kiko-orange-warm);
+	--bs-btn-hover-border-color: var(--kiko-orange-warm);
+	--bs-btn-active-bg: var(--kiko-orange-warm);
+	--bs-btn-active-border-color: var(--kiko-orange-warm);
+	--bs-btn-focus-shadow-rgb: 196, 96, 26;
+}
+
+.navbar.bg-primary,
+.bg-primary
+{
+	background-color: var(--kiko-orange) !important;
+}
+
+.text-primary
+{
+	color: var(--kiko-orange) !important;
+}
+
+.alert-warning
+{
+	--bs-alert-bg: var(--kiko-orange-pale);
+	--bs-alert-border-color: var(--kiko-orange-warm);
+	--bs-alert-color: var(--kiko-ink);
+}
+
+.alert-danger
+{
+	--bs-alert-color: #7a2e18;
+}
+
+/* Progress bar (rapport de synchronisation) */
+.progress-bar
+{
+	background-color: var(--kiko-orange);
+}
+
+/* Boutons désactivés (non-admin) : vrai gris neutre plutôt que la couleur
+   d'origine juste éclaircie par le opacity:.65 par défaut de Bootstrap. */
+.btn.disabled,
+.btn:disabled
+{
+	background-color: #e9ecef !important;
+	border-color: #ced4da !important;
+	color: #adb5bd !important;
+	opacity: 1 !important;
+}
