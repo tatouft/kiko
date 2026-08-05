@@ -10,7 +10,6 @@
 			<ul class="navbar-nav me-auto mb-2 mb-md-0">
 				<li class="nav-item"><a class="nav-item nav-link <?php if($CurrentPage == 'lists') echo('active'); ?>" href="index.php">Listes</a></li>
 				<li class="nav-item"><a class="nav-item nav-link <?php if($CurrentPage == 'presences') echo('active'); ?>" href="presences.php">Présences</a></li>
-				<li class="nav-item"><a class="nav-item nav-link" href="#">Banque</a></li>
 				<li class="nav-item"><a class="nav-item nav-link <?php if($CurrentPage == 'admin') echo('active'); ?>" href="saisons.php">Admin</a></li>
 			</ul>
 			<ul class="navbar-nav" id="HeaderD">

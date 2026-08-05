@@ -4,7 +4,7 @@
 	<div class="HeaderTitle"><?php echo($headerTitle); ?></div>
 	<ul class="Buttons">
 		<li title="Envoyer un email à tous les pratiquants affichés (via votre logiciel de messagerie)">
-			<a href="mailto:" target="_blank" id="email"><i class="fas fa-paper-plane"></i> Envoyer un email</a>
+			<a href="mailto:" target="_blank" id="email"><i class="fas fa-paper-plane"></i> Email à tous</a>
 		</li>
 	</ul>
 	<ul class="Buttons invisible" id="ActionButtons">
