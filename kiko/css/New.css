@@ -1,39 +1,33 @@
-.Contents
-{
-	width: 500px; 
-	margin-left: auto;
-	margin-right: auto;
-}
-
-
-.NewTitle 
-{ 
-	text-align: center;
-	background-color: lightgrey;
-}
-
-
-.Deleted
-{
-	background-color: lightcoral;
-}
-
 .New
 {
 	padding: 10px;
 }
 
-.ItemLeft
+/* Espacement entre les lignes de champ (Nom, Prénom, Adresse, ...) dans les
+   cartes de new.php. Chaque ligne utilise la classe Bootstrap "mb-2"
+   (margin-bottom: 0.5rem = 8px). Pas d'espace nécessaire en lecture (texte
+   collé) ; utile en édition pour respirer entre les champs de saisie -
+   :has() ne cible que les lignes qui contiennent un input/select. */
+.card-body .row.mb-2
 {
-	float: left;
-	width: 60%;
+	margin-bottom: 5px !important;
+}
+.card-body .row.mb-2:has(.form-control, .form-select)
+{
+	margin-bottom: 4px !important;
+}
+/* Bootstrap ajoute aussi du padding vertical sur .col-form-label, indépendant
+   du margin-bottom de la ligne : on le neutralise pour que tout l'espacement
+   passe par la seule règle ci-dessus. */
+.card-body .col-form-label
+{
+	padding-top: 0;
+	padding-bottom: 0;
 }
 
-.ItemRight
-{
-	float: right;
-}
-
+/* Utilisées par Grades/Payements : le JS (action.js: AddGrade/AddPeriode/
+   AddNewPeriode) injecte du HTML avec ces mêmes classes à l'exécution,
+   donc la structure reste volontairement en dehors de la grille Bootstrap. */
 .FieldName
 {
 	width: 100px;
@@ -41,6 +35,7 @@
 	margin-left: 3px;
 	margin-right: 5px;
 	font-weight: bold;
+	color: var(--kiko-ink, #261e14);
 }
 .Grade
 {
@@ -57,70 +52,9 @@
 
 .InputField
 {
-	/*width: 50px;*/
 	float: left;
 }
 
-.FieldPhoto
-{
-	float: right;
-	width: auto;
-}
-.Photo
-{
-	float: right;
-	width: 100px;
-	max-height: 130px;
-	overflow: hidden;
-	border: 1px black solid;
-}
-.Photo img
-{
-	width: 100px;	
-}
-
-.Button
-{
-	float: right;
-	background-color: rgb(240,240,240);
-}
-.EndFloat
-{
-	float: none;
-}
-
-#Add.Button
-{
-	float: none;
-	margin-right: 5px;
-}
-#AddPeriode.Button
-{
-	float: none;
-	margin-right: 5px;
-}
-#Save.Button
-{
-	margin-right: 0px;
-}
-#Edit.Button
-{
-	margin-right: 0px;
-}
-#Cancel.Button
-{
-	margin-right: 5px;
-}
-#Plus.Button
-{
-	float: none;
-	margin-left: 10px;
-}
-.Button img
-{
-	vertical-align: bottom;
-	margin-bottom: 2px;
-}
 input#presences
 {
 	width: 50px;

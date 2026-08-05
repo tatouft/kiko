@@ -1,46 +1,77 @@
-#Title
-{
-	font-size: 24px;
-	text-align: center;
-}
-
 #sections
 {
 	font-size: 18px;
-	text-align: center;
-	width: 500px;
-	margin-top: 15px;
-	padding: 10px;
-	border: 1px grey solid;
-	background-color: #EEEEEE;
-	margin-left: auto; 
-	margin-right: auto; 
 }
 #sections input.check
 {
+	width: 22px;
+	height: 22px;
 	margin-left: 20px;
+	margin-right: 6px;
+	vertical-align: middle;
+	cursor: pointer;
 }
-#sections input.button
+#sections input.check:first-child
 {
-	margin-left: 50px;
+	margin-left: 0;
 }
 
 div.name,div.fname
 {
-    width: 94px;
+    width: 100%;
     text-align: center;
+    font-size: 1.1rem;
+}
+div.fname
+{
+	font-weight: bold;
 }
 
 div.Identity
 {
-	width: 100px;
-	max-height: 130px;
+	position: relative;
+	width: 100%;
+	height: 160px;
 	overflow: hidden;
-	margin-bottom: 5px;
+	margin-bottom: 8px;
+	border-radius: 8px;
+	background-color: var(--kiko-paper-warm, #ede5d2);
 }
 div.Identity img
 {
-	width: 100px;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: opacity 0.25s ease-in-out;
+}
+/* Spinner affiché tant que la photo (proxy Dropbox) n'a pas chargé. L'image
+   démarre à opacity:0 (services/getPratiquantsNom.php) : elle ne peut donc
+   jamais masquer le spinner derrière elle pendant le chargement, quel que
+   soit le navigateur. Au onload, l'image apparaît et le spinner se cache.
+   CSS pur (pas de police d'icônes) : la page charge à la fois all.css et un
+   Kit Font Awesome JS qui peut cacher/ne jamais convertir un <i> injecté
+   en AJAX, ce qui rendait le sablier Font Awesome invisible en pratique. */
+div.IdentityLoading
+{
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+div.IdentityLoading::before
+{
+	content: '';
+	width: 32px;
+	height: 32px;
+	border: 4px solid var(--kiko-paper-rule, #d8cebc);
+	border-top-color: var(--kiko-orange, #c4601a);
+	border-radius: 50%;
+	animation: kiko-spin 0.8s linear infinite;
+}
+@keyframes kiko-spin
+{
+	to { transform: rotate(360deg); }
 }
 div.Licence
 {
@@ -49,36 +80,44 @@ div.Licence
 div.Licence div
 {
     overflow: hidden;
-    width: 100px;
-    height: 40px;
+    width: 100%;
+    height: 56px;
     position: relative;
-    top: -45px;
+    top: -56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     color: white;
+    font-weight: bold;
     background-color: #8F0013;
-    opacity: 0.7;
+    opacity: 0.9;
+    border-radius: 0 0 8px 8px;
 }
 
 div.Checked,div.Unchecked
 {
-	width: 100px;
-	height: 180px;
-	border: 2px solid grey;
-	float: left;
+	width: 140px;
+	border-radius: 12px;
 	margin: 10px;
-	padding: 3px;
+	padding: 10px;
+	cursor: pointer;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+	transition: transform 0.1s ease-in-out;
+}
+div.Checked:active,div.Unchecked:active
+{
+	transform: scale(0.96);
 }
 
 div.Checked
 {
-	background-color: #CFFFE3;
-	margin-left: 20px;
-	border-color: green;
+	background-color: #d7f2df;
+	border: 3px solid #3fa757;
 }
 
 div.Unchecked
 {
-	color: black;
-	margin-left: 20px;
-	border-color: #8F0013;
+	background-color: white;
+	border: 3px solid var(--kiko-paper-rule, #d8cebc);
 }

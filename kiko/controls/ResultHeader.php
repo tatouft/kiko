@@ -1,10 +1,10 @@
 
 <link rel="stylesheet" href="css/ResultHeader.css" type="text/css">
-<div class="Header">
+<div class="Header ResultBar">
 	<div class="HeaderTitle"><?php echo($headerTitle); ?></div>
 	<ul class="Buttons">
-		<li>
-			<a href="mailto:" target="_blank" id="email"><i class="far fa-envelope"> Mail</i></a>
+		<li title="Envoyer un email à tous les pratiquants affichés (via votre logiciel de messagerie)">
+			<a href="mailto:" target="_blank" id="email"><i class="fas fa-paper-plane"></i> Envoyer un email</a>
 		</li>
 	</ul>
 	<ul class="Buttons invisible" id="ActionButtons">

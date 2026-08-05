@@ -45,7 +45,8 @@
         $count = 0;
 
 ?>
-		<table id="TablePratiquants">
+		<table id="TablePratiquants" class="table table-hover align-middle">
+			<thead>
 			<tr>
 				<th>Nom/Prenom</th>
 				<th>Section</th>
@@ -57,6 +58,8 @@
 				<th>Examen</th>
 				<!--<th>&nbsp;</th>-->
 			</tr>
+			</thead>
+			<tbody>
 <?php
 			$mailto = "";
 			foreach($pratiquants as $prat)
@@ -73,15 +76,15 @@
                 }
 
 				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\")' ondblclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\");OpenPersonne();'>");
-				echo("<td><a name='Prat" . $prat->id . "'></a>");
-				
+				echo("<td class='PratName'><a name='Prat" . $prat->id . "'></a>");
+
 				// Name
 				echo(ucfirst($prat->nom ?? '') . " " . ucfirst($prat->prenom ?? ''));
-				echo("</td>\n\t\t\t<td>");
-				
+				echo("</td>\n\t\t\t<td data-label='Section'>");
+
 				// Section
 				echo($prat->GetSection()->libelle);
-				echo("</td>\n\t\t\t<td align='center'>");
+				echo("</td>\n\t\t\t<td data-label='Pub' align='center'>");
 
 				// Pub
                 if($prat->UnknownPub())
@@ -96,14 +99,14 @@
                 {
                     echo("<i class=\"fas fa-photo-video\" style='color: crimson;'></i>");
                 }
-                echo("</td>\n\t\t\t<td>");
+                echo("</td>\n\t\t\t<td data-label='Grade'>");
 
 
                 // Grade
                 $grade = $prat->GetGrade();
 				echo(($grade == NULL)?"---":$grade->GetGrade()->libelle);
-				echo("</td>\n\t\t\t<td>");
-				
+				echo("</td>\n\t\t\t<td data-label='License'>");
+
 				// License
                 if($prat->HasLicence())
                 {
@@ -116,7 +119,7 @@
                         echo("&nbsp;&nbsp;");
                     }
                 }
-				echo("</td>\n\t\t\t<td align='center'>");
+				echo("</td>\n\t\t\t<td data-label='Fédé' align='center'>");
 
 				// Fédé : alerte si la date de licence fédération diffère de celle du club
 				// (getAttribute() direct : PMO_MyObject n'a pas de __isset(), donc
@@ -132,7 +135,7 @@
 						echo("<i class=\"fas fa-exclamation-triangle\" style='color: darkorange;' title='Fédération: " . $fedeFormatted . " / Club: " . $localFormatted . "'></i>");
 					}
 				}
-				echo("</td>\n\t\t\t<td>");
+				echo("</td>\n\t\t\t<td data-label='Cotisation'>");
 
                 // Cotisation
                 $lessons = $prat->GetCountNoPayLesson();
@@ -154,8 +157,8 @@
                     echo($lessons . " cours");
                 }
                 echo("&nbsp;");
-				echo("</td>\n\t\t\t<td>");
-				
+				echo("</td>\n\t\t\t<td data-label='Examen'>");
+
 				// Examen
                 try
                 {
@@ -179,6 +182,7 @@
                 echo("</td></tr>\n\t\t");
 			}
 ?>
+			</tbody>
 		</table>
         <div id='Total'>Total: <?php echo($count); ?></div>
         <script>$('email').href = "mailto:?bcc=<?php echo($mailto); ?>";</script>
@@ -186,7 +190,7 @@
 	}
 	else
 	{
-		echo("pas de pratiquants");
+		echo("<div class='alert alert-secondary m-3 mb-0'>Aucun pratiquant</div>");
 	}
 ?>
 

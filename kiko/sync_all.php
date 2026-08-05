@@ -14,6 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Accès non autorisé');
 }
 
+if (!in_array($_SERVER['REMOTE_USER'] ?? '', $admins)) {
+    die('Accès réservé aux administrateurs.');
+}
+
 // Vérifier si maintenance
 if ($maintenance) {
     die('<div class="alert alert-warning">Maintenance en cours. Impossible de synchroniser pour le moment.</div>');
@@ -39,7 +43,8 @@ function flushOutput() {
 <head>
     <meta charset="utf-8">
     <title>Synchronisation avec la fédération</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch/dist/minty/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/theme.css" type="text/css">
     <link rel="icon" type="image/png" href="favicon.png" />
 </head>
 <body>
@@ -165,7 +170,7 @@ try {
                     <p><strong>Total pratiquants actifs:</strong> <?php echo $report['total']; ?></p>
                     <p><strong>Non liés à la fédération (pas de n° licence):</strong> <?php echo $report['skipped']; ?></p>
                     <p><strong>Réussis:</strong> <span class="text-success"><?php echo $report['success']; ?></span></p>
-                    <p><strong>Introuvables chez la fédération:</strong> <span class="text-warning"><?php echo $report['not_found']; ?></span></p>
+                    <p><strong>Introuvables à la fédération:</strong> <span class="text-warning"><?php echo $report['not_found']; ?></span></p>
                     <p><strong>Erreurs:</strong> <span class="text-danger"><?php echo $report['errors']; ?></span></p>
                     <p><strong>Durée:</strong> <?php echo $report['duration']; ?> secondes</p>
                 </div>

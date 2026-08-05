@@ -1,30 +1,41 @@
-body
-{
-    -moz-box-sizing: content-box;
-    -ms-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
-
-}
-
-div
-{
-    -moz-box-sizing: content-box;
-    -ms-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
-}
-
 .Contents
 {
 	margin-left: 50px;
 	margin-right: 50px;
 }
 
+/* Bouton "Imprimer" du header : n'imprime que la liste, pas le menu ni les
+   filtres de recherche. Les sélecteurs ne matchent rien sur les pages qui
+   n'ont pas ces éléments (presences.php, new.php, ...), sans effet là. */
+@media print
+{
+	nav#Header,
+	.LittelTabs,
+	#sections,
+	ul.Buttons,
+	.d-flex.gap-2.mb-3,
+	form[action="sync_all.php"]
+	{
+		display: none !important;
+	}
+}
+
+@media (max-width: 576px)
+{
+	.Contents
+	{
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
 .List
 {
-	border: solid 2px grey;
+	border: solid 1px var(--kiko-paper-rule, #d8cebc);
 	margin-top: 20px;
     border-radius: 8px;
     overflow: auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 #Total
@@ -61,11 +72,57 @@ tr:nth-child(even) {
 }
 tr.Selectable:hover
 {
-    background-color: #D1E1FF;
+    background-color: var(--kiko-orange-pale, #f2dcc8);
 }
 tr.Selected
 {
-    background-color: #B1C1FF;
+    background-color: #e6c19c;
+}
+
+/* Liste des pratiquants : bascule en cartes empilées sur petit écran */
+@media (max-width: 767.98px)
+{
+	#TablePratiquants thead
+	{
+		display: none;
+	}
+	#TablePratiquants, #TablePratiquants tbody, #TablePratiquants tr, #TablePratiquants td
+	{
+		display: block;
+		width: 100%;
+	}
+	#TablePratiquants tr.Selectable
+	{
+		border: 1px solid var(--kiko-paper-rule, #d8cebc);
+		border-radius: 8px;
+		margin-bottom: 10px;
+		padding: 6px 10px;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+	}
+	#TablePratiquants td
+	{
+		border: none;
+		padding: 4px 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	#TablePratiquants td[data-label]::before
+	{
+		content: attr(data-label);
+		font-weight: 600;
+		color: var(--kiko-ink-soft, #9c8e7c);
+		margin-right: 8px;
+	}
+	#TablePratiquants td.PratName
+	{
+		font-weight: bold;
+		font-size: 1.05rem;
+		justify-content: flex-start;
+		padding-bottom: 8px;
+		border-bottom: 1px solid var(--kiko-paper-rule, #d8cebc);
+		margin-bottom: 4px;
+	}
 }
 
 ul.Buttons
@@ -78,22 +135,18 @@ ul.Buttons
 ul.Buttons li
 {
     float: left;
-    background-color: #D1E1FF;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    margin-right: 4px;
+    background-color: var(--kiko-orange-pale, #f2dcc8);
+    border: none;
+    border-radius: 50rem;
+    margin-right: 6px;
     display: block;
-    float: left;
-    padding-left: 4px;
-    padding-right: 4px;
-    padding-top: 2px;
-    padding-bottom: 1px;
+    padding: 4px 12px;
     cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
 }
 ul.Buttons li:hover
 {
-    background-color: #B1C1FF;
+    background-color: #e6c19c;
 }
 
 .TableButton
@@ -152,7 +205,8 @@ input
 {
 	margin-left: auto;
 	margin-right: auto;
-	width: 500px;
+	max-width: 500px;
+	width: 100%;
 }
 .Invisible
 {
@@ -209,12 +263,13 @@ div.value
 div.NewPeriode div
 {
     margin: auto;
-    width: 56%;
+    width: 100%;
     overflow: auto;
 }
 
 div.NewPeriode div div
 {
+    box-sizing: border-box;
     float: left;
     padding: 5px;
     margin: auto;
@@ -223,27 +278,30 @@ div.NewPeriode div div
 }
 div.NewPeriode div.NotSaved
 {
-    background-color: lightyellow;
+    background-color: var(--kiko-orange-pale, #f2dcc8);
 }
 div.NewPeriode div div.libelle
 {
-    width: 53%;
+    width: 38%;
 }
 div.NewPeriode div div.court
 {
-    width: 10%;
+    white-space: nowrap;
+    width: 14%;
 }
 div.NewPeriode div div.date
 {
     text-align: center;
-    width: 15%;
+    white-space: nowrap;
+    width: 24%;
 }
 
 div#NewPeriodeFields
 {
     padding-top: 10px;
     margin:auto;
-    width: 30%;
+    width: 100%;
+    max-width: 400px;
 }
 
 div#NewPeriodeFields div
@@ -252,11 +310,12 @@ div#NewPeriodeFields div
 }
 div.NewPeriode div.Header
 {
-    background-color: lightgrey;
+    background-color: var(--kiko-paper-warm, #ede5d2);
+    font-weight: bold;
 }
 div.NewPeriode div.Header div
 {
-    border-color: white;
+    border-color: var(--kiko-paper-rule, #d8cebc);
     border-style: solid;
     border-width: 1px;
 }

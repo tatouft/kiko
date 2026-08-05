@@ -111,6 +111,10 @@ class pratiquants extends PMO_MyObject{
 	}
 	public function GetPresencesCountFromLastGrade()
 	{
+		if($this->GetGrade() == null)
+		{
+			return 0;
+		}
 		return count(presences::GetByPratiquantFromLastGrade($this->id, $this->GetGrade()->date));
 	}
     public function GetPresencesNeededForNextGrade()

@@ -6,29 +6,36 @@
     ?>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/theme.css" type="text/css">
         <script src="js/scriptaculous/prototype.js"		type="text/javascript"></script>
         <script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>
         <script src="js/action.js"						type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="css/general.css" type="text/css">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="favicon.png" />
     </head>
     <body>
         <?php
-            $CurrentPage = "lists";
+            $CurrentPage = "admin";
             require_once("controls/PageHeader.php");
             ?>
-        <div id="debug">&nbsp;</div>
-
-        <div class="List Contents">
-            <div id='Saisons'>
+        <div class="container my-3" style="max-width: 700px;">
+            <div class="card" id='Saisons'>
+                <div class="card-header fw-bold">Saisons</div>
+                <div class="card-body">
                 <form method="post" action="<?php echo($_SERVER['REQUEST_URI']); ?>" name="formList" id="formList">
                     <?php
                         extract($_GET);
                         extract($_POST);
 
                         $action = filter_input(INPUT_POST, 'action');
-                        if($action == 'add')
+                        $isAdmin = in_array($_SERVER['REMOTE_USER'] ?? '', $admins);
+                        if($action == 'add' && $isAdmin)
                         {
                             $i = 0;
                             do
@@ -84,15 +91,21 @@
                     <div class="NewPeriode" id="NewPeriode" name="NewPeriode">
                     </div>
                     <div id="NewPeriodeFields">
-                        <div>Libellé long: <input type="text" id="libelleLong" name="libelleLong"></div>
-                        <div>Libellé court: <input type="text" id="libelleCourt" name="libelleCourt"></div>
-                        <div>Date de début: <input type="text" id="dateDebut" name="dateDebut"></div>
-                        <div>Date de fin: <input type="text" id="dateFin" name="dateFin"></div>
-                        <div><a class="Button" id="Add" href="#" onClick="AddNewPeriode($('libelleLong').value, $('libelleCourt').value, $('dateDebut').value, $('dateFin').value);">Ajouter</a>
-                        <a class="Button" id="Save" href="#" onClick="SetHidden('action', 'add'); $('formList').submit()">Enregistrer</a>
-                        <a class="Button" id="Save" href="#" onClick="CancelNewPeriode();">Annuler</a></div>
+                        <div class="mb-3">
+                            <a class="btn btn-outline-primary" id="AddSeason" href="#" onClick="var y = prompt('Année de début de la saison (ex: 2025 pour la saison 2025-2026) :', SuggestSeasonStartYear()); if(y) AddSeason(parseInt(y, 10)); return false;"><i class="fas fa-calendar-plus"></i> Créer une saison complète</a>
+                        </div>
+                        <div class="mb-2"><label class="form-label mb-0">Libellé long:</label> <input type="text" class="form-control d-inline-block w-auto" id="libelleLong" name="libelleLong"></div>
+                        <div class="mb-2"><label class="form-label mb-0">Libellé court:</label> <input type="text" class="form-control d-inline-block w-auto" id="libelleCourt" name="libelleCourt"></div>
+                        <div class="mb-2"><label class="form-label mb-0">Date de début:</label> <input type="text" class="form-control d-inline-block w-auto" id="dateDebut" name="dateDebut"></div>
+                        <div class="mb-2"><label class="form-label mb-0">Date de fin:</label> <input type="text" class="form-control d-inline-block w-auto" id="dateFin" name="dateFin"></div>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-primary" id="Add" href="#" onClick="AddNewPeriode($('libelleLong').value, $('libelleCourt').value, $('dateDebut').value, $('dateFin').value); return false;">Ajouter</a>
+                            <a class="btn btn-success" id="Save" href="#" onClick="SetHidden('action', 'add'); $('formList').submit()">Enregistrer</a>
+                            <a class="btn btn-outline-secondary" id="Cancel" href="#" onClick="CancelNewPeriode(); return false;">Annuler</a>
+                        </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </body>

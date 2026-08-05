@@ -12,14 +12,14 @@
 	<input type="hidden" id="filterAction">
 	<div class="SearchAreaContent" id="AllArea">
 		Tous les pratiquants
-		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','all');" value="Rafraichir"></div>
+		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','all');" value="Rafraichir"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="SectionArea">
 		<div id="CSection" class="criteres">
             Affiche uniquement les pratiquants d'une section.<br/>
 			Section: 
-			<select id="filterSection" name="filterSection">
+			<select class="form-select form-select-sm d-inline-block w-auto" id="filterSection" name="filterSection">
 				<?php
 					$sections = sections::GetAll();
 					foreach($sections as $sec)
@@ -29,13 +29,13 @@
 				?>
 			</select>
 		</div>
-		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','section',$F('filterSection'));" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','section',$F('filterSection'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExamensArea">
 		<div id="CSectionExam" class="criteres">
 			Section: 
-			<select id="filterSectionExam" name="filterSectionExam">
+			<select class="form-select form-select-sm d-inline-block w-auto" id="filterSectionExam" name="filterSectionExam">
 				<?php
 					$sections = sections::GetAll();
 					foreach($sections as $sec)
@@ -45,22 +45,22 @@
 				?>
 			</select>
 		</div>
-		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','examens',$F('filterSectionExam'));" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','examens',$F('filterSectionExam'));" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">
 		Affiche uniquement les pratiquants dont la licence a expiré.
-		<div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','license','');" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','license','');" value="Afficher"></div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="UpArea">
 		Sections, date
-		<div class="SearchButton"><input type="button" value="Afficher"></div>
+		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" value="Afficher"></div>
 	</div>
 
     <div class="SearchAreaContent Invisible" id="PoubelleArea">
         Affiche les pratiquants supprimés
-        <div class="SearchButton"><input type="button" onclick="DeSelect();Search('services/getPratiquants.php','poubelle',0);" value="Afficher"></div>
+        <div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','poubelle',0);" value="Afficher"></div>
     </div>
 </div>
 </form>

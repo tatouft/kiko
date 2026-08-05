@@ -140,7 +140,11 @@ function AddGrade(gradeId, gradeLibelle)
 	var text = "<div class='FieldName Grade'>" + gradeLibelle + ":</div> ";
 	text += "<div class='InputField'><input type='text' name='newGrade" + nbNewGrades + "' id='newGrade" + nbNewGrades + "' ><input type='hidden' name='newGradeId" + nbNewGrades + "' id='newGradeId" + nbNewGrades + "' value='" + gradeId + "'></div><br>";
 	$('NewGrade').innerHTML += text;
-	
+
+	// Retire le grade ajouté du menu déroulant pour éviter de l'ajouter 2x
+	var gradeList = $('gradeList');
+	gradeList.remove(gradeList.selectedIndex);
+
 	++nbNewGrades;
 }
 
@@ -157,6 +161,28 @@ function AddNewPeriode(libelleLong, libelleCourt, dateDebut, dateFin)
 	++nbNewNewPeriode;
 }
 
+// Génère les 4 périodes d'une saison complète (Saison + 3 trimestres) en un
+// coup, selon le pattern utilisé chaque année : mi-août -> fin juillet.
+function AddSeason(startYear)
+{
+	var endYear = startYear + 1;
+	var label = startYear + "-" + endYear;
+
+	AddNewPeriode("Saison " + label, "Saison", "15/08/" + startYear, "31/07/" + endYear);
+	AddNewPeriode("1er Période (" + label + ")", "1er", "15/08/" + startYear, "31/12/" + startYear);
+	AddNewPeriode("2e Période (" + label + ")", "2e", "01/01/" + endYear, "31/03/" + endYear);
+	AddNewPeriode("3e Période (" + label + ")", "3e", "01/04/" + endYear, "31/07/" + endYear);
+}
+
+// Suggère l'année de début de la prochaine saison à créer : l'année scolaire
+// commence en août, donc avant août on propose encore l'année précédente.
+function SuggestSeasonStartYear()
+{
+	var now = new Date();
+	var month = now.getMonth() + 1;
+	return (month >= 8) ? now.getFullYear() : now.getFullYear() - 1;
+}
+
 function CancelNewPeriode()
 {
 	$('NewPeriode').innerHTML = "";
@@ -170,7 +196,11 @@ function AddPeriode(preiodeId, periodeLibelle)
 
 	text += "<div class='InputField'><input type='hidden' name='newPeriodeId" + nbNewPeriodes + "' id='newPeriodeId" + nbNewPeriodes + "' value='" + preiodeId + "'></div><br>";
 	$('NewPeriode').innerHTML += text;
-    
+
+	// Retire la période ajoutée du menu déroulant pour éviter de l'ajouter 2x
+	var periodeList = $('periodeList');
+	periodeList.remove(periodeList.selectedIndex);
+
     ++nbNewPeriodes;
 }
 

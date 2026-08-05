@@ -1,11 +1,8 @@
 #SearchArea
 {
-	/*margin-top: 2px;*/
-	border: solid 2px grey;
-    
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
+	border: solid 1px var(--kiko-paper-rule, #d8cebc);
+	border-radius: 8px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .SearchAreaContent

@@ -1,8 +1,12 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/theme.css" type="text/css">
 		<script src="js/scriptaculous/prototype.js"		type="text/javascript"></script>
 		<script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>
 		<script src="js/action.js"						type="text/javascript"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Force latest IE rendering engine or ChromeFrame if installed -->
         <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
@@ -28,6 +32,7 @@
 			require_once(dirname(__FILE__)."/core/pmo/PMO_core/class_loader/class_cotisationsPeriode.php");
 		?>
 		<form method="post" action="<?php echo($_SERVER['REQUEST_URI']); ?>" name="formNew" id="formNew">
+			<div class="container my-3" style="max-width: 700px;">
 			<?php
 
                 function formatPhoneNumber($phoneNumber) {
@@ -61,6 +66,17 @@
                     return $phoneNumber;
                 }
 
+                // Affiche un bouton d'action ; grisé + tooltip si non-admin plutôt que masqué.
+                // Le title est sur un <span> englobant : un élément disabled/pointer-events:none
+                // ne reçoit plus les événements de survol, donc son propre title ne s'affiche jamais.
+                function RenderActionButton($id, $btnClass, $icon, $label, $onclick, $isAdmin) {
+                    if ($isAdmin) {
+                        echo '<a class="btn ' . $btnClass . '" id="' . $id . '" href="#" onClick="' . $onclick . '"><i class="fas ' . $icon . '"></i> ' . $label . '</a>';
+                    } else {
+                        echo '<span title="Contactez un administrateur pour modifier ce pratiquant"><a class="btn ' . $btnClass . ' disabled" id="' . $id . '" href="#" tabindex="-1" aria-disabled="true"><i class="fas ' . $icon . '"></i> ' . $label . '</a></span>';
+                    }
+                }
+
 				//import_request_variables('GP');
 				extract($_GET);
 				extract($_POST);
@@ -73,7 +89,8 @@
 				$id = filter_input(INPUT_GET , 'id');
 				$edit = filter_input(INPUT_POST, 'edit');
 				$action = filter_input(INPUT_POST, 'action');
-				
+				$isAdmin = in_array($_SERVER['REMOTE_USER'] ?? '', $admins);
+
                 $pratiquant = PMO_MyObject::factory('pratiquants');
                 if($id)
 				{
@@ -90,14 +107,14 @@
 				{
 					echo('Action: ' . $action);
 				}
-				if($action == 'undelete')
+				if($action == 'undelete' && $isAdmin)
                 {
                     $pratiquant->deleted = 0;
                     $pratiquant->commit();
 
                     $edit = false;
                 }
-				else if($action == 'add' || $action == 'save')
+				else if(($action == 'add' || $action == 'save') && $isAdmin)
 				{
 					if($action == 'add')
 					{
@@ -242,263 +259,264 @@
 			<input type="hidden" id="action" name="action" />
 			<input type="hidden" id="edit" name="edit" value="<?php echo($edit); ?>" />
 
-			<?php echo($_SERVER['REMOTE_USER'] ?? '');?>
-            <?php if(in_array($_SERVER['REMOTE_USER'] ?? '', $admins)){ ?>
-			<div class="Contents">
-                <?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><i class="fas fa-edit"></i> Modifier</a><?php } ?>
-                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<?php echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
-                <?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><i class="fas fa-window-close" style="color:red;"></i> Annuler</a><?php } ?>
-                <?php if($pratiquant->deleted){ ?><a class="Button" id="Undelete" href="#" onClick="SetHidden('action', 'undelete'); $('formNew').submit()"><i class="fas fa-recycle" style="color:darkorange;"></i> Restaurer</a><?php } ?>
-				<div class="EndFloat">&nbsp;</div>
+			<div class="d-flex gap-2 mb-3">
+                <?php if(!$edit){ RenderActionButton('Edit', 'btn-primary', 'fa-edit', 'Modifier', "SetHidden('edit', 'true'); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($edit){ RenderActionButton('Save', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($edit){ RenderActionButton('Cancel', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($pratiquant->deleted){ RenderActionButton('Undelete', 'btn-warning', 'fa-recycle', 'Restaurer', "SetHidden('action', 'undelete'); \$('formNew').submit()", $isAdmin); } ?>
 			</div>
-            <?php } ?>
 
-			<div class="List Contents">
-				<div class="NewTitle <?php echo($pratiquant->deleted?'Deleted':''); ?>">Identité</div>
-				<div class="New">
-                    <div class="ItemLeft">
-                        <div class="FieldName">Nom:</div>
-                        <div class="InputField">
-                            <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="nom"				name="nom"		 value="<?php echo($pratiquant->nom); ?>">
-                            <?php } else {
-                                echo($pratiquant->nom);
-                            } ?>
-                        </div>
-                    </div>
+			<div class="card mb-3">
+				<div class="card-header fw-bold <?php echo($pratiquant->deleted?'bg-danger text-white':''); ?>">Identité</div>
+				<div class="card-body">
+					<div class="row mb-2">
+						<div class="col-8">
+							<div class="row mb-2 align-items-center">
+								<label class="col-sm-4 col-form-label fw-bold">Nom:</label>
+								<div class="col-sm-8">
+			                        <?php if($edit){ ?>
+			                            <input type="text" class="form-control" autocomplete="off" id="nom"				name="nom"		 value="<?php echo($pratiquant->nom); ?>">
+			                        <?php } else {
+			                            echo($pratiquant->nom);
+			                        } ?>
+								</div>
+							</div>
 
-                    <div class="ItemRight">
-                        <div class="InputField Photo">
-                            <img src="<?php echo($pratiquant->GetPhotoHttpPath()); ?>" title="<?php echo($pratiquant->GetPhotoTitle()); ?>"/>
-                        </div>
-                        <div class="FieldName FieldPhoto">Photo:</div>
-                    </div>
+							<div class="row mb-2 align-items-center">
+								<label class="col-sm-4 col-form-label fw-bold">Prénom:</label>
+								<div class="col-sm-8">
+			                        <?php if($edit){ ?>
+			                            <input type="text" class="form-control" autocomplete="off" id="prenom"	name="prenom"	 value="<?php echo($pratiquant->prenom); ?>">
+			                        <?php } else {
+			                            echo($pratiquant->prenom);
+			                        } ?>
+								</div>
+							</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Prénom:</div>
-                        <div class="InputField">
-                            <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="prenom"	name="prenom"	 value="<?php echo($pratiquant->prenom); ?>">
-                            <?php } else {
-                                echo($pratiquant->prenom);
-                            } ?>
-                        </div>
-                    </div>
+							<div class="row mb-2 align-items-center">
+								<label class="col-sm-4 col-form-label fw-bold">Naissance:</label>
+								<div class="col-sm-8">
+			                        <?php if($edit){ ?>
+			                            <input type="text" class="form-control" autocomplete="off" id="naissance" name="naissance" value="<?php echo(date('d/m/Y', strtotime($pratiquant->naissance ?? ''))); ?>">
+			                        <?php } else {
+			                            echo(date('d/m/Y', strtotime($pratiquant->naissance)));
+			                        } ?>
+								</div>
+							</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Sexe:</div>
-                        <div class="InputField">
-                            <?php if($edit){ ?>
-                                <select id="sexe" name="sexe">
-                                    <option value="0" <?php echo($pratiquant->sexe?'':'selected'); ?>>Femme</option>
-                                    <option value="1" <?php echo($pratiquant->sexe?'selected':''); ?>>Homme</option>
-                                </select>
-                            <?php } else {
-                                echo($pratiquant->sexe?'Homme':'Femme');
-                            } ?>
-                        </div>
-                    </div>
+							<div class="row mb-2 align-items-center">
+								<label class="col-sm-4 col-form-label fw-bold">Sexe:</label>
+								<div class="col-sm-8">
+			                        <?php if($edit){ ?>
+			                            <select class="form-select" id="sexe" name="sexe">
+			                                <option value="0" <?php echo($pratiquant->sexe?'':'selected'); ?>>Femme</option>
+			                                <option value="1" <?php echo($pratiquant->sexe?'selected':''); ?>>Homme</option>
+			                            </select>
+			                        <?php } else {
+			                            echo($pratiquant->sexe?'Homme':'Femme');
+			                        } ?>
+								</div>
+							</div>
+                           <div class="row mb-2 align-items-center">
+                                <label class="col-sm-4 col-form-label fw-bold">Chef famille:</label>
+                                <div class="col-sm-8">
+                                    <?php if($edit){ ?>
+                                        <select class="form-select" id="famille" name="famille">
+                                            <?php
+                                            $selected = "";
+                                            if($new || !$pratiquant->IsFamilyMember())
+                                            {
+                                                $selected = "selected";
+                                            }
+                                            echo('<option value="' . $pratiquant->id . '" ' . $selected . '>-- Pas de famille --</option>');
+
+                                            function RenderChef($chef, $selected)
+                                            {
+                                                echo('<option value="' . $chef->id . '" ' . $selected . '>' . $chef->nom . " " . $chef->prenom . '</option>');
+                                            }
+
+                                            if(!$new)
+                                            {
+                                                $myNameMembers = pratiquants::GetByLastNameButMe($pratiquant->nom, $pratiquant->id);
+                                                foreach($myNameMembers as $myNameMember)
+                                                {
+                                                    RenderChef($myNameMember, '');
+                                                }
+                                                if(count($myNameMembers) > 0)
+                                                {
+                                                    echo('<option value="">-----------</option>');
+                                                }
+                                            }
+
+                                            if($new)
+                                            {
+                                                $id = 0;
+                                            }
+                                            else
+                                            {
+                                                $id = $pratiquant->id;
+                                            }
+
+                                            $potentialsChefs = pratiquants::GetChefsButMe($id);
+
+                                            foreach($potentialsChefs as $potentialChef)
+                                            {
+                                                $selected = "";
+                                                if($pratiquant->fk_famille == $potentialChef->id)
+                                                {
+                                                    $selected = "selected";
+                                                }
+                                                RenderChef($potentialChef, $selected);
+                                            }
+                                            ?>
+                                        </select>
+                                    <?php } else {
+                                        if($pratiquant->GetFamilyHead())
+                                        {
+                                            echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
+                                        }
+
+                                    } ?>
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <label class="col-sm-4 col-form-label fw-bold">Publicité:</label>
+                                <div class="col-sm-8">
+                                    <?php
+                                    if($edit){ ?>
+                                        <select class="form-select" id="pub" name="pub">
+                                            <option value="0" <?php echo($pratiquant->UnknownPub()?'selected':''); ?>>Inconnu</option>
+                                            <option value="1" <?php echo($pratiquant->AllowPub()?'selected':''); ?>>Autorisé</option>
+                                            <option value="-1" <?php echo($pratiquant->DisallowPub()?'selected':''); ?>>Interdit</option>
+                                        </select>
+                                    <?php } else {
+                                        if($pratiquant->UnknownPub())
+                                        {
+                                            echo("Inconnu");
+                                        }
+                                        elseif ($pratiquant->AllowPub())
+                                        {
+                                            echo("Autorisé");
+                                        }
+                                        elseif ($pratiquant->DisallowPub())
+                                        {
+                                            echo("Interdit");
+                                        }
+                                    } ?>
+                                </div>
+                            </div>
+
+						</div>
+						<div class="col-4 text-center">
+							<img class="img-thumbnail" style="max-height:170px;" src="<?php echo($pratiquant->GetPhotoHttpPath()); ?>" title="<?php echo($pratiquant->GetPhotoTitle()); ?>"/>
+						</div>
+					</div>
 
 					<?php if($edit){ ?>
-                        <div class="ItemLeft">
-                            <div class="FieldName">Photo:</div>
-                            <div class="InputField">
-                                <input type="text" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
-                            </div>
-                        </div>
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Photo:</label>
+						<div class="col-sm-8">
+                            <input type="text" class="form-control" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
+						</div>
+					</div>
 					<?php } ?>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Adresse:</div>	<div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Adresse:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="adresse"		name="adresse"	 value="<?php echo($pratiquant->adresse); ?>">
+                                <input type="text" class="form-control" autocomplete="off" id="adresse"		name="adresse"	 value="<?php echo($pratiquant->adresse); ?>">
                             <?php } else {
                                 echo($pratiquant->adresse);
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Code postal:</div>	<div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Code postal:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
+                                <input type="text" class="form-control" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
                             <?php } else {
                                 echo($pratiquant->codePostal);
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Commune:</div>	<div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Commune:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="commune"		name="commune"	 value="<?php echo($pratiquant->commune); ?>">
+                                <input type="text" class="form-control" autocomplete="off" id="commune"		name="commune"	 value="<?php echo($pratiquant->commune); ?>">
                             <?php } else {
                                 echo($pratiquant->commune);
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Naissance:</div><div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Téléphone:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="naissance" name="naissance" value="<?php echo(date('d/m/Y', strtotime($pratiquant->naissance ?? ''))); ?>">
-                            <?php } else {
-                                echo(date('d/m/Y', strtotime($pratiquant->naissance)));
-                            } ?>
-                        </div>
-                    </div>
-
-                    <div class="ItemLeft">
-                        <div class="FieldName">Chef famille:</div><div class="InputField">
-                            <?php if($edit){ ?>
-                                <!--<input type="text" id="famille"	name="famille" value="<?php echo($pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom); ?>">-->
-
-                                <select id="famille" name="famille">
-                                    <?php
-                                    $selected = "";
-                                    if($new || !$pratiquant->IsFamilyMember())
-                                    {
-                                        $selected = "selected";
-                                    }
-                                    echo('<option value="' . $pratiquant->id . '" ' . $selected . '>-- Pas de famille --</option>');
-
-                                    function RenderChef($chef, $selected)
-                                    {
-                                        echo('<option value="' . $chef->id . '" ' . $selected . '>' . $chef->nom . " " . $chef->prenom . '</option>');
-                                    }
-
-                                    if(!$new)
-                                    {
-                                        $myNameMembers = pratiquants::GetByLastNameButMe($pratiquant->nom, $pratiquant->id);
-                                        foreach($myNameMembers as $myNameMember)
-                                        {
-                                            RenderChef($myNameMember, '');
-                                        }
-                                        if(count($myNameMembers) > 0)
-                                        {
-                                            echo('<option value="">-----------</option>');
-                                        }
-                                    }
-
-                                    if($new)
-                                    {
-                                        $id = 0;
-                                    }
-                                    else
-                                    {
-                                        $id = $pratiquant->id;
-                                    }
-
-                                    $potentialsChefs = pratiquants::GetChefsButMe($id);
-
-                                    foreach($potentialsChefs as $potentialChef)
-                                    {
-                                        $selected = "";
-                                        if($pratiquant->fk_famille == $potentialChef->id)
-                                        {
-                                            $selected = "selected";
-                                        }
-                                        RenderChef($potentialChef, $selected);
-                                    }
-                                    ?>
-                                </select>
-                            <?php } else {
-                                if($pratiquant->GetFamilyHead())
-                                {
-                                    echo("<a target='new' href='new.php?id=" . $pratiquant->fk_famille . "'>" . $pratiquant->GetFamilyHead()->nom . " " . $pratiquant->GetFamilyHead()->prenom . "</a>");
-                                }
-
-                            } ?>
-                        </div>
-                    </div>
-
-                    <div class="ItemLeft">
-                        <div class="FieldName">Téléphone:</div>	<div class="InputField">
-                            <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="telephone" name="telephone" value="<?php echo($pratiquant->telephone); ?>">
+                                <input type="text" class="form-control" autocomplete="off" id="telephone" name="telephone" value="<?php echo($pratiquant->telephone); ?>">
                             <?php } else {
                                     echo(formatPhoneNumber($pratiquant->telephone));
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">GSM:</div>	<div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">GSM:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="gsm" name="gsm" value="<?php echo($pratiquant->gsm); ?>">
+                                <input type="text" class="form-control" autocomplete="off" id="gsm" name="gsm" value="<?php echo($pratiquant->gsm); ?>">
                             <?php } else {
                                 echo(formatPhoneNumber($pratiquant->gsm));
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">eMail:</div>	<div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">eMail:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
+                                <input type="text" class="form-control" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
                             <?php } else {
                                 echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
                             } ?>
-                        </div>
-                    </div>
-
-                    <div class="ItemLeft">
-                        <div class="FieldName">Publicité:</div>
-                        <div class="InputField">
-                            <?php
-                            if($edit){ ?>
-                                <select id="pub" name="pub">
-                                    <option value="0" <?php echo($pratiquant->UnknownPub()?'selected':''); ?>>Inconnu</option>
-                                    <option value="1" <?php echo($pratiquant->AllowPub()?'selected':''); ?>>Autorisé</option>
-                                    <option value="-1" <?php echo($pratiquant->DisallowPub()?'selected':''); ?>>Interdit</option>
-                                </select>
-                            <?php } else {
-                                if($pratiquant->UnknownPub())
-                                {
-                                    echo("Inconnu");
-                                }
-                                elseif ($pratiquant->AllowPub())
-                                {
-                                    echo("Autorisé");
-                                }
-                                elseif ($pratiquant->DisallowPub())
-                                {
-                                    echo("Interdit");
-                                }
-                            } ?>
-                        </div>
-                    </div>
-                </div>
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="List Contents">
-				<div class="NewTitle">Club et fédé</div>
-				<div class="New">
-                    <div class="ItemLeft">
-                        <div class="FieldName">N° licence:</div>
-                        <div class="InputField">
+			<div class="card mb-3">
+				<div class="card-header fw-bold">Club et fédé</div>
+				<div class="card-body">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">N° licence:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" id="licence" name="licence"	autocomplete="off"	value="<?php echo($pratiquant->licenceNbr); ?>">
+                                <input type="text" class="form-control" id="licence" name="licence"	autocomplete="off"	value="<?php echo($pratiquant->licenceNbr); ?>">
                             <?php } else {
                                 echo($pratiquant->licenceNbr);
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Expiration:</div>
-                        <div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Expiration:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" id="licenceDate" name="licenceDate"		value="<?php echo(date('d/m/Y', strtotime($pratiquant->licenceDate ?? ''))); ?>">
+                                <input type="text" class="form-control" id="licenceDate" name="licenceDate"		value="<?php echo(date('d/m/Y', strtotime($pratiquant->licenceDate ?? ''))); ?>">
                             <?php } else {
                                 echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Grade:</div>
-                        <div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Grade:</label>
+						<div class="col-sm-8">
                                 <?php
                                     if($action != 'add')
                                     {
@@ -507,14 +525,14 @@
                                             echo($grade->GetGrade()->libelle);
                                     }
                                 ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="ItemLeft">
-                        <div class="FieldName">Section:</div>
-                        <div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Section:</label>
+						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <select id="section" name="section">
+                                <select class="form-select" id="section" name="section">
                                 <?php
                                     $sections = sections::GetAll();
                                     $i = 0;
@@ -533,8 +551,8 @@
                             <?php } else {
                                 echo($pratiquant->GetSection()->libelle);
                             } ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -547,46 +565,45 @@
 			$fedeEmail = $pratiquant->getAttribute('fede_email');
 			$fedeAdresse = $pratiquant->getAttribute('fede_adresse');
 		?>
-			<div class="List Contents">
-				<div class="NewTitle">Fédération</div>
-				<div class="New">
-					<div class="ItemLeft">
-						<div class="FieldName">N° licence:</div>
-						<div class="InputField"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); ?></div>
+			<div class="card mb-3">
+				<div class="card-header fw-bold">Fédération</div>
+				<div class="card-body">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">N° licence:</label>
+						<div class="col-sm-8"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); ?></div>
 					</div>
 
-					<div class="ItemLeft">
-						<div class="FieldName">Expiration:</div>
-						<div class="InputField"><?php echo($fedeLicenceDate ? date('d/m/Y', strtotime($fedeLicenceDate)) : '—'); ?></div>
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Expiration:</label>
+						<div class="col-sm-8"><?php echo($fedeLicenceDate ? date('d/m/Y', strtotime($fedeLicenceDate)) : '—'); ?></div>
 					</div>
 
-					<div class="ItemLeft">
-						<div class="FieldName">Naissance:</div>
-						<div class="InputField"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); ?></div>
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Naissance:</label>
+						<div class="col-sm-8"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); ?></div>
 					</div>
 
-					<div class="ItemLeft">
-						<div class="FieldName">eMail:</div>
-						<div class="InputField">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">eMail:</label>
+						<div class="col-sm-8">
 							<?php if($fedeEmail){ ?>
 								<a href="mailto:<?php echo($fedeEmail); ?>" target="new"><?php echo($fedeEmail); ?></a>
 							<?php } else { echo('—'); } ?>
 						</div>
 					</div>
 
-					<div class="ItemLeft">
-						<div class="FieldName">Adresse:</div>
-						<div class="InputField"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); ?></div>
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Adresse:</label>
+						<div class="col-sm-8"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); ?></div>
 					</div>
 				</div>
 			</div>
 		<?php } ?>
 
 		<?php if($id){ ?>
-			<div class="List Contents">
-
-				<div class="NewTitle">Grades</div>
-				<div class="New">
+			<div class="card mb-3">
+				<div class="card-header fw-bold">Grades</div>
+				<div class="card-body New">
 					<?php
 						if($pratiquant != NULL)
 						{
@@ -614,7 +631,7 @@
 					<div id="NewGrade"></div>
 
 					<br>
-						<select id="gradeList" name="gradeList">
+						<select class="form-select form-select-sm d-inline-block w-auto" id="gradeList" name="gradeList">
 						<?php
 							$grades = grades::GetBySection($pratiquant->fk_section);
 							$i = 0;
@@ -630,8 +647,8 @@
 							}
 						?>
 						</select>
-						
-						<a class="Button" id="Add" href="#" onClick="AddGrade($('gradeList').value, $('gradeList').options[$('gradeList').options.selectedIndex].innerHTML);">Ajouter</a>
+
+						<a class="btn btn-primary btn-sm ms-2" id="Add" href="#" onClick="AddGrade($('gradeList').value, $('gradeList').options[$('gradeList').options.selectedIndex].innerHTML); return false;">Ajouter</a>
 					<br>
 			   <?php } ?>
 				</div>
@@ -639,29 +656,36 @@
 		<?php } ?>
 
 		<?php if($id){ ?>
-			<div class="List Contents">
-				<div class="NewTitle">Statistiques</div>
-				<div class="New">
-					<div class="FieldName Stat">Présences depuis le dernier grade:</div>
-					<div class="InputField"><?php echo($pratiquant->GetPresencesCountFromLastGrade()); ?> / <?php echo($pratiquant->GetPresencesNeededForNextGrade()); ?></div>
-					<?php if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" name="presences" id="presences" value="0" size="3"><?php } ?>
-					<br/>
+			<div class="card mb-3">
+				<div class="card-header fw-bold">Statistiques</div>
+				<div class="card-body">
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-6 col-form-label fw-bold">Présences depuis le dernier grade:</label>
+						<div class="col-sm-6">
+							<?php echo($pratiquant->GetPresencesCountFromLastGrade()); ?> / <?php echo($pratiquant->GetPresencesNeededForNextGrade()); ?>
+							<?php if($edit){ ?>&nbsp;Ajouter des préseces&nbsp;<input type="text" class="form-control d-inline-block w-auto" name="presences" id="presences" value="0" size="3"><?php } ?>
+						</div>
+					</div>
 
-					<div class="FieldName Stat">Présences pour cette saison:</div>
-					<div class="InputField"><?php echo($pratiquant->GetPresencesCountForThisSeason()); ?></div><br/>
-					
-					<!--<div class="FieldName Stat">Stages du club cette saison:</div>
-					<div class="InputField"><?php echo($pratiquant->GetCountStages()); ?></div>-->
-                    <br/>
-			
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-6 col-form-label fw-bold">Présences pour cette saison:</label>
+						<div class="col-sm-6"><?php echo($pratiquant->GetPresencesCountForThisSeason()); ?></div>
+					</div>
+
+					<!--
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-6 col-form-label fw-bold">Stages du club cette saison:</label>
+						<div class="col-sm-6"><?php echo($pratiquant->GetCountStages()); ?></div>
+					</div>
+					-->
 				</div>
 			</div>
 		<?php } ?>
 
         <?php if($id){ ?>
-            <div class="List Contents">
-                <div class="NewTitle">Payements</div>
-                <div class="New">
+            <div class="card mb-3">
+                <div class="card-header fw-bold">Payements</div>
+                <div class="card-body New">
                     <div class="FieldName Stat">Périodes payées:</div>
                     <?php
                     $periodes = $pratiquant->GetPaiedPeriodForSeason();
@@ -717,7 +741,7 @@
 
 
                     <?php if($edit){ ?>&nbsp;Ajouter une période&nbsp;
-                       <select id="periodeList" name="periodeList">
+                       <select class="form-select form-select-sm d-inline-block w-auto" id="periodeList" name="periodeList">
 						<?php
                             $periodes = periodes::GetNewForPratiquant($pratiquant->id);
                             $i = 0;
@@ -733,7 +757,7 @@
                             }
 						?>
 						</select>
-                        <a class="Button" id="AddPeriode" href="#" onClick="AddPeriode($('periodeList').value, $('periodeList').options[$('periodeList').options.selectedIndex].innerHTML);">Ajouter</a>
+                        <a class="btn btn-primary btn-sm ms-2" id="AddPeriode" href="#" onClick="AddPeriode($('periodeList').value, $('periodeList').options[$('periodeList').options.selectedIndex].innerHTML); return false;">Ajouter</a>
                     <?php } ?>
                     <br/>
             
@@ -756,16 +780,14 @@
             </div>
         <?php } ?>
 
-        <?php if(in_array($_SERVER['REMOTE_USER'] ?? '', $admins)){ ?>
-            <div class="Contents">
-                <?php if(!$edit){ ?><a class="Button" id="Edit" href="#" onClick="SetHidden('edit', 'true'); $('formNew').submit()"><i class="fas fa-edit"></i> Modifier</a><?php } ?>
-                <?php if($edit){ ?><a class="Button" id="Save" href="#" onClick="SetHidden('action', '<?php echo($new?'add':'save'); ?>'); $('formNew').submit()"><i class="fas fa-save" style="color:green;"></i> Enregistrer</a><?php } ?>
-                <?php if($edit){ ?><a class="Button" id="Cancel" href="#" onClick="SetHidden('edit', ''); $('formNew').submit()"><i class="fas fa-window-close" style="color:red;"></i> Annuler</a><?php } ?>
-                <?php if($pratiquant->deleted){ ?><a class="Button" id="Undelete" href="#" onClick="SetHidden('action', 'undelete'); $('formNew').submit()"><i class="fas fa-recycle" style="color:darkorange;"></i> Restaurer</a><?php } ?>
-				<div class="EndFloat">&nbsp;</div>
+            <div class="d-flex gap-2 mb-3">
+                <?php if(!$edit){ RenderActionButton('EditBottom', 'btn-primary', 'fa-edit', 'Modifier', "SetHidden('edit', 'true'); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($edit){ RenderActionButton('SaveBottom', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($edit){ RenderActionButton('CancelBottom', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($pratiquant->deleted){ RenderActionButton('UndeleteBottom', 'btn-warning', 'fa-recycle', 'Restaurer', "SetHidden('action', 'undelete'); \$('formNew').submit()", $isAdmin); } ?>
 			</div>
-        <?php } ?>
 
+			</div>
 		</form>
 	</body>
 </html>

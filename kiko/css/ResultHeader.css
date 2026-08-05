@@ -1,9 +1,11 @@
 .Header
 {
-	background-color: lightgrey;
+	background-color: var(--kiko-paper-warm, #ede5d2);
+	border-bottom: 1px solid var(--kiko-paper-rule, #d8cebc);
 	height: 20px;
-	padding: 5px;
-
+	padding: 10px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .HeaderTitle
@@ -13,7 +15,46 @@
 	font-weight: bold;
 	text-align: center;
 	font-size: +1em;
+	color: var(--kiko-ink, #261e14);
         height: 20px;
+}
+
+/* Barre au-dessus de la liste des pratiquants : titre + boutons alignés
+   proprement sur la même ligne, sans le hack de marge négative d'origine. */
+.ResultBar
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 6px;
+	height: auto;
+	min-height: 20px;
+}
+
+.ResultBar .HeaderTitle
+{
+	flex: 1 1 auto;
+	text-align: left;
+	height: auto;
+	padding-top: 0;
+}
+
+.ResultBar ul.Buttons
+{
+	float: none;
+	margin-top: 0;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+/* .invisible (general.css) doit rester prioritaire pour cacher #ActionButtons
+   tant qu'aucune ligne n'est sélectionnée - sinon notre display:flex l'emporterait. */
+.ResultBar ul.Buttons.invisible
+{
+	display: none;
 }
 
 .Buttons li a#email

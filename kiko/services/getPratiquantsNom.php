@@ -27,7 +27,8 @@
 			$checked = presences::Exists($prat->id,$today)?'Checked':'Unchecked';
 			echo("<div class='" . $checked . "' onClick='AddPresence(" . $prat->id . ",this)'>");
 			echo("<div class='Identity'>");
-			echo("<img src='" . $prat->GetPhotoHttpPath() . "' title='" . $prat->GetPhotoTitle() . "'/>");
+			echo("<div class='IdentityLoading'></div>");
+			echo("<img src='" . $prat->GetPhotoHttpPath() . "' title='" . $prat->GetPhotoTitle() . "' style='opacity:0;' onload='this.style.opacity=1; this.previousElementSibling.style.display=\"none\";'/>");
 			echo("</div>");
 			if($prat->IsLicenceExpired())
 			{

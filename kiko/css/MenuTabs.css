@@ -1,34 +1,43 @@
 #MenuTab
 {
-	border: solid 0 white;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
 	padding-top: 3px;
-    padding-bottom: 0px;    
-    
-    margin-bottom: -2px;
+	margin-bottom: 12px;
 }
 #formSearch
 {
-    border: solid 0 white;
     margin: 0px;
     padding: 0px;
 }
 
 #MenuTab .Tab
 {
-	border: solid 2px grey;
+	border: none;
 	display: inline-block;
-	padding: 3px;
-    padding-bottom: 0px;
+	padding: 6px 14px;
 	margin: 0px;
 	cursor: pointer;
-	cursor: hand;
-    
-    background-color: white;
-    
-    border-top-right-radius: 8px;
+	border-radius: 50rem;
+	background-color: var(--kiko-paper-warm, #ede5d2);
+	color: var(--kiko-ink-mid, #5c5040);
+	font-size: 0.9rem;
+	transition: background-color 0.15s ease-in-out;
+}
+
+#MenuTab .Tab:hover
+{
+	background-color: var(--kiko-paper-rule, #d8cebc);
 }
 
 #MenuTab .SelectedTab
 {
-	border-bottom: solid 2px white;
+	background-color: var(--kiko-orange, #c4601a);
+	color: white;
+}
+
+#MenuTab .SelectedTab:hover
+{
+	background-color: var(--kiko-orange, #c4601a);
 }
