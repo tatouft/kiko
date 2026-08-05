@@ -11,6 +11,7 @@
     if (php_sapi_name() === 'cli-server' && !isset($_SERVER['REMOTE_USER'])) {
         $_SERVER['REMOTE_USER'] = 'tatou';
         $_SESSION['WebSiteRoot'] = '/www';
+        $_SESSION['AllowSync'] = true;
     }
 
 	$debug = false;

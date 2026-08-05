@@ -21,6 +21,7 @@
 	--bs-primary: var(--kiko-orange);
 	--bs-primary-rgb: 196, 96, 26;
 	--bs-body-bg: var(--kiko-paper);
+	--bs-body-bg-rgb: 244, 239, 228;
 	--bs-body-color: var(--kiko-ink);
 	--bs-border-color: var(--kiko-paper-rule);
 	--bs-link-color: var(--kiko-orange);

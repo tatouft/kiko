@@ -70,13 +70,17 @@ th
 tr:nth-child(even) {
     background-color: rgba(200, 200, 200, 0.3); /* red, 30% alpha */
 }
+/* Bootstrap 5 peint le fond de chaque <td> individuellement (pas la <tr>) et
+   sa classe table-hover pilote son propre survol via --bs-table-hover-bg -
+   un simple background-color sur la <tr> est donc invisible. On passe par
+   les variables CSS de Bootstrap pour que ça s'affiche vraiment. */
 tr.Selectable:hover
 {
-    background-color: var(--kiko-orange-pale, #f2dcc8);
+    --bs-table-hover-bg: var(--kiko-orange-pale, #f2dcc8);
 }
 tr.Selected
 {
-    background-color: #e6c19c;
+    --bs-table-accent-bg: #e6c19c;
 }
 
 /* Liste des pratiquants : bascule en cartes empilées sur petit écran */

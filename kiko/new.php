@@ -1,12 +1,12 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/theme.css" type="text/css">
 		<script src="js/scriptaculous/prototype.js"		type="text/javascript"></script>
 		<script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>
 		<script src="js/action.js"						type="text/javascript"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
 
         <!-- Force latest IE rendering engine or ChromeFrame if installed -->
         <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
@@ -259,7 +259,7 @@
 			<input type="hidden" id="action" name="action" />
 			<input type="hidden" id="edit" name="edit" value="<?php echo($edit); ?>" />
 
-			<div class="d-flex gap-2 mb-3">
+			<div class="d-flex gap-2 mb-3 sticky-top bg-body py-2">
                 <?php if(!$edit){ RenderActionButton('Edit', 'btn-primary', 'fa-edit', 'Modifier', "SetHidden('edit', 'true'); \$('formNew').submit()", $isAdmin); } ?>
                 <?php if($edit){ RenderActionButton('Save', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); \$('formNew').submit()", $isAdmin); } ?>
                 <?php if($edit){ RenderActionButton('Cancel', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
@@ -564,23 +564,62 @@
 			$fedeNaissance = $pratiquant->getAttribute('fede_naissance');
 			$fedeEmail = $pratiquant->getAttribute('fede_email');
 			$fedeAdresse = $pratiquant->getAttribute('fede_adresse');
+			$licenceNbr = $pratiquant->getAttribute('licenceNbr');
+			$fedeFormulairePath = $licenceNbr ? dirname(__FILE__) . '/uploads/fede_formulaires/' . (int)$licenceNbr . '.pdf' : null;
+			$fedeFormulaireExiste = $fedeFormulairePath && is_file($fedeFormulairePath);
+
+			// Signale un champ fédé quand il diffère de la valeur club - seulement si la
+			// fédé a une valeur (sinon "pas encore scrapé" serait signalé comme un conflit).
+			$diffLicence = $fedeLicence !== null && $fedeLicence !== '' && (string)$fedeLicence !== (string)$licenceNbr;
+			$diffLicenceDate = !empty($fedeLicenceDate) && $fedeLicenceDate !== $pratiquant->licenceDate;
+			$diffNaissance = !empty($fedeNaissance) && $fedeNaissance !== $pratiquant->naissance;
+			$diffEmail = !empty($fedeEmail) && strcasecmp($fedeEmail, $pratiquant->email ?? '') !== 0;
+
+			// La fédé colle rue et commune dans un seul champ, alors que le club les garde
+			// séparés (adresse / commune), sans forcément la même ponctuation ("rue X, 12"
+			// vs "Rue X 12Commune") - on normalise (minuscule, lettres/chiffres uniquement)
+			// avant de vérifier que les deux morceaux du club se retrouvent dans le texte
+			// de la fédé, peu importe l'ordre/la ponctuation utilisés.
+			$normalizeAdresse = function ($str) {
+				return preg_replace('/[^\p{L}\p{N}]+/u', '', mb_strtolower(trim($str ?? ''), 'UTF-8'));
+			};
+			$diffAdresse = false;
+			if ($fedeAdresse !== null && $fedeAdresse !== '') {
+				$fedeAdresseNorm = $normalizeAdresse($fedeAdresse);
+				$adresseMatch = !empty($pratiquant->adresse) && str_contains($fedeAdresseNorm, $normalizeAdresse($pratiquant->adresse));
+				$communeMatch = !empty($pratiquant->commune) && str_contains($fedeAdresseNorm, $normalizeAdresse($pratiquant->commune));
+				$diffAdresse = !($adresseMatch && $communeMatch);
+			}
+
+			function AlerteDiff($diff) {
+				if ($diff) {
+					echo '<i class="fas fa-exclamation-triangle text-warning ms-1" title="Différent de la fiche club"></i>';
+				}
+			}
 		?>
 			<div class="card mb-3">
 				<div class="card-header fw-bold">Fédération</div>
 				<div class="card-body">
 					<div class="row mb-2 align-items-center">
 						<label class="col-sm-4 col-form-label fw-bold">N° licence:</label>
-						<div class="col-sm-8"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); ?></div>
+						<div class="col-sm-8"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); AlerteDiff($diffLicence); ?></div>
 					</div>
 
 					<div class="row mb-2 align-items-center">
 						<label class="col-sm-4 col-form-label fw-bold">Expiration:</label>
-						<div class="col-sm-8"><?php echo($fedeLicenceDate ? date('d/m/Y', strtotime($fedeLicenceDate)) : '—'); ?></div>
+						<div class="col-sm-8">
+							<?php echo($fedeLicenceDate ? date('d/m/Y', strtotime($fedeLicenceDate)) : '—'); AlerteDiff($diffLicenceDate); ?>
+							<?php if ($diffLicenceDate && $edit) { ?>
+								<button type="button" class="btn btn-sm btn-outline-warning ms-2" onclick="SetHidden('licenceDate', '<?php echo(date('d/m/Y', strtotime($fedeLicenceDate))); ?>')">
+									<i class="fas fa-sync"></i> Reporter au club
+								</button>
+							<?php } ?>
+						</div>
 					</div>
 
 					<div class="row mb-2 align-items-center">
 						<label class="col-sm-4 col-form-label fw-bold">Naissance:</label>
-						<div class="col-sm-8"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); ?></div>
+						<div class="col-sm-8"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); AlerteDiff($diffNaissance); ?></div>
 					</div>
 
 					<div class="row mb-2 align-items-center">
@@ -589,13 +628,25 @@
 							<?php if($fedeEmail){ ?>
 								<a href="mailto:<?php echo($fedeEmail); ?>" target="new"><?php echo($fedeEmail); ?></a>
 							<?php } else { echo('—'); } ?>
+							<?php AlerteDiff($diffEmail); ?>
 						</div>
 					</div>
 
 					<div class="row mb-2 align-items-center">
 						<label class="col-sm-4 col-form-label fw-bold">Adresse:</label>
-						<div class="col-sm-8"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); ?></div>
+						<div class="col-sm-8"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); AlerteDiff($diffAdresse); ?></div>
 					</div>
+
+					<?php if ($fedeFormulaireExiste) { ?>
+					<div class="row mb-2 align-items-center">
+						<label class="col-sm-4 col-form-label fw-bold">Formulaire:</label>
+						<div class="col-sm-8">
+							<a href="download_formulaire.php?id=<?php echo($id); ?>" class="btn btn-outline-primary btn-sm" target="_blank">
+								<i class="fas fa-file-pdf"></i> Télécharger le formulaire de renouvellement
+							</a>
+						</div>
+					</div>
+					<?php } ?>
 				</div>
 			</div>
 		<?php } ?>
@@ -779,13 +830,6 @@
                 </div>
             </div>
         <?php } ?>
-
-            <div class="d-flex gap-2 mb-3">
-                <?php if(!$edit){ RenderActionButton('EditBottom', 'btn-primary', 'fa-edit', 'Modifier', "SetHidden('edit', 'true'); \$('formNew').submit()", $isAdmin); } ?>
-                <?php if($edit){ RenderActionButton('SaveBottom', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); \$('formNew').submit()", $isAdmin); } ?>
-                <?php if($edit){ RenderActionButton('CancelBottom', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
-                <?php if($pratiquant->deleted){ RenderActionButton('UndeleteBottom', 'btn-warning', 'fa-recycle', 'Restaurer', "SetHidden('action', 'undelete'); \$('formNew').submit()", $isAdmin); } ?>
-			</div>
 
 			</div>
 		</form>

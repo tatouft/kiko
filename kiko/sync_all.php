@@ -37,17 +37,31 @@ function flushOutput() {
     }
     flush();
 }
+
+// N'affiche les timings détaillés que si $debug = true (config/config.php), pour ne pas
+// polluer l'écran en usage normal tout en gardant de la visibilité quand ça tourne mal.
+function debugLog(string $message) {
+    global $debug;
+    if (!$debug) return;
+    $ts = date('H:i:s');
+    echo "<script>document.getElementById('debugLog').textContent += " . json_encode("[{$ts}] {$message}\n") . ";</script>\n";
+    flushOutput();
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Synchronisation avec la fédération</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/theme.css" type="text/css">
     <link rel="icon" type="image/png" href="favicon.png" />
 </head>
 <body>
+<!-- Firefox (contrairement à Chrome) attend un minimum d'octets avant de commencer à
+     afficher la page progressivement ; sans ce padding il n'affiche rien tant que la
+     réponse n'est pas complète, ce qui annule tout l'intérêt du flush() ci-dessous. -->
+<!-- <?php echo str_repeat(' ', 8192); ?> -->
 <div class="container mt-4" id="progressZone">
     <h1>Synchronisation avec la fédération</h1>
     <div class="progress mb-2" style="height: 25px;">
@@ -55,6 +69,12 @@ function flushOutput() {
     </div>
     <div id="syncStatus" class="text-muted">Connexion à la fédération...</div>
 </div>
+<?php if ($debug): ?>
+<div class="container mt-2">
+    <h6 class="text-muted">Debug — timings</h6>
+    <pre id="debugLog" class="bg-dark text-light p-2" style="max-height:300px; overflow:auto; font-size:0.8em;"></pre>
+</div>
+<?php endif; ?>
 <?php flushOutput(); ?>
 
 <?php
@@ -68,20 +88,27 @@ $report = [
     'errors' => 0,
     'not_found' => 0,
     'modified' => [],
+    'pdf_downloaded' => [],
     'not_found_list' => [],
     'errors_list' => [],
     'start_time' => time()
 ];
 
 try {
+    $t0 = microtime(true);
     if (!$scraper->login(FEDE_USERNAME, FEDE_PASSWORD)) {
+        $diag = $scraper->getLastDiagnostics();
+        debugLog("Échec connexion — diagnostics: " . json_encode($diag, JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE));
         throw new \Exception("Impossible de se connecter à la fédération");
     }
+    debugLog("Connexion à la fédération: " . round(microtime(true) - $t0, 2) . "s");
 
     $updater = new PratiquantUpdater($scraper);
 
     // Récupérer tous les pratiquants actifs
+    $t0 = microtime(true);
     $pratiquants = pratiquants::GetAll();
+    debugLog("Récupération des pratiquants locaux: " . round(microtime(true) - $t0, 2) . "s (" . count($pratiquants) . " pratiquants)");
 
     $report['total'] = count($pratiquants);
     $i = 0;
@@ -103,7 +130,16 @@ try {
         }
 
         $fedeId = (int)$licenceNbr;
+        $tPrat = microtime(true);
         $result = $updater->syncPratiquant($prat);
+        $timings = $result['timings'] ?? [];
+        $timingParts = [];
+        if (isset($timings['scrape'])) $timingParts[] = "scrape " . round($timings['scrape'], 2) . "s";
+        if (isset($timings['commit'])) $timingParts[] = "commit " . round($timings['commit'], 2) . "s";
+        if (isset($timings['pdf'])) $timingParts[] = "pdf " . round($timings['pdf'], 2) . "s";
+        debugLog("Pratiquant {$fedeId} ({$nomComplet}): {$result['status']}"
+            . (!empty($timingParts) ? " [" . implode(', ', $timingParts) . "]" : "")
+            . " — total " . round(microtime(true) - $tPrat, 2) . "s");
 
         switch ($result['status']) {
             case 'updated':
@@ -113,6 +149,13 @@ try {
                     'nom' => $prat->nom,
                     'prenom' => $prat->prenom
                 ];
+                if (!empty($result['pdf_downloaded'])) {
+                    $report['pdf_downloaded'][] = [
+                        'id' => $fedeId,
+                        'nom' => $prat->nom,
+                        'prenom' => $prat->prenom
+                    ];
+                }
                 break;
             case 'unchanged':
                 $report['success']++;
@@ -144,10 +187,12 @@ try {
 
     $report['end_time'] = time();
     $report['duration'] = $report['end_time'] - $report['start_time'];
+    debugLog("Synchronisation terminée en {$report['duration']}s");
 
 } catch (\Exception $e) {
     $report['errors']++;
     $report['errors_list'][] = ['error' => $e->getMessage()];
+    debugLog("ERREUR CRITIQUE: " . $e->getMessage());
 }
 ?>
 <script>
@@ -197,6 +242,35 @@ try {
                         <tr>
                             <td><?php echo htmlspecialchars($mod['id']); ?></td>
                             <td><?php echo htmlspecialchars($mod['nom'] . ' ' . $mod['prenom']); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if (!empty($report['pdf_downloaded'])): ?>
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Formulaires de renouvellement téléchargés (<?php echo count($report['pdf_downloaded']); ?>)</h5>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">Date de licence changée depuis la dernière synchro — PDF récupéré dans <code>uploads/fede_formulaires/</code>.</p>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($report['pdf_downloaded'] as $pdf): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($pdf['id']); ?></td>
+                            <td><?php echo htmlspecialchars($pdf['nom'] . ' ' . $pdf['prenom']); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

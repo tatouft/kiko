@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/theme.css" type="text/css">
 		<script src="js/scriptaculous/prototype.js"		type="text/javascript"></script>
 		<script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>

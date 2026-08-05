@@ -7,12 +7,12 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/theme.css" type="text/css">
 		<script src="js/scriptaculous/prototype.js"		type="text/javascript"></script>
 		<script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>
 		<script src="js/action.js"						type="text/javascript"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
 
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
@@ -34,6 +34,7 @@
             </div>
         <?php }?>
         <?php $isAdmin = in_array($_SERVER['REMOTE_USER'] ?? '', $admins); ?>
+        <?php if ($_SESSION['AllowSync']) { ?>
         <div class="mb-3 mt-3 text-center">
             <form method="post" action="sync_all.php" onsubmit="return confirm('Êtes-vous sûr de vouloir lancer la synchronisation de tous les membres actifs ? Cette opération peut prendre du temps.');">
                 <?php if ($isAdmin) { ?>
@@ -49,6 +50,7 @@
                 <?php } ?>
             </form>
         </div>
+        <?php } ?>
 		<div class="LittelTabs">
 			<?php require_once("controls/MenuTabs.php"); ?>
 			<?php require_once("controls/SearchArea.php"); ?>

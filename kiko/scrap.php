@@ -23,6 +23,8 @@ class FedeScraper {
     private $ch;
     private $cookieFile;
     private $baseUrl;
+    private $lastDiagnostics = [];
+    private $lastHeaders = [];
 
     public function __construct() {
         $this->baseUrl = FEDE_BASE_URL;
@@ -35,13 +37,30 @@ class FedeScraper {
             CURLOPT_COOKIEFILE     => $this->cookieFile,
             CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             CURLOPT_SSL_VERIFYPEER => true,
+            // Capture les en-têtes bruts de la réponse - pas accessible via SSH sur
+            // l'hébergement mutualisé, donc c'est la seule façon de voir ce qu'un WAF/CDN
+            // devant le site de la fédération répond réellement à une requête venant de
+            // cette IP (Set-Cookie absent, server: cloudflare, etc.)
+            CURLOPT_HEADERFUNCTION => function ($ch, $header) {
+                $this->lastHeaders[] = rtrim($header, "\r\n");
+                return strlen($header);
+            },
         ]);
+    }
+
+    /**
+     * Diagnostics de la dernière tentative de login (utile quand login() échoue
+     * silencieusement en prod - cookiejar non inscriptible, TLS bloqué, etc.)
+     */
+    public function getLastDiagnostics(): array {
+        return $this->lastDiagnostics;
     }
 
     private function get(string $url): string {
         curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_HTTPGET, true);
-        return curl_exec($this->ch);
+        $result = curl_exec($this->ch);
+        return $result === false ? '' : $result;
     }
 
     private function extractCsrfToken(string $html): ?string {
@@ -55,8 +74,20 @@ class FedeScraper {
     }
 
     public function login(string $username, string $password): bool {
+        $this->lastDiagnostics = [
+            'cookie_file'      => $this->cookieFile,
+            'cookie_writable'  => is_writable(dirname($this->cookieFile)),
+        ];
+
+        $this->lastHeaders = [];
         $loginPageHtml = $this->get($this->baseUrl . '/fr/login');
+        $this->lastDiagnostics['get_curl_error'] = curl_error($this->ch);
+        $this->lastDiagnostics['get_http_code'] = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
+        $this->lastDiagnostics['get_response_headers'] = $this->lastHeaders;
+        $this->lastDiagnostics['cookie_file_size'] = is_file($this->cookieFile) ? filesize($this->cookieFile) : null;
+
         $csrfToken = $this->extractCsrfToken($loginPageHtml);
+        $this->lastDiagnostics['csrf_found'] = $csrfToken !== null;
 
         if (!$csrfToken) {
             throw new \RuntimeException("CSRF token introuvable");
@@ -76,8 +107,15 @@ class FedeScraper {
             ],
         ]);
 
-        curl_exec($this->ch);
+        $this->lastHeaders = [];
+        $postResponseBody = curl_exec($this->ch);
         $finalUrl = curl_getinfo($this->ch, CURLINFO_EFFECTIVE_URL);
+
+        $this->lastDiagnostics['post_curl_error'] = curl_error($this->ch);
+        $this->lastDiagnostics['post_http_code'] = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
+        $this->lastDiagnostics['post_response_headers'] = $this->lastHeaders;
+        $this->lastDiagnostics['post_body_snippet'] = $postResponseBody === false ? null : substr($postResponseBody, 0, 500);
+        $this->lastDiagnostics['final_url'] = $finalUrl;
 
         return !str_contains($finalUrl, '/fr/login');
     }
@@ -242,6 +280,22 @@ class FedeScraper {
         return ($nodes && $nodes->length > 0) ? trim($nodes->item(0)->textContent) : null;
     }
 
+    /**
+     * Télécharge le PDF "Formulaire de renouvellement" d'un membre (onglet Licence).
+     * Retourne null si la réponse n'est pas un PDF (session expirée, membre sans
+     * renouvellement en cours, etc.) plutôt que de sauvegarder une page d'erreur HTML.
+     */
+    public function downloadFormulaireRenouvellement(int $id): ?string {
+        $pdf = $this->get($this->baseUrl . '/fr/membre/' . $id . '/formulaire-renouvellement/');
+        $contentType = curl_getinfo($this->ch, CURLINFO_CONTENT_TYPE);
+
+        if ($pdf === '' || !str_contains((string)$contentType, 'application/pdf')) {
+            return null;
+        }
+
+        return $pdf;
+    }
+
     public function __destruct() {
         @unlink($this->cookieFile);
     }
@@ -275,15 +329,21 @@ class PratiquantUpdater {
      */
     public function syncPratiquant(PMO_MyObject $prat): array {
         $fedeId = (int)$prat->licenceNbr;
+        $timings = [];
+        $oldLicenceDate = $prat->fede_licence_date;
 
+        $t0 = microtime(true);
         try {
             $membre = $this->scraper->getMembre($fedeId);
         } catch (MembreIntrouvableException $e) {
-            return ['status' => 'not_found_in_fede', 'message' => $e->getMessage()];
+            $timings['scrape'] = microtime(true) - $t0;
+            return ['status' => 'not_found_in_fede', 'message' => $e->getMessage(), 'timings' => $timings];
         } catch (\Exception $e) {
+            $timings['scrape'] = microtime(true) - $t0;
             error_log("Erreur lors de la synchronisation du pratiquant (licenceNbr {$fedeId}): " . $e->getMessage());
-            return ['status' => 'error', 'message' => $e->getMessage()];
+            return ['status' => 'error', 'message' => $e->getMessage(), 'timings' => $timings];
         }
+        $timings['scrape'] = microtime(true) - $t0;
 
         $changed = (
             $prat->fede_licence != $membre['fede_licence'] ||
@@ -294,7 +354,7 @@ class PratiquantUpdater {
         );
 
         if (!$changed) {
-            return ['status' => 'unchanged', 'message' => null];
+            return ['status' => 'unchanged', 'message' => null, 'timings' => $timings];
         }
 
         $prat->fede_licence = $membre['fede_licence'];
@@ -303,14 +363,43 @@ class PratiquantUpdater {
         $prat->fede_email = $membre['fede_email'];
         $prat->fede_adresse = $membre['fede_adresse'];
 
+        $t1 = microtime(true);
         try {
             $prat->commit();
         } catch (\Exception $e) {
+            $timings['commit'] = microtime(true) - $t1;
             error_log("Erreur lors de la sauvegarde du pratiquant (licenceNbr {$fedeId}): " . $e->getMessage());
-            return ['status' => 'error', 'message' => $e->getMessage()];
+            return ['status' => 'error', 'message' => $e->getMessage(), 'timings' => $timings];
+        }
+        $timings['commit'] = microtime(true) - $t1;
+
+        // Le formulaire de renouvellement n'a de sens que si la date de licence a
+        // vraiment changé (nouvelle licence/renouvellement) - pas pour un simple
+        // changement d'email ou d'adresse, qui déclenche $changed mais pas ceci.
+        $pdfDownloaded = false;
+        if ($oldLicenceDate != $membre['fede_licence_date'] && !empty($membre['fede_licence_date'])) {
+            $t2 = microtime(true);
+            $pdfContent = $this->scraper->downloadFormulaireRenouvellement($fedeId);
+            if ($pdfContent !== null) {
+                $pdfDownloaded = $this->savePdfFormulaire($fedeId, $pdfContent);
+            }
+            $timings['pdf'] = microtime(true) - $t2;
         }
 
-        return ['status' => 'updated', 'message' => null];
+        return ['status' => 'updated', 'message' => null, 'timings' => $timings, 'pdf_downloaded' => $pdfDownloaded];
+    }
+
+    /**
+     * Sauvegarde le PDF de renouvellement dans kiko/uploads/fede_formulaires/{licenceNbr}.pdf
+     */
+    private function savePdfFormulaire(int $fedeId, string $pdfContent): bool {
+        $dir = __DIR__ . '/uploads/fede_formulaires';
+        if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
+            error_log("Impossible de créer le dossier {$dir}");
+            return false;
+        }
+
+        return file_put_contents($dir . '/' . $fedeId . '.pdf', $pdfContent) !== false;
     }
 
     /**

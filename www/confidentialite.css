@@ -1,0 +1,76 @@
+/* =====================================================
+   KOME DOJO — confidentialite.css
+   Utilisé uniquement dans confidentialite.php
+   ===================================================== */
+
+.privacy-section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+
+.privacy-content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-mid);
+}
+
+.privacy-content h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+.privacy-content h2:first-child {
+  margin-top: 0;
+}
+
+.privacy-content p {
+  margin-bottom: 16px;
+}
+
+.privacy-content ul {
+  margin-bottom: 16px;
+  padding-left: 20px;
+}
+
+.privacy-content li {
+  margin-bottom: 8px;
+}
+
+.privacy-content a {
+  color: var(--orange);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.privacy-content a:hover {
+  border-color: var(--orange);
+}
+
+.privacy-content em {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 820px) {
+  .privacy-section {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 72px;
+  }
+
+  .privacy-content {
+    font-size: 15px;
+  }
+
+  .privacy-content h2 {
+    font-size: 20px;
+  }
+}
