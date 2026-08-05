@@ -1,0 +1,8 @@
+AuthUserFile /homez.462/komewntp/www/.htpasswd
+AuthGroupFile /dev/null
+AuthName "tatou,michelle"
+AuthType Basic
+<Limit GET POST>
+require valid-user
+</Limit>
+RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization},L] 

@@ -1,0 +1,9 @@
+# Données personnelles (formulaires de renouvellement fédération, etc.) -
+# jamais accessibles directement, seulement via un script PHP authentifié.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order Deny,Allow
+    Deny from all
+</IfModule>
