@@ -1,6 +1,6 @@
 # Synchronisation des données de Fédération
 
-Ce système permet de scraper les données des pratiquants depuis le site de la fédération (afamanager.aikido.be) et de les synchroniser automatiquement avec la base de données locale.
+Ce système permet de scraper les données des pratiquants depuis le site de la fédération et de les synchroniser automatiquement avec la base de données locale.
 
 ## Installation et Configuration
 
@@ -26,7 +26,7 @@ Les identifiants de la fédération doivent être configurés dans `config/crede
 ```php
 define('FEDE_USERNAME', 'votre_username');
 define('FEDE_PASSWORD', 'votre_password');
-define('FEDE_BASE_URL', 'https://afamanager.aikido.be');
+define('FEDE_BASE_URL', 'https://xxx');
 ```
 
 ## Utilisation
