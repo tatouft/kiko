@@ -20,7 +20,7 @@ function SetParam1(param)
 
 function Search(baseUrl, action, param1, param2)
 {
-    $loading = "<div class='loading'><img src='images/loading.gif'/></div>";
+    $loading = "<div class='loading'><div class='spinner'></div></div>";
     
 	if(action == "all")
 	{

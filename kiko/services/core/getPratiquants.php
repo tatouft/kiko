@@ -128,7 +128,7 @@
                 {
                     if($prat->IsLicenceExpired())
                     {
-                        echo($prat->HasFormulaire() ? "<a href='download_formulaire.php?id=" . $prat->id . "'><span class='status-badge danger'><i class=\"fas fa-file-download\"></i></span></a>" : "<span class='status-badge danger' title='Aucun formulaire disponible'><i class=\"fas fa-times\"></i></span>");
+                        echo($prat->HasFormulaire() ? "<a href='download_formulaire.php?id=" . $prat->id . "'><span class='status-badge danger'><i class=\"fas fa-download\"></i></span></a>" : "<span class='status-badge danger' title='Aucun formulaire disponible'><i class=\"fas fa-times\"></i></span>");
                     }
                     else
                     {

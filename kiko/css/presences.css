@@ -56,10 +56,6 @@ div.IdentityLoading::before
 	border-radius: 50%;
 	animation: kiko-spin 0.8s linear infinite;
 }
-@keyframes kiko-spin
-{
-	to { transform: rotate(360deg); }
-}
 div.Licence
 {
     height: 0px;
