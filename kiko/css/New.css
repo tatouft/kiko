@@ -3,6 +3,16 @@
 	padding: 10px;
 }
 
+/* Chaque ligne Grade/Periode (.FieldName + .InputField) est flottante puis
+   suivie d'un <br> ; un <br> seul ne force pas le passage sous des flottants,
+   il ne fait que retourner à la ligne dans le flux, qui peut rester à côté
+   d'eux s'il reste de la place - d'où des lignes qui se retrouvaient en
+   cascade côte à côte une fois les colonnes resserrées. */
+.New br
+{
+	clear: both;
+}
+
 /* Espacement entre les lignes de champ (Nom, Prénom, Adresse, ...) dans les
    cartes de new.php. Chaque ligne utilise la classe Bootstrap "mb-2"
    (margin-bottom: 0.5rem = 8px). Pas d'espace nécessaire en lecture (texte
@@ -25,6 +35,21 @@
 	padding-bottom: 0;
 }
 
+/* Même largeur label/valeur que dans la carte Identité (où le label est
+   imbriqué dans une colonne col-8 à côté de la photo : col-sm-4 d'une
+   colonne à 66,67% = 22,22% de la carte). Pas de fraction Bootstrap propre
+   pour 22,22%/77,78% (2/9e), d'où ces deux classes maison. */
+.label-narrow
+{
+	flex: 0 0 22.2222%;
+	max-width: 22.2222%;
+}
+.value-narrow
+{
+	flex: 0 0 77.7778%;
+	max-width: 77.7778%;
+}
+
 /* Utilisées par Grades/Payements : le JS (action.js: AddGrade/AddPeriode/
    AddNewPeriode) injecte du HTML avec ces mêmes classes à l'exécution,
    donc la structure reste volontairement en dehors de la grille Bootstrap. */
@@ -34,12 +59,18 @@
 	float: left;
 	margin-left: 3px;
 	margin-right: 5px;
+	margin-bottom: 8px;
 	font-weight: bold;
 	color: var(--kiko-ink, #261e14);
 }
+/* Largeur fixe (200px) remplacée par une largeur au contenu : les libellés
+   de grade varient beaucoup en longueur ("6e Kyu" vs "5e Kyu Barrette
+   orange"), une largeur fixe laissait un grand vide avant le champ pour
+   les libellés courts - même logique de resserrement que les autres cartes. */
 .Grade
 {
-	width: 200px;
+	width: auto;
+	margin-right: 14px;
 }
 .Periode
 {
@@ -53,6 +84,14 @@
 .InputField
 {
 	float: left;
+	margin-bottom: 8px;
+}
+/* .form-control est width:100% par défaut : sans largeur explicite ici,
+   un input à 100% dans un conteneur flottant qui se dimensionne à son
+   contenu (donc à... cet input) donnerait une taille ambiguë. */
+.InputField input.form-control
+{
+	width: 140px;
 }
 
 /* Hors grille Bootstrap ici (voir commentaire plus haut) : on adapte le

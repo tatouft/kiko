@@ -125,6 +125,16 @@
 
                     $edit = false;
                 }
+                else if($action == 'delete_permanently' && $isAdmin && $pratiquant->deleted)
+                {
+                    // Suppression SQL réelle (PMO_MyObject::delete()), pas juste deleted=1.
+                    // Le reste de la page ne peut plus se générer normalement (le
+                    // pratiquant n'existe plus) : on ferme l'onglet, ou on redirige
+                    // vers la liste si la fermeture est refusée par le navigateur.
+                    $pratiquant->delete();
+                    echo '<script>window.close(); window.location.href = "index.php";</script>';
+                    exit;
+                }
 				else if(($action == 'add' || $action == 'save') && $isAdmin)
 				{
 					if($action == 'add')
@@ -155,8 +165,11 @@
 					$datet = explode("/", $licenceDate);
 					date_date_set($date , $datet[2] , $datet[1], $datet[0]);
 					$pratiquant->licenceDate = date_format($date, "Y-m-d");
-					
-					echo($section);
+
+					if($debug)
+					{
+						echo("Section: " . $section);
+					}
 					$pratiquant->fk_section = $section;
 					$pratiquant->AddPresences($presences);
 					//$new->fk_famille = 
@@ -279,6 +292,7 @@
                 <?php if($edit){ RenderActionButton('Save', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); SubmitIfValid('formNew')", $isAdmin); } ?>
                 <?php if($edit){ RenderActionButton('Cancel', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
                 <?php if($pratiquant->deleted){ RenderActionButton('Undelete', 'btn-warning', 'fa-recycle', 'Restaurer', "SetHidden('action', 'undelete'); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($pratiquant->deleted){ RenderActionButton('DeleteForever', 'btn-danger', 'fa-trash-alt', 'Supprimer définitivement', "if(confirm('Supprimer définitivement " . addslashes(trim($pratiquant->prenom . ' ' . $pratiquant->nom)) . " ? Cette action est irréversible.')){ SetHidden('action', 'delete_permanently'); \$('formNew').submit(); }", $isAdmin); } ?>
 			</div>
 
 			<div class="card mb-3">
@@ -421,84 +435,84 @@
                                 </div>
                             </div>
 
+						<?php if($edit){ ?>
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">Photo:</label>
+							<div class="col-sm-8">
+                                <input type="text" class="form-control filename-field" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
+							</div>
+						</div>
+						<?php } ?>
+
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">Adresse:</label>
+							<div class="col-sm-8">
+                                <?php if($edit){ ?>
+                                    <input type="text" class="form-control" autocomplete="off" id="adresse"		name="adresse"	 value="<?php echo($pratiquant->adresse); ?>">
+                                <?php } else {
+                                    echo($pratiquant->adresse);
+                                } ?>
+							</div>
+						</div>
+
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">Code postal:</label>
+							<div class="col-sm-8">
+                                <?php if($edit){ ?>
+                                    <input type="text" class="form-control digits-field" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
+                                <?php } else {
+                                    echo($pratiquant->codePostal);
+                                } ?>
+							</div>
+						</div>
+
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">Commune:</label>
+							<div class="col-sm-8">
+                                <?php if($edit){ ?>
+                                    <input type="text" class="form-control" autocomplete="off" id="commune"		name="commune"	 value="<?php echo($pratiquant->commune); ?>">
+                                <?php } else {
+                                    echo($pratiquant->commune);
+                                } ?>
+							</div>
+						</div>
+
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">Téléphone:</label>
+							<div class="col-sm-8">
+                                <?php if($edit){ ?>
+                                    <input type="text" class="form-control phone-field" autocomplete="off" id="telephone" name="telephone" value="<?php echo(formatPhoneNumber($pratiquant->telephone)); ?>">
+                                <?php } else {
+                                        echo(formatPhoneNumber($pratiquant->telephone));
+                                } ?>
+							</div>
+						</div>
+
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">GSM:</label>
+							<div class="col-sm-8">
+                                <?php if($edit){ ?>
+                                    <input type="text" class="form-control phone-field" autocomplete="off" id="gsm" name="gsm" value="<?php echo(formatPhoneNumber($pratiquant->gsm)); ?>">
+                                <?php } else {
+                                    echo(formatPhoneNumber($pratiquant->gsm));
+                                } ?>
+							</div>
+						</div>
+
+						<div class="row mb-2 align-items-center">
+							<label class="col-sm-4 col-form-label fw-bold">eMail:</label>
+							<div class="col-sm-8">
+                                <?php if($edit){ ?>
+                                    <input type="text" class="form-control emails-field" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
+                                <?php } else {
+                                    echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
+                                } ?>
+							</div>
+						</div>
+
 						</div>
 						<div class="col-4 text-center">
-							<img class="img-thumbnail" style="max-height:170px;" src="<?php echo($pratiquant->GetPhotoHttpPath()); ?>" title="<?php echo($pratiquant->GetPhotoTitle()); ?>"/>
-						</div>
-					</div>
-
-					<?php if($edit){ ?>
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Photo:</label>
-						<div class="col-sm-8">
-                            <input type="text" class="form-control filename-field" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
-						</div>
-					</div>
-					<?php } ?>
-
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Adresse:</label>
-						<div class="col-sm-8">
-                            <?php if($edit){ ?>
-                                <input type="text" class="form-control" autocomplete="off" id="adresse"		name="adresse"	 value="<?php echo($pratiquant->adresse); ?>">
-                            <?php } else {
-                                echo($pratiquant->adresse);
-                            } ?>
-						</div>
-					</div>
-
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Code postal:</label>
-						<div class="col-sm-8">
-                            <?php if($edit){ ?>
-                                <input type="text" class="form-control digits-field" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
-                            <?php } else {
-                                echo($pratiquant->codePostal);
-                            } ?>
-						</div>
-					</div>
-
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Commune:</label>
-						<div class="col-sm-8">
-                            <?php if($edit){ ?>
-                                <input type="text" class="form-control" autocomplete="off" id="commune"		name="commune"	 value="<?php echo($pratiquant->commune); ?>">
-                            <?php } else {
-                                echo($pratiquant->commune);
-                            } ?>
-						</div>
-					</div>
-
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Téléphone:</label>
-						<div class="col-sm-8">
-                            <?php if($edit){ ?>
-                                <input type="text" class="form-control phone-field" autocomplete="off" id="telephone" name="telephone" value="<?php echo(formatPhoneNumber($pratiquant->telephone)); ?>">
-                            <?php } else {
-                                    echo(formatPhoneNumber($pratiquant->telephone));
-                            } ?>
-						</div>
-					</div>
-
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">GSM:</label>
-						<div class="col-sm-8">
-                            <?php if($edit){ ?>
-                                <input type="text" class="form-control phone-field" autocomplete="off" id="gsm" name="gsm" value="<?php echo(formatPhoneNumber($pratiquant->gsm)); ?>">
-                            <?php } else {
-                                echo(formatPhoneNumber($pratiquant->gsm));
-                            } ?>
-						</div>
-					</div>
-
-					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">eMail:</label>
-						<div class="col-sm-8">
-                            <?php if($edit){ ?>
-                                <input type="text" class="form-control emails-field" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
-                            <?php } else {
-                                echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
-                            } ?>
+							<img class="img-thumbnail" style="max-height:250px;" src="<?php echo($pratiquant->GetPhotoHttpPath()); ?>" title="<?php echo($pratiquant->GetPhotoTitle()); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -508,8 +522,8 @@
 				<div class="card-header fw-bold">Club et fédé</div>
 				<div class="card-body">
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">N° licence:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">N° licence:</label>
+						<div class="value-narrow">
                             <?php if($edit){ ?>
                                 <input type="text" class="form-control digits-field" id="licence" name="licence"	autocomplete="off"	value="<?php echo($pratiquant->licenceNbr); ?>">
                             <?php } else {
@@ -519,8 +533,8 @@
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Expiration:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">Expiration:</label>
+						<div class="value-narrow">
                             <?php if($edit){ ?>
                                 <input type="text" class="form-control date-field" id="licenceDate" name="licenceDate" placeholder="jj/mm/aaaa" value="<?php echo(FormatDate($pratiquant->licenceDate ?? '')); ?>">
                             <?php } else {
@@ -530,8 +544,8 @@
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Grade:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">Grade:</label>
+						<div class="value-narrow">
                                 <?php
                                     if($action != 'add')
                                     {
@@ -544,8 +558,8 @@
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Section:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">Section:</label>
+						<div class="value-narrow">
                             <?php if($edit){ ?>
                                 <select class="form-select" id="section" name="section">
                                 <?php
@@ -614,13 +628,13 @@
 				<div class="card-header fw-bold">Fédération</div>
 				<div class="card-body">
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">N° licence:</label>
-						<div class="col-sm-8"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); AlerteDiff($diffLicence); ?></div>
+						<label class="label-narrow col-form-label fw-bold">N° licence:</label>
+						<div class="value-narrow"><?php echo($fedeLicence !== null && $fedeLicence !== '' ? $fedeLicence : '—'); AlerteDiff($diffLicence); ?></div>
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Expiration:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">Expiration:</label>
+						<div class="value-narrow">
 							<?php echo($fedeLicenceDate ? date('d/m/Y', strtotime($fedeLicenceDate)) : '—'); AlerteDiff($diffLicenceDate); ?>
 							<?php if ($diffLicenceDate && $edit) { ?>
 								<button type="button" class="btn btn-sm btn-outline-warning ms-2" onclick="SetHidden('licenceDate', '<?php echo(date('d/m/Y', strtotime($fedeLicenceDate))); ?>')">
@@ -631,13 +645,13 @@
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Naissance:</label>
-						<div class="col-sm-8"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); AlerteDiff($diffNaissance); ?></div>
+						<label class="label-narrow col-form-label fw-bold">Naissance:</label>
+						<div class="value-narrow"><?php echo($fedeNaissance ? date('d/m/Y', strtotime($fedeNaissance)) : '—'); AlerteDiff($diffNaissance); ?></div>
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">eMail:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">eMail:</label>
+						<div class="value-narrow">
 							<?php if($fedeEmail){ ?>
 								<a href="mailto:<?php echo($fedeEmail); ?>" target="new"><?php echo($fedeEmail); ?></a>
 							<?php } else { echo('—'); } ?>
@@ -646,14 +660,14 @@
 					</div>
 
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Adresse:</label>
-						<div class="col-sm-8"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); AlerteDiff($diffAdresse); ?></div>
+						<label class="label-narrow col-form-label fw-bold">Adresse:</label>
+						<div class="value-narrow"><?php echo($fedeAdresse !== null && $fedeAdresse !== '' ? $fedeAdresse : '—'); AlerteDiff($diffAdresse); ?></div>
 					</div>
 
 					<?php if ($fedeFormulaireExiste) { ?>
 					<div class="row mb-2 align-items-center">
-						<label class="col-sm-4 col-form-label fw-bold">Formulaire:</label>
-						<div class="col-sm-8">
+						<label class="label-narrow col-form-label fw-bold">Formulaire:</label>
+						<div class="value-narrow">
 							<a href="download_formulaire.php?id=<?php echo($id); ?>" class="btn btn-outline-primary btn-sm" target="_blank">
 								<i class="fas fa-file-pdf"></i> Télécharger le formulaire de renouvellement
 							</a>
@@ -681,7 +695,7 @@
 									<div class="FieldName Grade"><?php echo($grade->GetGrade()->libelle); ?>:</div> 
 									<div class="InputField">
 										<?php if($edit){ ?>
-											<input type="text" class="date-field" name="grade<?php echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" placeholder="jj/mm/aaaa" value="<?php echo(FormatDate($grade->date)); ?>">
+											<input type="text" class="date-field form-control" name="grade<?php echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" placeholder="jj/mm/aaaa" value="<?php echo(FormatDate($grade->date)); ?>">
 										<?php } else {
 											echo(FormatDate($grade->date));
 										} ?>
@@ -697,17 +711,24 @@
 					<br>
 						<select class="form-select form-select-sm d-inline-block w-auto" id="gradeList" name="gradeList">
 						<?php
+							// Ne propose pas les grades que le pratiquant a déjà (sinon on peut
+							// en ajouter un doublon en plus de celui déjà enregistré au-dessus).
+							$existingGradeIds = array_map(function($g) { return $g->fk_grade; }, $pratiquant->GetGrades());
 							$grades = grades::GetBySection($pratiquant->fk_section);
-							$i = 0;
+							$first = true;
 							foreach($grades as $grade)
 							{
+								if(in_array($grade->id, $existingGradeIds))
+								{
+									continue;
+								}
 								$selected = "";
-								if($i == 0)
+								if($first)
 								{
 									$selected = "selected";
+									$first = false;
 								}
 								echo('<option value="' . $grade->id . '" ' . $selected . '>' . $grade->libelle . '</option>');
-								$i++;
 							}
 						?>
 						</select>
@@ -846,5 +867,26 @@
 
 			</div>
 		</form>
+		<script>
+			// Raccourci clavier "e" pour passer en édition, sauf en train de
+			// taper dans un champ (input/textarea/select) ou si déjà en édition
+			// (le bouton #Edit n'existe alors plus, remplacé par Enregistrer/Annuler).
+			document.addEventListener('keydown', function(e) {
+				if (e.key !== 'e' || e.ctrlKey || e.metaKey || e.altKey)
+				{
+					return;
+				}
+				var tag = document.activeElement ? document.activeElement.tagName : '';
+				if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT')
+				{
+					return;
+				}
+				var editBtn = document.getElementById('Edit');
+				if (editBtn)
+				{
+					editBtn.click();
+				}
+			});
+		</script>
 	</body>
 </html>

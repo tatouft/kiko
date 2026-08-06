@@ -217,6 +217,7 @@ class pratiquants extends PMO_MyObject{
 		$map = $controler->queryController($sql);
 
 		$i = 0;
+		$presences = array();
 		while ($result = $map->fetchMap())
 		{
 			$presences[$i] = $result[presences::$TableName];

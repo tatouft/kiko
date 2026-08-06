@@ -1,7 +1,8 @@
 # Urgent
-- Vérifier le format des données rentrées dans new.php et proposer un formet grisé dans le champ
 - Impossible de deleter si on a déjà fait d'autres opérations
-- En version mobile retravailler la liste. MEttre des icones plus parlants pour ne pas devoir rappeler le label sur téléphone
+- Permettre de supprimer définitivement un pratiquant (avec confirmation)
+- Implmenter un processus de RGPD pour supprimerl les informations inutiles d'un pratiquant (adresse, téléphone) tout en gardant les informations nécessaires pour les évènements particuliers. Cela pourrait inclure la création d'une méthode dans la classe Pratiquant pour anonymiser les données personnelles.
 
 # Optionel
 - Ajouter la possibilité de Del des grades
+- Ajouter un vrai système de login avec vue du profil etc.

@@ -299,7 +299,7 @@ var nbNewGrades = 0;
 function AddGrade(gradeId, gradeLibelle)
 {
 	var text = "<div class='FieldName Grade'>" + gradeLibelle + ":</div> ";
-	text += "<div class='InputField'><input type='text' class='date-field' name='newGrade" + nbNewGrades + "' id='newGrade" + nbNewGrades + "' placeholder='jj/mm/aaaa'><input type='hidden' name='newGradeId" + nbNewGrades + "' id='newGradeId" + nbNewGrades + "' value='" + gradeId + "'></div><br>";
+	text += "<div class='InputField'><input type='text' class='date-field form-control' name='newGrade" + nbNewGrades + "' id='newGrade" + nbNewGrades + "' placeholder='jj/mm/aaaa'><input type='hidden' name='newGradeId" + nbNewGrades + "' id='newGradeId" + nbNewGrades + "' value='" + gradeId + "'></div><br>";
 	$('NewGrade').innerHTML += text;
 	AttachFieldValidation(document.getElementById('newGrade' + nbNewGrades));
 
