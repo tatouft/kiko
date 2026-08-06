@@ -57,6 +57,17 @@
 	display: none;
 }
 
+/* Sur mobile, Afficher/Supprimer sont répétés sur chaque carte pratiquant
+   (voir #TablePratiquants .mobile-actions) : plus besoin de ces boutons en
+   haut de page, qui obligeraient à remonter jusqu'ici. */
+@media (max-width: 767.98px)
+{
+	#ActionButtons
+	{
+		display: none !important;
+	}
+}
+
 .Buttons li a#email
 {
 	/*width:  20px;

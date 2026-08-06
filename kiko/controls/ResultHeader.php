@@ -55,13 +55,20 @@
 		
 		function DeletePersonne()
 		{
-		    if(selectedFamily != '')
+			DeletePratiquantWithFamilyCheck(selectedFirstName, selectedLastName, selectedId, selectedFamily);
+		}
+
+		// Comme DeletePersonne, mais sans dépendre du pratiquant "sélectionné" globalement :
+		// utilisé par les boutons répétés sur chaque carte en mode mobile.
+		function DeletePratiquantWithFamilyCheck(firstName, lastName, id, family)
+		{
+		    if(family != '')
             {
-                alert("Vous ne pouvez pas supprimer " + selectedLastName + " " + selectedFirstName + " car il est chef de famille. Modifiez d'abord les chefs de famille des pratiquants suivants: " + selectedFamily);
+                alert("Vous ne pouvez pas supprimer " + lastName + " " + firstName + " car il est chef de famille. Modifiez d'abord les chefs de famille des pratiquants suivants: " + family);
             }
             else
             {
-                DeletePratiquant( selectedFirstName, selectedLastName, selectedId);
+                DeletePratiquant(firstName, lastName, id);
             }
 		}
 	</script>

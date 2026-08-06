@@ -178,9 +178,10 @@ a:hover > .status-badge
 	}
 	#TablePratiquants tr.Selectable
 	{
+		width: auto;
 		border: 1px solid var(--kiko-paper-rule, #d8cebc);
 		border-radius: 8px;
-		margin-bottom: 10px;
+		margin: 0 8px 10px;
 		padding: 6px 10px;
 		box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 	}
@@ -245,6 +246,24 @@ a:hover > .status-badge
 	{
 		display: flex;
 	}
+	/* Boutons Afficher/Supprimer répétés sur chaque carte : évite d'avoir à
+	   remonter vers les boutons d'action tout en haut de la page. */
+	#TablePratiquants tr.expanded td.mobile-actions
+	{
+		gap: 8px;
+		padding-top: 8px;
+	}
+	#TablePratiquants td.mobile-actions .btn
+	{
+		flex: 1;
+	}
+}
+
+/* La colonne actions n'existe pas dans l'entête desktop (pas de <th>) : elle
+   n'a de sens que sur la mise en page "carte" du mobile. */
+.mobile-actions
+{
+	display: none;
 }
 
 /* L'icône n'a de sens que sur la mise en page "carte" du mobile.

@@ -17,6 +17,7 @@
 	{
     	$date = '';
 	}
+	$isAdmin = in_array($_SERVER['REMOTE_USER'] ?? '', $admins);
 
 	if($debug == true)
 	{
@@ -202,6 +203,16 @@
                     }
                 } catch (\Throwable $e) {
 
+                }
+                echo("</td>\n\t\t\t<td class='mobile-details mobile-actions'>");
+
+                // Actions (mobile uniquement) : répétées sur chaque carte pour éviter
+                // d'avoir à remonter vers les boutons d'action en haut de page. Liées
+                // directement à ce pratiquant, pas au pratiquant "sélectionné" global.
+                echo("<button type='button' class='btn btn-outline-primary btn-sm' onclick='event.stopPropagation(); window.open(\"new.php?id=" . $prat->id . "\");'><i class=\"far fa-file-alt\"></i> Afficher</button>");
+                if ($isAdmin)
+                {
+                    echo("<button type='button' class='btn btn-outline-danger btn-sm' onclick='event.stopPropagation(); DeletePratiquantWithFamilyCheck(\"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", " . $prat->id . ", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\");'><i class=\"far fa-trash-alt\"></i> Supprimer</button>");
                 }
                 echo("</td></tr>\n\t\t");
 			}
