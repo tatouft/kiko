@@ -55,6 +55,18 @@
 	float: left;
 }
 
+/* Hors grille Bootstrap ici (voir commentaire plus haut) : on adapte le
+   message d'erreur et la bordure rouge, normalement liés à .form-control. */
+.InputField .invalid-feedback
+{
+	width: auto;
+	clear: both;
+}
+.InputField input.is-invalid
+{
+	border-color: #dc3545;
+}
+
 input#presences
 {
 	width: 50px;

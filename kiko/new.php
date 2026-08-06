@@ -35,6 +35,17 @@
 			<div class="container my-3" style="max-width: 700px;">
 			<?php
 
+                // date('d/m/Y', strtotime('')) donne "01/01/1970" (strtotime('')
+                // renvoie false, interprété comme le timestamp 0) : PMO stocke ''
+                // pour un champ date vide en base, pas NULL. Sans ce garde-fou,
+                // toute date absente s'affiche comme si elle valait 1970.
+                function FormatDate($rawDate) {
+                    if (empty($rawDate)) {
+                        return '';
+                    }
+                    return date('d/m/Y', strtotime($rawDate));
+                }
+
                 function formatPhoneNumber($phoneNumber) {
                     $phoneNumber = preg_replace('/[^0-9]/','',$phoneNumber ?? '');
 
@@ -128,8 +139,11 @@
 					$pratiquant->adresse = $adresse;
 					$pratiquant->codePostal = $cp;
 					$pratiquant->commune = $commune;
-                    $pratiquant->telephone = $telephone;
-                    $pratiquant->gsm = $gsm;
+                    // Le champ affiche une version formatée (voir formatPhoneNumber) pour
+                    // que l'édition ressemble à l'aperçu ; on ne garde que les chiffres
+                    // en base, quel que soit ce que l'utilisateur a tapé/laissé.
+                    $pratiquant->telephone = preg_replace('/[^0-9]/', '', $telephone ?? '');
+                    $pratiquant->gsm = preg_replace('/[^0-9]/', '', $gsm ?? '');
                     $pratiquant->email = $email;
                     $pratiquant->pub = $pub;
                     $pratiquant->fk_famille = $famille;
@@ -262,7 +276,7 @@
 			<div class="d-flex gap-2 mb-3 sticky-top bg-body py-2">
                 <button type="button" class="btn btn-outline-secondary" onclick="window.close();"><i class="fas fa-times"></i> Fermer</button>
                 <?php if(!$edit){ RenderActionButton('Edit', 'btn-primary', 'fa-edit', 'Modifier', "SetHidden('edit', 'true'); \$('formNew').submit()", $isAdmin); } ?>
-                <?php if($edit){ RenderActionButton('Save', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); \$('formNew').submit()", $isAdmin); } ?>
+                <?php if($edit){ RenderActionButton('Save', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); SubmitIfValid('formNew')", $isAdmin); } ?>
                 <?php if($edit){ RenderActionButton('Cancel', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
                 <?php if($pratiquant->deleted){ RenderActionButton('Undelete', 'btn-warning', 'fa-recycle', 'Restaurer', "SetHidden('action', 'undelete'); \$('formNew').submit()", $isAdmin); } ?>
 			</div>
@@ -298,9 +312,9 @@
 								<label class="col-sm-4 col-form-label fw-bold">Naissance:</label>
 								<div class="col-sm-8">
 			                        <?php if($edit){ ?>
-			                            <input type="text" class="form-control" autocomplete="off" id="naissance" name="naissance" value="<?php echo(date('d/m/Y', strtotime($pratiquant->naissance ?? ''))); ?>">
+			                            <input type="text" class="form-control date-field" autocomplete="off" id="naissance" name="naissance" placeholder="jj/mm/aaaa" value="<?php echo(FormatDate($pratiquant->naissance ?? '')); ?>">
 			                        <?php } else {
-			                            echo(date('d/m/Y', strtotime($pratiquant->naissance)));
+			                            echo(FormatDate($pratiquant->naissance));
 			                        } ?>
 								</div>
 							</div>
@@ -417,7 +431,7 @@
 					<div class="row mb-2 align-items-center">
 						<label class="col-sm-4 col-form-label fw-bold">Photo:</label>
 						<div class="col-sm-8">
-                            <input type="text" class="form-control" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
+                            <input type="text" class="form-control filename-field" autocomplete="off" id="photo" name="photo" value="<?php echo($pratiquant->photo); ?>">
 						</div>
 					</div>
 					<?php } ?>
@@ -437,7 +451,7 @@
 						<label class="col-sm-4 col-form-label fw-bold">Code postal:</label>
 						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" class="form-control" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
+                                <input type="text" class="form-control digits-field" autocomplete="off" id="cp"		name="cp"		 value="<?php echo($pratiquant->codePostal); ?>">
                             <?php } else {
                                 echo($pratiquant->codePostal);
                             } ?>
@@ -459,7 +473,7 @@
 						<label class="col-sm-4 col-form-label fw-bold">Téléphone:</label>
 						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" class="form-control" autocomplete="off" id="telephone" name="telephone" value="<?php echo($pratiquant->telephone); ?>">
+                                <input type="text" class="form-control phone-field" autocomplete="off" id="telephone" name="telephone" value="<?php echo(formatPhoneNumber($pratiquant->telephone)); ?>">
                             <?php } else {
                                     echo(formatPhoneNumber($pratiquant->telephone));
                             } ?>
@@ -470,7 +484,7 @@
 						<label class="col-sm-4 col-form-label fw-bold">GSM:</label>
 						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" class="form-control" autocomplete="off" id="gsm" name="gsm" value="<?php echo($pratiquant->gsm); ?>">
+                                <input type="text" class="form-control phone-field" autocomplete="off" id="gsm" name="gsm" value="<?php echo(formatPhoneNumber($pratiquant->gsm)); ?>">
                             <?php } else {
                                 echo(formatPhoneNumber($pratiquant->gsm));
                             } ?>
@@ -481,7 +495,7 @@
 						<label class="col-sm-4 col-form-label fw-bold">eMail:</label>
 						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" class="form-control" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
+                                <input type="text" class="form-control emails-field" autocomplete="off" id="email" name="email" value="<?php echo($pratiquant->email); ?>">
                             <?php } else {
                                 echo("<a href='mailto:"  . $pratiquant->email . "' target='new'>" . $pratiquant->email . "</a>");
                             } ?>
@@ -497,7 +511,7 @@
 						<label class="col-sm-4 col-form-label fw-bold">N° licence:</label>
 						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" class="form-control" id="licence" name="licence"	autocomplete="off"	value="<?php echo($pratiquant->licenceNbr); ?>">
+                                <input type="text" class="form-control digits-field" id="licence" name="licence"	autocomplete="off"	value="<?php echo($pratiquant->licenceNbr); ?>">
                             <?php } else {
                                 echo($pratiquant->licenceNbr);
                             } ?>
@@ -508,9 +522,9 @@
 						<label class="col-sm-4 col-form-label fw-bold">Expiration:</label>
 						<div class="col-sm-8">
                             <?php if($edit){ ?>
-                                <input type="text" class="form-control" id="licenceDate" name="licenceDate"		value="<?php echo(date('d/m/Y', strtotime($pratiquant->licenceDate ?? ''))); ?>">
+                                <input type="text" class="form-control date-field" id="licenceDate" name="licenceDate" placeholder="jj/mm/aaaa" value="<?php echo(FormatDate($pratiquant->licenceDate ?? '')); ?>">
                             <?php } else {
-                                echo(date('d/m/Y', strtotime($pratiquant->licenceDate)));
+                                echo(FormatDate($pratiquant->licenceDate));
                             } ?>
 						</div>
 					</div>
@@ -667,9 +681,9 @@
 									<div class="FieldName Grade"><?php echo($grade->GetGrade()->libelle); ?>:</div> 
 									<div class="InputField">
 										<?php if($edit){ ?>
-											<input type="text" name="grade<?php echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" value="<?php echo(date('d/m/Y', strtotime($grade->date))); ?>">
+											<input type="text" class="date-field" name="grade<?php echo($grade->fk_grade); ?>" id="grade<?php echo($grade->fk_grade); ?>" placeholder="jj/mm/aaaa" value="<?php echo(FormatDate($grade->date)); ?>">
 										<?php } else {
-											echo(date('d/m/Y', strtotime($grade->date)));
+											echo(FormatDate($grade->date));
 										} ?>
 									</div><br>
 					<?php		} 
