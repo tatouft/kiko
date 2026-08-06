@@ -41,6 +41,8 @@
 		<script src="js/scriptaculous/scriptaculous.js"	type="text/javascript"></script>
 		<script src="js/action.js"						type="text/javascript"></script>
 		<script src="js/bootstrap.bundle.min.js"></script>
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/09e5bbb46b.js" crossorigin="anonymous"></script>
 
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="css/general.css" type="text/css">
