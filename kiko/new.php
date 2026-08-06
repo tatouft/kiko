@@ -585,9 +585,8 @@
 			$diffAdresse = false;
 			if ($fedeAdresse !== null && $fedeAdresse !== '') {
 				$fedeAdresseNorm = $normalizeAdresse($fedeAdresse);
-				$adresseMatch = !empty($pratiquant->adresse) && str_contains($fedeAdresseNorm, $normalizeAdresse($pratiquant->adresse));
-				$communeMatch = !empty($pratiquant->commune) && str_contains($fedeAdresseNorm, $normalizeAdresse($pratiquant->commune));
-				$diffAdresse = !($adresseMatch && $communeMatch);
+				$clubAdresseNorm = $normalizeAdresse(($pratiquant->adresse ?? '') . ' ' . ($pratiquant->commune ?? ''));
+				$diffAdresse = $fedeAdresseNorm != $clubAdresseNorm;
 			}
 
 			function AlerteDiff($diff) {

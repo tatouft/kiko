@@ -97,24 +97,43 @@
                 }
                 elseif($prat->AllowPub())
                 {
-                    echo("<i class=\"fas fa-photo-video\" style='color: green;'></i>");
+                    echo("<span class='status-badge success'><i class=\"fas fa-photo-video\"></i></span>");
                 }
                 elseif($prat->DisallowPub())
                 {
-                    echo("<i class=\"fas fa-photo-video\" style='color: crimson;'></i>");
+                    echo("<span class='status-badge danger'><i class=\"fas fa-photo-video\"></i></span>");
                 }
                 echo("</td>\n\t\t\t<td data-label='Grade'>");
 
 
                 // Grade
                 $grade = $prat->GetGrade();
-				echo(($grade == NULL)?"---":$grade->GetGrade()->libelle);
+                if ($grade == NULL)
+                {
+                    echo("---");
+                }
+                else
+                {
+                    $g = $grade->GetGrade();
+                    $color = $g->GetColor();
+                    if ($color)
+                        echo("<span style='color:" . $color . "; font-weight:bold;'>" . htmlspecialchars($g->GetShortLabel(), ENT_QUOTES | ENT_HTML401) . "</span>");
+                    else
+                        echo(htmlspecialchars($g->GetShortLabel(), ENT_QUOTES | ENT_HTML401));
+                }
 				echo("</td>\n\t\t\t<td data-label='License'>");
 
 				// License
                 if($prat->HasLicence())
                 {
-                    echo($prat->IsLicenceExpired() ? "<a href='./services/GetLicence.php?id=" . $prat->id . "'><i class=\"fas fa-file-download\" style='color: crimson;'></i></a>" : "<i class=\"fas fa-check-circle\" style='color: green;'></i>");
+                    if($prat->IsLicenceExpired())
+                    {
+                        echo($prat->HasFormulaire() ? "<a href='download_formulaire.php?id=" . $prat->id . "'><span class='status-badge danger'><i class=\"fas fa-file-download\"></i></span></a>" : "<span class='status-badge danger' title='Aucun formulaire disponible'><i class=\"fas fa-times\"></i></span>");
+                    }
+                    else
+                    {
+                        echo("<span class='status-badge success'><i class=\"fas fa-check\"></i></span>");
+                    }
                     $dt = date_create($prat->licenceDate);
 
                     echo("&nbsp;" . $dt->format('d/m/Y'));
@@ -136,7 +155,7 @@
 					{
 						$fedeFormatted = date('d/m/Y', strtotime($fedeLicenceDate));
 						$localFormatted = ($localLicenceDate !== null && $localLicenceDate !== '') ? date('d/m/Y', strtotime($localLicenceDate)) : '—';
-						echo("<i class=\"fas fa-exclamation-triangle\" style='color: darkorange;' title='Fédération: " . $fedeFormatted . " / Club: " . $localFormatted . "'></i>");
+						echo("<span class='status-badge warning' title='Fédération: " . $fedeFormatted . " / Club: " . $localFormatted . "'><i class=\"fas fa-exclamation\"></i></span>");
 					}
 				}
 				echo("</td>\n\t\t\t<td data-label='Cotisation'>");
@@ -145,7 +164,7 @@
                 $lessons = $prat->GetCountNoPayLesson();
                 $periodes = $prat->GetNoPayPeriod();
                 $enOrdre = (count($periodes) > 0 || $lessons > 0);
-                echo($enOrdre?"<i class=\"fas fa-times-circle\" style='color: crimson;'></i>":"<i class=\"fas fa-check-circle\" style='color: green;'></i>");
+                echo($enOrdre?"<span class='status-badge danger'><i class=\"fas fa-times\"></i></span>":"<span class='status-badge success'><i class=\"fas fa-check\"></i></span>");
                 echo("&nbsp;");
                 if(count($periodes) > 0)
                 {
@@ -173,7 +192,7 @@
                         $percent = floor(100 / $prat->GetPresencesNeededForNextGrade() * $prat->GetPresencesCountFromLastGrade());
                         if ($percent > 100)
                             $percent = 100;
-                        echo($ready ? "<i class=\"fas fa-check-circle\" style='color: green;'></i>" : "");
+                        echo($ready ? "<span class='status-badge success'><i class=\"fas fa-check\"></i></span>" : "");
                         echo("&nbsp;" . $percent . "% ");
                         if ($rest > 0)
                         {

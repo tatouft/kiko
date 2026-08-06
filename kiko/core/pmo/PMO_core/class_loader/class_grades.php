@@ -20,6 +20,39 @@ class grades extends PMO_MyObject{
 		return sections::GetArray($map);		
 	}
     
+    // Premier mot du libellé (+ "Kyu"/"Dan" s'il suit), pour un affichage compact
+    // dans les listes (ex: "5e Kyu Barrette orange" -> "5e Kyu", "Barrette Jaune" -> "Barrette")
+    public function GetShortLabel()
+    {
+        $words = explode(' ', trim($this->libelle));
+        $label = $words[0];
+        if (isset($words[1]) && in_array(mb_strtolower($words[1], 'UTF-8'), array('kyu', 'dan')))
+            $label .= ' ' . $words[1];
+        return $label;
+    }
+
+    // Couleur de barrette associée au grade si son libellé en mentionne une, sinon null
+    public function GetColor()
+    {
+        static $colors = array(
+            'jaune'  => '#c9a227',
+            'orange' => '#c4601a',
+            'verte'  => '#2f8f3e',
+            'vert'   => '#2f8f3e',
+            'bleue'  => '#1f6fba',
+            'bleu'   => '#1f6fba',
+            'marron' => '#6f4423',
+        );
+
+        $libelleLower = mb_strtolower($this->libelle, 'UTF-8');
+        foreach ($colors as $mot => $color)
+        {
+            if (strpos($libelleLower, $mot) !== false)
+                return $color;
+        }
+        return null;
+    }
+
     // Récupère le grade suivant
     public function GetNextGrade($section)
     {

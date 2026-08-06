@@ -83,6 +83,53 @@ tr.Selected
     --bs-table-accent-bg: #e6c19c;
 }
 
+/* Pastilles colorées pour les icônes de statut de la liste des pratiquants
+   (Pub, License, Fédé, Cotisation, Examen) : plus lisibles qu'une icône nue
+   posée directement sur le fond blanc/gris de la table. */
+.status-badge
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	color: white;
+	font-size: 0.72rem;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+	vertical-align: middle;
+}
+.status-badge.success { background-color: #3fa757; }
+.status-badge.danger   { background-color: #c94f4f; }
+.status-badge.warning  { background-color: var(--kiko-orange-warm, #d97830); }
+
+/* fa-check/fa-times sont des glyphes simples qui remplissent presque tout
+   leur espace, contrairement à fa-photo-video (appareil photo + lecteur) :
+   à taille égale ils paraissent plus imposants. On les réduit légèrement
+   pour équilibrer visuellement avec les autres icônes de la pastille. */
+.status-badge .fa-check,
+.status-badge .fa-times
+{
+	font-size: 0.85em;
+}
+
+/* fa-photo-video est un glyphe large/rectangulaire (caméra + lecteur), pas
+   carré comme check/times : à taille de base il touche les bords du rond.
+   On le réduit davantage pour qu'il tienne dans la pastille. */
+.status-badge .fa-photo-video
+{
+	font-size: 0.75em;
+}
+
+a > .status-badge
+{
+	transition: transform 0.1s ease-in-out;
+}
+a:hover > .status-badge
+{
+	transform: scale(1.1);
+}
+
 /* Liste des pratiquants : bascule en cartes empilées sur petit écran */
 @media (max-width: 767.98px)
 {
