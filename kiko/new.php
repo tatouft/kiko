@@ -260,6 +260,7 @@
 			<input type="hidden" id="edit" name="edit" value="<?php echo($edit); ?>" />
 
 			<div class="d-flex gap-2 mb-3 sticky-top bg-body py-2">
+                <button type="button" class="btn btn-outline-secondary" onclick="window.close();"><i class="fas fa-times"></i> Fermer</button>
                 <?php if(!$edit){ RenderActionButton('Edit', 'btn-primary', 'fa-edit', 'Modifier', "SetHidden('edit', 'true'); \$('formNew').submit()", $isAdmin); } ?>
                 <?php if($edit){ RenderActionButton('Save', 'btn-success', 'fa-save', 'Enregistrer', "SetHidden('action', '" . ($new?'add':'save') . "'); \$('formNew').submit()", $isAdmin); } ?>
                 <?php if($edit){ RenderActionButton('Cancel', 'btn-outline-secondary', 'fa-window-close', 'Annuler', "SetHidden('edit', ''); \$('formNew').submit()", $isAdmin); } ?>
