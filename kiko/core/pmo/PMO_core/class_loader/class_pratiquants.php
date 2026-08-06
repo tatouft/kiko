@@ -79,6 +79,28 @@ class pratiquants extends PMO_MyObject{
 	{
 		return $this->licenceNbr != "" ;
 	}
+
+	// Chemin du formulaire de renouvellement recupere par la synchro federation
+	// (uploads/fede_formulaires/{licenceNbr}.pdf), ou null si pas de licence.
+	public function GetFormulairePath()
+	{
+		$licenceNbr = $this->getAttribute('licenceNbr');
+		if (!$licenceNbr)
+			return null;
+
+		return dirname(__FILE__) . '/../../../../uploads/fede_formulaires/' . (int)$licenceNbr . '.pdf';
+	}
+
+	public function HasFormulaire()
+	{
+		$path = $this->GetFormulairePath();
+		return $path !== null && is_file($path);
+	}
+
+	public function GetFormulaireFilename()
+	{
+		return $this->nom . '-' . $this->prenom . '-formulaire.pdf';
+	}
 	public function IsLicenceExpired()
 	{
 		if($this->licenceNbr != "" && $this->licenceDate <= date("Y-m-d"))

@@ -565,8 +565,7 @@
 			$fedeEmail = $pratiquant->getAttribute('fede_email');
 			$fedeAdresse = $pratiquant->getAttribute('fede_adresse');
 			$licenceNbr = $pratiquant->getAttribute('licenceNbr');
-			$fedeFormulairePath = $licenceNbr ? dirname(__FILE__) . '/uploads/fede_formulaires/' . (int)$licenceNbr . '.pdf' : null;
-			$fedeFormulaireExiste = $fedeFormulairePath && is_file($fedeFormulairePath);
+			$fedeFormulaireExiste = $pratiquant->HasFormulaire();
 
 			// Signale un champ fédé quand il diffère de la valeur club - seulement si la
 			// fédé a une valeur (sinon "pas encore scrapé" serait signalé comme un conflit).

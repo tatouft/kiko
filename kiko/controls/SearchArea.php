@@ -54,8 +54,7 @@
 			$nbFormulairesExpires = 0;
 			foreach (pratiquants::GetExpired() as $pratExpire)
 			{
-				$licenceNbrExpire = $pratExpire->getAttribute('licenceNbr');
-				if ($licenceNbrExpire && is_file(dirname(__FILE__) . '/../uploads/fede_formulaires/' . (int)$licenceNbrExpire . '.pdf'))
+				if ($pratExpire->HasFormulaire())
 				{
 					$nbFormulairesExpires++;
 				}
