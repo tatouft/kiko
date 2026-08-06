@@ -3,6 +3,7 @@ require_once("class_passages.php");
 require_once("class_presences.php");
 require_once("class_cotisationsSimple.php");
 require_once("class_cotisationsPeriode.php");
+require_once("class_section.php");
     
 class pratiquants extends PMO_MyObject{
 	public static $TableName = 'pratiquants';
@@ -483,11 +484,26 @@ class pratiquants extends PMO_MyObject{
 	public static function GetExpired()
 	{
 		$controler = new PMO_MyController();
-		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE licenceDate <= current_date AND  deleted = 0;');
-	
-		return self::GetArray($map);		
+		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE licenceDate <= date("now", "+2 months") AND  deleted = 0;');
+
+		return self::GetArray($map);
 	}
-	
+
+	// Pratiquants d'une section ayant atteint l'age limite (ageMax) de cette
+	// section a la date donnee, et devant donc "monter" dans la section suivante.
+	public static function GetSectionAtAgeLimit($sectionId, $date)
+	{
+		$section = sections::GetById($sectionId);
+
+		if ($section->ageMax === null || $section->ageMax === '')
+			return array();
+
+		$controler = new PMO_MyController();
+		$map = $controler->queryController('SELECT * FROM ' . self::$TableName . ' WHERE fk_section = ' . (int)$sectionId . ' AND deleted = 0 AND naissance != "" AND naissance != "1970-01-01" AND naissance <= date("' . $date . '", "-' . (int)$section->ageMax . ' years") ORDER BY naissance;');
+
+		return self::GetArray($map);
+	}
+
 	public static function GetCount($date1, $date2)
 	{
 		$controler = new PMO_MyController();

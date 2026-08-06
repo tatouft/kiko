@@ -1,5 +1,5 @@
 <?php
-    function FillTable($action, $section)
+    function FillTable($action, $section, $date = null)
     {
         if($action == "all")
 		{
@@ -16,6 +16,10 @@
         else if($action == "license")
         {
             $pratiquants = pratiquants::GetExpired();
+        }
+        else if($action == "montee")
+        {
+            $pratiquants = pratiquants::GetSectionAtAgeLimit($section, $date ?: date("Y-m-d"));
         }
         else if($action == "poubelle")
 		{

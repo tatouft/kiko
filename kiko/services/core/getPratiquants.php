@@ -13,6 +13,10 @@
 	{
     	$section = '';
 	}
+	if(!isset($date))
+	{
+    	$date = '';
+	}
 
 	if($debug == true)
 	{
@@ -32,7 +36,7 @@
 	}
 
 
-    $pratiquants = FillTable($action, $section);
+    $pratiquants = FillTable($action, $section, $date);
 
 ?>
 

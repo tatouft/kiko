@@ -22,8 +22,16 @@ class sections extends PMO_MyObject{
 		$controler = new PMO_MyController();
 
 		$map = $controler->queryController("SELECT * FROM " . self::$TableName . ";");
-	
+
 		return self::GetArray($map);
+	}
+
+	public static function GetById($id)
+	{
+		$section = PMO_MyObject::factory(self::$TableName);
+		$section->id = $id;
+		$section->load();
+		return $section;
 	}
 }
 

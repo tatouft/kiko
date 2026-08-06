@@ -77,6 +77,19 @@ function Search(baseUrl, action, param1, param2)
 			}
 		);
 	}
+	if(action == "montee")
+	{
+		$('PratiquantList').innerHTML = $loading;
+		url = baseUrl + "?action=montee&section=" + param1 + "&date=" + param2;
+		new Ajax.Updater($('PratiquantList'),
+			url, {
+				evalScripts: true,
+				onFailure: function(transport) {
+					alert('oups, ajax problem');
+				}
+			}
+		);
+	}
 	if(action == "presences")
 	{
         $('PratiquantList').innerHTML = $loading;
@@ -209,12 +222,29 @@ function GetSections()
 	var childs = $('sections').childElements();
 	var ids = '-1';
 	for(i=0;i<childs.length;i++) {
-		if(childs[i].readAttribute('type') == 'checkbox' && childs[i].checked)
+		if(childs[i].hasClassName('section-btn') && childs[i].hasClassName('active'))
 		{
-			ids += ',' + childs[i].value;
+			ids += ',' + childs[i].readAttribute('data-id');
 		}
 	}
 	return ids;
+}
+
+function ToggleSection(btn)
+{
+	var childs = $('sections').childElements();
+	for(i=0;i<childs.length;i++) {
+		if(childs[i].hasClassName('section-btn'))
+		{
+			childs[i].removeClassName('active');
+			childs[i].removeClassName('btn-primary');
+			childs[i].addClassName('btn-outline-primary');
+		}
+	}
+	btn.removeClassName('btn-outline-primary');
+	btn.addClassName('btn-primary');
+	btn.addClassName('active');
+	Search('services/getPratiquantsNom.php', 'presences', GetSections());
 }
 
 function DeletePratiquant(nom, prenom, id)

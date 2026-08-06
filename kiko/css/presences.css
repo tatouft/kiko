@@ -2,19 +2,6 @@
 {
 	font-size: 18px;
 }
-#sections input.check
-{
-	width: 22px;
-	height: 22px;
-	margin-left: 20px;
-	margin-right: 6px;
-	vertical-align: middle;
-	cursor: pointer;
-}
-#sections input.check:first-child
-{
-	margin-left: 0;
-}
 
 div.name,div.fname
 {

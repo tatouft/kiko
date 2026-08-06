@@ -7,6 +7,7 @@
 
 	$action = $_REQUEST['action'] ?? '';
 	$section = $_REQUEST['section'] ?? '';
+	$date = $_REQUEST['date'] ?? '';
 ?>
 <?php
     require_once("core/FillTable.php");

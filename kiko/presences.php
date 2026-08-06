@@ -29,10 +29,9 @@
 						$sections = sections::GetAll();
 						foreach($sections as $sec)
 						{
-							echo('<input class="check" type="checkbox" checked value="' . $sec->id . '">' . $sec->libelle . '</input>');
+							echo('<button type="button" class="btn btn-outline-primary section-btn me-2 mb-2" data-id="' . $sec->id . '" onclick="ToggleSection(this)">' . $sec->libelle . '</button>');
 						}
 					?>
-					<input type="button" class="btn btn-primary ms-3" value="Afficher" onclick="Search('services/getPratiquantsNom.php', 'presences', GetSections());"/>
 				</div>
 			</div>
 

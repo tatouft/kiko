@@ -50,12 +50,42 @@
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">
 		Affiche uniquement les pratiquants dont la licence a expiré.
-		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','license','');" value="Afficher"></div>
+		<?php
+			$nbFormulairesExpires = 0;
+			foreach (pratiquants::GetExpired() as $pratExpire)
+			{
+				$licenceNbrExpire = $pratExpire->getAttribute('licenceNbr');
+				if ($licenceNbrExpire && is_file(dirname(__FILE__) . '/../uploads/fede_formulaires/' . (int)$licenceNbrExpire . '.pdf'))
+				{
+					$nbFormulairesExpires++;
+				}
+			}
+		?>
+		<div class="SearchButton">
+			<input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','license','');" value="Afficher">
+			<a class="btn btn-outline-primary btn-sm ms-2" href="services/GetLicencesZip.php" target="_blank"><i class="fas fa-file-archive"></i> Télécharger tous les formulaires (<?php echo($nbFormulairesExpires); ?>)</a>
+		</div>
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="UpArea">
-		Sections, date
-		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" value="Afficher"></div>
+		<div id="CSectionUp" class="criteres">
+            Pratiquants en age de changer de section.<br/>
+			Section:
+			<select class="form-select form-select-sm d-inline-block w-auto" id="filterSectionUp" name="filterSectionUp">
+				<?php
+					$sections = sections::GetAll();
+					foreach($sections as $sec)
+					{
+						if($sec->ageMax === null || $sec->ageMax === '')
+							continue;
+						echo('<option value="' . $sec->id . '">' . $sec->libelle . '</option>');
+					}
+				?>
+			</select>
+			Date:
+			<input type="date" class="form-control form-control-sm d-inline-block w-auto" id="filterDateUp" name="filterDateUp" value="<?php echo(date('Y-m-d')); ?>">
+		</div>
+		<div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','montee',$F('filterSectionUp'),$F('filterDateUp'));" value="Afficher"></div>
 	</div>
 
     <div class="SearchAreaContent Invisible" id="PoubelleArea">
