@@ -26,7 +26,7 @@
 			if(selectedId !== 0)
 			{
 			    try {
-                    $('PratRow' + selectedId).className = "Selectable";
+                    $('PratRow' + selectedId).classList.remove('Selected');
                     $("ActionButtons").className = "Buttons invisible";
                 } catch(exception) {
 
@@ -40,7 +40,7 @@
 		function Select(id, firstName, lastName, family)
 		{
 			DeSelect();
-			$('PratRow'+id).className = "Selected";
+			$('PratRow'+id).classList.add('Selected');
 			selectedId = id;
             selectedFirstName = firstName;
             selectedLastName = lastName;

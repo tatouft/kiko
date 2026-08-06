@@ -79,16 +79,17 @@
                 	}
                 }
 
-				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\")' ondblclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\");OpenPersonne();'>");
+				echo("<tr class='Selectable' id='PratRow" . $prat->id . "' onclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\");this.classList.toggle(\"expanded\");' ondblclick='Select(" . $prat->id . ", \"" . htmlspecialchars($prat->prenom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->nom ?? '', ENT_QUOTES | ENT_HTML401) . "\", \"" . htmlspecialchars($prat->GetFamilyNameList() ?? '', ENT_QUOTES | ENT_HTML401) . "\");OpenPersonne();'>");
 				echo("<td class='PratName'><a name='Prat" . $prat->id . "'></a>");
 
 				// Name
 				echo(ucfirst($prat->nom ?? '') . " " . ucfirst($prat->prenom ?? ''));
-				echo("</td>\n\t\t\t<td data-label='Section'>");
+				echo("<i class=\"fas fa-chevron-down mobile-toggle\"></i>");
+				echo("</td>\n\t\t\t<td class='mobile-details' data-label='Section'>");
 
 				// Section
 				echo($prat->GetSection()->libelle);
-				echo("</td>\n\t\t\t<td data-label='Pub' align='center'>");
+				echo("</td>\n\t\t\t<td class='mobile-details' data-label='Pub' align='center'>");
 
 				// Pub
                 if($prat->UnknownPub())
@@ -103,7 +104,7 @@
                 {
                     echo("<span class='status-badge danger'><i class=\"fas fa-photo-video\"></i></span>");
                 }
-                echo("</td>\n\t\t\t<td data-label='Grade'>");
+                echo("</td>\n\t\t\t<td class='mobile-details' data-label='Grade'>");
 
 
                 // Grade
@@ -121,7 +122,7 @@
                     else
                         echo(htmlspecialchars($g->GetShortLabel(), ENT_QUOTES | ENT_HTML401));
                 }
-				echo("</td>\n\t\t\t<td data-label='License'>");
+				echo("</td>\n\t\t\t<td class='mobile-details' data-label='License'>");
 
 				// License
                 if($prat->HasLicence())
@@ -142,7 +143,7 @@
                         echo("&nbsp;&nbsp;");
                     }
                 }
-				echo("</td>\n\t\t\t<td data-label='Fédé' align='center'>");
+				echo("</td>\n\t\t\t<td class='mobile-details' data-label='Fédé' align='center'>");
 
 				// Fédé : alerte si la date de licence fédération diffère de celle du club
 				// (getAttribute() direct : PMO_MyObject n'a pas de __isset(), donc
@@ -158,7 +159,7 @@
 						echo("<span class='status-badge warning' title='Fédération: " . $fedeFormatted . " / Club: " . $localFormatted . "'><i class=\"fas fa-exclamation\"></i></span>");
 					}
 				}
-				echo("</td>\n\t\t\t<td data-label='Cotisation'>");
+				echo("</td>\n\t\t\t<td class='mobile-details' data-label='Cotisation'>");
 
                 // Cotisation
                 $lessons = $prat->GetCountNoPayLesson();
@@ -180,7 +181,7 @@
                     echo($lessons . " cours");
                 }
                 echo("&nbsp;");
-				echo("</td>\n\t\t\t<td data-label='Examen'>");
+				echo("</td>\n\t\t\t<td class='mobile-details' data-label='Examen'>");
 
 				// Examen
                 try

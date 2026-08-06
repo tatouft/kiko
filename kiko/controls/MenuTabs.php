@@ -46,6 +46,6 @@
 	<div class="Tab" onclick="JavaScript: SwitchSearchTab('SectionArea', this);" id="SectionTab">Sections</div>
 	<!--<div class="Tab" onclick="JavaScript: SwitchSearchTab('ExamensArea', this);" id="ExamensTab">Examens</div>-->
 	<div class="Tab" onclick="JavaScript: SwitchSearchTab('ExpirationArea', this);" id="ExpirationTab">Expirations</div>
-	<div class="Tab" onclick="JavaScript: SwitchSearchTab('UpArea', this);" id="UpTab">Montées</div>
+	<div class="Tab" onclick="JavaScript: SwitchSearchTab('UpArea', this);" id="UpTab">Transfert</div>
 	<div class="Tab" onclick="JavaScript: SwitchSearchTab('PoubelleArea', this);" id="Poubele">Poubelle</div>
 </div>

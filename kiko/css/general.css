@@ -58,6 +58,13 @@ table
 	border: 1px solid white;
 	width: 100%;
 }
+/* Sans ça, le tap sur une ligne cliquable déclenche le halo gris natif du
+   navigateur (-webkit-tap-highlight-color), visible depuis qu'il n'est plus
+   masqué par le hover orange (désactivé sur tactile juste au-dessus). */
+tr.Selectable
+{
+	-webkit-tap-highlight-color: transparent;
+}
 td
 {
 	border: 1px solid lightgray;
@@ -67,16 +74,35 @@ th
 	padding-top: 10px;
 	border: 1px solid lightgray;
 }
-tr:nth-child(even) {
-    background-color: rgba(200, 200, 200, 0.3); /* red, 30% alpha */
-}
-/* Bootstrap 5 peint le fond de chaque <td> individuellement (pas la <tr>) et
-   sa classe table-hover pilote son propre survol via --bs-table-hover-bg -
-   un simple background-color sur la <tr> est donc invisible. On passe par
-   les variables CSS de Bootstrap pour que ça s'affiche vraiment. */
-tr.Selectable:hover
+/* Bootstrap 5 peint le fond de chaque <td> individuellement (pas la <tr>) -
+   un simple background-color sur la <tr> est donc invisible (même souci que
+   le hover et le Selected ci-dessous). On passe par --bs-table-accent-bg,
+   la variable CSS que Bootstrap applique réellement sur chaque cellule.
+   :not(.Selected) pour ne pas passer outre la surbrillance de sélection. */
+#TablePratiquants tr:nth-child(even):not(.Selected)
 {
-    --bs-table-hover-bg: var(--kiko-orange-pale, #f2dcc8);
+    --bs-table-accent-bg: rgba(200, 200, 200, 0.3);
+}
+/* (hover: hover) : sur tactile il n'y a pas de vrai survol, le navigateur
+   applique :hover au tap et il reste "collé" faute de sortie de souris -
+   d'où un fond orange qui persiste après avoir déployé une carte mobile. */
+@media (hover: hover) and (pointer: fine)
+{
+	tr.Selectable:hover
+	{
+		--bs-table-hover-bg: var(--kiko-orange-pale, #f2dcc8);
+	}
+}
+/* Sur tactile, Bootstrap a SA PROPRE règle native (.table-hover>tbody>tr:hover>*,
+   dans bootstrap.min.css, jamais modifiée ici) qui applique aussi :hover au
+   tap avec sa valeur grise par défaut - la scoper ci-dessus ne suffit donc
+   pas, il faut aussi vider la variable pour ce mécanisme natif. */
+@media (hover: none), (pointer: coarse)
+{
+	tr.Selectable
+	{
+		--bs-table-hover-bg: initial;
+	}
 }
 tr.Selected
 {
@@ -142,6 +168,14 @@ a:hover > .status-badge
 		display: block;
 		width: 100%;
 	}
+	/* Chaque ligne est déjà une carte avec sa propre bordure : l'alternance
+	   de fond (utile dans le tableau desktop) devient superflue sur mobile.
+	   Même sélecteur (avec :not(.Selected)) que la règle de base pour avoir
+	   une spécificité égale et vraiment la neutraliser ici. */
+	#TablePratiquants tr:nth-child(even):not(.Selected)
+	{
+		--bs-table-accent-bg: initial;
+	}
 	#TablePratiquants tr.Selectable
 	{
 		border: 1px solid var(--kiko-paper-rule, #d8cebc);
@@ -170,10 +204,56 @@ a:hover > .status-badge
 		font-weight: bold;
 		font-size: 1.05rem;
 		justify-content: flex-start;
+	}
+	/* Le séparateur sous le nom n'a de sens que si des détails sont déployés
+	   en dessous : sinon il laisse un trait flottant sans rien après. */
+	#TablePratiquants tr.expanded td.PratName
+	{
 		padding-bottom: 8px;
 		border-bottom: 1px solid var(--kiko-paper-rule, #d8cebc);
 		margin-bottom: 4px;
 	}
+
+	/* Sur mobile, la carte n'affiche que le nom par défaut ; le reste des
+	   infos (section, grade, license, ...) ne s'affiche qu'au tap sur la
+	   ligne, pour ne pas surcharger la liste. Le tap sélectionne ET déploie
+	   en même temps (toute la ligne est la zone cliquable) : pas besoin
+	   d'une couleur de sélection séparée, l'état déployé en tient lieu. */
+	#TablePratiquants tr.Selected
+	{
+		--bs-table-accent-bg: initial;
+	}
+	#TablePratiquants .mobile-toggle
+	{
+		display: inline-flex !important;
+		align-items: center;
+		justify-content: center;
+		margin-left: auto;
+		color: var(--kiko-ink-soft, #9c8e7c);
+		font-size: 0.9rem;
+		transition: transform 0.15s ease-in-out;
+	}
+	#TablePratiquants tr.expanded .mobile-toggle
+	{
+		transform: rotate(180deg);
+	}
+	#TablePratiquants td.mobile-details
+	{
+		display: none;
+	}
+	#TablePratiquants tr.expanded td.mobile-details
+	{
+		display: flex;
+	}
+}
+
+/* L'icône n'a de sens que sur la mise en page "carte" du mobile.
+   !important : le Kit Font Awesome convertit les <i> en <svg> à l'exécution
+   et injecte son propre display:inline-block sur ces icônes, qui passe
+   après (et gagne sur) cette règle à spécificité égale sinon. */
+.mobile-toggle
+{
+	display: none !important;
 }
 
 ul.Buttons

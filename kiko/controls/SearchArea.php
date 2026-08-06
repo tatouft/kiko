@@ -17,7 +17,7 @@
 	
 	<div class="SearchAreaContent Invisible" id="SectionArea">
 		<div id="CSection" class="criteres">
-            Affiche uniquement les pratiquants d'une section.<br/>
+            Uniquement les pratiquants d'une section.<br/>
 			Section: 
 			<select class="form-select form-select-sm d-inline-block w-auto" id="filterSection" name="filterSection">
 				<?php
@@ -49,7 +49,7 @@
 	</div>
 	
 	<div class="SearchAreaContent Invisible" id="ExpirationArea">
-		Affiche uniquement les pratiquants dont la licence a expiré.
+		Les pratiquants dont la licence a expiré.
 		<?php
 			$nbFormulairesExpires = 0;
 			foreach (pratiquants::GetExpired() as $pratExpire)
@@ -88,7 +88,7 @@
 	</div>
 
     <div class="SearchAreaContent Invisible" id="PoubelleArea">
-        Affiche les pratiquants supprimés
+        Les pratiquants supprimés
         <div class="SearchButton"><input type="button" class="btn btn-primary btn-sm" onclick="DeSelect();Search('services/getPratiquants.php','poubelle',0);" value="Afficher"></div>
     </div>
 </div>
