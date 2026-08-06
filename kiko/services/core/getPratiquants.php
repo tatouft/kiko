@@ -60,7 +60,7 @@
 				<th>License</th>
 				<th>Fédé</th>
                 <th>Cotisation</th>
-				<th>Examen</th>
+				<!--<th>Examen</th> -->
 				<!--<th>&nbsp;</th>-->
 			</tr>
 			</thead>
@@ -182,7 +182,9 @@
                     echo($lessons . " cours");
                 }
                 echo("&nbsp;");
+/*
 				echo("</td>\n\t\t\t<td class='mobile-details' data-label='Examen'>");
+
 
 				// Examen
                 try
@@ -204,6 +206,7 @@
                 } catch (\Throwable $e) {
 
                 }
+            */
                 echo("</td>\n\t\t\t<td class='mobile-details mobile-actions'>");
 
                 // Actions (mobile uniquement) : répétées sur chaque carte pour éviter

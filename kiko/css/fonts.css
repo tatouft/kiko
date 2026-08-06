@@ -1,0 +1,20 @@
+/* Police auto-hébergée pour le logo 気工 (en-tête). Même police (Yuji Mai)
+   que le kanji du hero sur www/ (合気道), mais sous-ensembles distincts :
+   気 est déjà utilisé par www/ (copié depuis www/fonts/), 工 ne l'était pas
+   et a été téléchargé spécifiquement pour ce logo. */
+@font-face {
+	font-family: 'Yuji Mai';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+6C17;
+	src: url('../fonts/yuji-mai-400-kanji-ki.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Yuji Mai';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+5DE5;
+	src: url('../fonts/yuji-mai-400-kanji-kou.woff2') format('woff2');
+}

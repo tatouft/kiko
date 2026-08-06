@@ -1,8 +1,9 @@
+<link rel="stylesheet" href="css/fonts.css" type="text/css">
 <link rel="stylesheet" href="css/PageHeader.css" type="text/css">
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary" id="Header">
 	<div class="container-fluid">
-		<a class="navbar-brand" id="HeaderG" href="index.php">KiKo</a>
+		<a class="navbar-brand" id="HeaderG" href="index.php"><span class="LogoKanji">気工</span><span class="LogoRomaji">KiKo</span></a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#HeaderNav" aria-controls="HeaderNav" aria-expanded="false" aria-label="Menu">
 			<span class="navbar-toggler-icon"></span>
 		</button>

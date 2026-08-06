@@ -1,5 +1,18 @@
 #Header .navbar-brand {
 	font-weight: bold;
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+}
+
+/* Logo 気工, même police (Yuji Mai) que le kanji du hero sur www/ (合気道),
+   accolé au romaji "KiKo" d'origine (poids/police par défaut du navbar-brand). */
+#Header .navbar-brand .LogoKanji {
+	font-family: 'Yuji Mai', serif;
+	font-weight: 400;
+	font-size: 1.7rem;
+	line-height: 1;
+	letter-spacing: 0.03em;
 }
 
 #Header .nav-link.active {
