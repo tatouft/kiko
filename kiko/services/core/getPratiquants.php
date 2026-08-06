@@ -99,11 +99,11 @@
                 }
                 elseif($prat->AllowPub())
                 {
-                    echo("<span class='status-badge success'><i class=\"fas fa-photo-video\"></i></span>");
+                    echo("<span class='status-badge success' title='Autorise la publication de photos'><i class=\"fas fa-photo-video\"></i></span>");
                 }
                 elseif($prat->DisallowPub())
                 {
-                    echo("<span class='status-badge danger'><i class=\"fas fa-photo-video\"></i></span>");
+                    echo("<span class='status-badge muted' title=\"N'autorise pas la publication de photos\"><i class=\"fas fa-photo-video\"></i></span>");
                 }
                 echo("</td>\n\t\t\t<td class='mobile-details' data-label='Grade'>");
 
@@ -130,11 +130,11 @@
                 {
                     if($prat->IsLicenceExpired())
                     {
-                        echo($prat->HasFormulaire() ? "<a href='download_formulaire.php?id=" . $prat->id . "'><span class='status-badge danger'><i class=\"fas fa-download\"></i></span></a>" : "<span class='status-badge danger' title='Aucun formulaire disponible'><i class=\"fas fa-times\"></i></span>");
+                        echo($prat->HasFormulaire() ? "<a href='download_formulaire.php?id=" . $prat->id . "'><span class='status-badge danger' title='Licence expirée - cliquer pour télécharger le formulaire'><i class=\"fas fa-download\"></i></span></a>" : "<span class='status-badge danger' title='Licence expirée - aucun formulaire disponible'><i class=\"fas fa-times\"></i></span>");
                     }
                     else
                     {
-                        echo("<span class='status-badge success'><i class=\"fas fa-check\"></i></span>");
+                        echo("<span class='status-badge success' title='Licence à jour'><i class=\"fas fa-check\"></i></span>");
                     }
                     $dt = date_create($prat->licenceDate);
 
@@ -166,7 +166,7 @@
                 $lessons = $prat->GetCountNoPayLesson();
                 $periodes = $prat->GetNoPayPeriod();
                 $enOrdre = (count($periodes) > 0 || $lessons > 0);
-                echo($enOrdre?"<span class='status-badge danger'><i class=\"fas fa-times\"></i></span>":"<span class='status-badge success'><i class=\"fas fa-check\"></i></span>");
+                echo($enOrdre?"<span class='status-badge danger' title='Périodes ou cours impayés'><i class=\"fas fa-times\"></i></span>":"<span class='status-badge success' title='Cotisation à jour'><i class=\"fas fa-check\"></i></span>");
                 echo("&nbsp;");
                 if(count($periodes) > 0)
                 {

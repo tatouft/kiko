@@ -128,6 +128,7 @@ tr.Selected
 .status-badge.success { background-color: #3fa757; }
 .status-badge.danger   { background-color: #c94f4f; }
 .status-badge.warning  { background-color: var(--kiko-orange-warm, #d97830); }
+.status-badge.muted    { background-color: var(--kiko-ink-soft, #9c8e7c); }
 
 /* fa-check/fa-times sont des glyphes simples qui remplissent presque tout
    leur espace, contrairement à fa-photo-video (appareil photo + lecteur) :
